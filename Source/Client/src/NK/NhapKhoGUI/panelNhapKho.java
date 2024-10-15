@@ -2,11 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package NK.NhapKho;
+package NK.NhapKhoGUI;
 
-import NK.*;
-import QL.NhapKho.themPhieuNhap;
-import QL.NhapKho.thongTinPhieuNhap;
+import QL.NhapKhoGUI.themPhieuNhap;
+import QL.NhapKhoGUI.thongTinPhieuNhap;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**

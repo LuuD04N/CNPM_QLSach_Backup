@@ -4,7 +4,7 @@
  */
 package GUI;
 
-import NK.NhapKho.panelNhapKho;
+import NK.NhapKhoGUI.panelNhapKho;
 import TrangChuImg.panelTrangChu;
 import java.awt.Color;
 import javax.swing.BorderFactory;

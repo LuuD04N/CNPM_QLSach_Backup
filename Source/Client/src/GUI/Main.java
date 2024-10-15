@@ -5,7 +5,7 @@
 package GUI;
 
 import TrangChuImg.panelTrangChu;
-import QL.NhapKho.panelKho;
+import QL.NhapKhoGUI.panelKho;
 import QL.tacGiaGUI.panelTacGia;
 import java.awt.Color;
 import javax.swing.BorderFactory;
