@@ -4,6 +4,8 @@
  */
 package QL.NhapKhoGUI;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
 /**
  *
  * @author PC
@@ -401,6 +403,7 @@ public class suaPhieuNhap extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                FlatLightLaf.setup();
                 new suaPhieuNhap().setVisible(true);
             }
         });
