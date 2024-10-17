@@ -1,2 +1,0 @@
-passwordfield.PasswordField$TextUI
-passwordfield.PasswordField
