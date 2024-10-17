@@ -245,7 +245,7 @@ public class thongTinPhieuNhap extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FlatLightLaf.setup();
+            
                 new thongTinPhieuNhap().setVisible(true);
             }
         });
