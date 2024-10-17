@@ -6,8 +6,6 @@ create table NhaXuatBan(
 	Diachi varchar(100),
 	Sodienthoai varchar(10),	
 	Email varchar(100),
-	NgayThanhLap date,
-	Trangthai int,
 	Primary key (MaNXB)
 );
 
@@ -44,7 +42,6 @@ create table KhuyenMai(
 	TenKM varchar(50),
 	NgayBatDau Date,
 	NgayKetThuc Date,
-	TrangThai int,
 	MaloaiKM varchar(10),
 	primary key (MaKM)
 );
@@ -108,16 +105,18 @@ create table VaiTro(
 );
 
 create table ChiTietHD(
-	MaCTHD Varchar(10),
+	MaHD Varchar(10),
 	Soluong Int,
 	DonGia DOUBLE PRECISION,
-	MaSP Varchar(10)
+	MaSP Varchar(10),
+	PRIMARY KEY(MaHD,MaSP)
 );
 
 create table ChiTietKM(
-	GiaTriKhuyenMai Int,
 	MaKM Varchar(10),
-	MaSP Varchar(10)
+	MaSP Varchar(10),
+
+	PRIMARY KEY(MaKM,MaSP)
 
 );
 
@@ -125,13 +124,18 @@ create table ChiTietPN(
 	Soluongnhap Int,
 	DonGia DOUBLE PRECISION,
 	MaSP Varchar(10),
-	MaPN Varchar(10)
+	MaPN Varchar(10),
+	PRIMARY KEY(MaSP,MaPN)
+	
 
 );
 
 create table SachTheLoai(
 	MaSP Varchar(10),
-	MaTL Varchar(10)
+	MaTL Varchar(10),
+
+	PRIMARY KEY(MaSP,MaTL)
+	
 );
 
 ALTER TABLE SanPham
@@ -159,7 +163,7 @@ ALTER TABLE ChiTietHD
 ADD FOREIGN KEY (MaSP) REFERENCES SanPham(MaSP);
 
 ALTER TABLE ChiTietHD
-ADD FOREIGN KEY (MaCTHD) REFERENCES HoaDon(MaHD);
+ADD FOREIGN KEY (MaHD) REFERENCES HoaDon(MaHD);
 
 ALTER TABLE ChiTietKM
 ADD FOREIGN KEY (MaKM) REFERENCES KhuyenMai(MaKM);

@@ -5,6 +5,7 @@
 package GUI;
 
 import TrangChuImg.panelTrangChu;
+import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
@@ -483,6 +484,7 @@ public class MainBanHang extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                FlatLightLaf.setup();
                 new MainBanHang().setVisible(true);
             }
         });

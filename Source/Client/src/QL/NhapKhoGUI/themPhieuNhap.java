@@ -4,8 +4,12 @@
  */
 package QL.NhapKhoGUI;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
 import javax.swing.BorderFactory;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 
 /**
@@ -21,7 +25,7 @@ public class themPhieuNhap extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setBorder();
-       
+        
     }
 
     private void setBorder()
@@ -420,7 +424,9 @@ public class themPhieuNhap extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 new themPhieuNhap().setVisible(true);
+               
             }
         });
     }

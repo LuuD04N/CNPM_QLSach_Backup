@@ -4,6 +4,8 @@
  */
 package QL.tacGiaGUI;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
 
 /**
  *
@@ -240,6 +242,7 @@ public class thongTinTacGia extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+               
                 new thongTinTacGia().setVisible(true);
             }
         });
