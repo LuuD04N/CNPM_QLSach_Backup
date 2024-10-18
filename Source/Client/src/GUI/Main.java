@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import QL.NhanVienGUI.panelNhanVien;
 import TrangChuImg.panelTrangChu;
 import QL.NhapKhoGUI.panelKho;
 import QL.tacGiaGUI.panelTacGia;
@@ -669,6 +670,9 @@ Color customColor = Color.decode("#C2F2E9");
         panel10.setBackground(Color.WHITE);
         panel11.setBackground(Color.WHITE);
         panelTT.setBackground(Color.WHITE);
+        panelNhanVien  nv = new panelNhanVien();
+        panelChange.removeAll();
+        panelChange.add(nv).setVisible(true);
     }//GEN-LAST:event_panel2MouseClicked
 
     private void panel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel3MouseClicked
