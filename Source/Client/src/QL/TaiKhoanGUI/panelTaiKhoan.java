@@ -4,6 +4,8 @@
  */
 package QL.TaiKhoanGUI;
 
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+
 /**
  *
  * @author Administrator
@@ -15,6 +17,9 @@ public class panelTaiKhoan extends javax.swing.JInternalFrame {
      */
     public panelTaiKhoan() {
         initComponents();
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
+        bui.setNorthPane(null);
     }
 
     /**

@@ -4,6 +4,8 @@
  */
 package QL.tacGiaGUI;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
 /**
  *
  * @author PC
@@ -233,6 +235,7 @@ public class suaTacGia extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 new suaTacGia().setVisible(true);
             }
         });
