@@ -275,7 +275,7 @@ public class panelKho extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Mã tác giả", "Họ và tên", "Bút xanh", "Quốc tịch"
+                "Mã phiếu nhập", "Ngày nhập", "Thành tiền", "Mã nhà xuất bản"
             }
         ) {
             boolean[] canEdit = new boolean [] {

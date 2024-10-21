@@ -256,7 +256,7 @@ public class panelNhaXuatBan extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Mã tác giả", "Họ và tên", "Bút xanh", "Quốc tịch"
+                "Mã nhà xuất bản", "Tên nhà xuất bản", "Địa chỉ", "Email"
             }
         ) {
             boolean[] canEdit = new boolean [] {

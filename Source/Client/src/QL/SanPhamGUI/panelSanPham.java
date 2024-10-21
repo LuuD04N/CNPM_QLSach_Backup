@@ -252,15 +252,23 @@ public class panelSanPham extends javax.swing.JInternalFrame {
         jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"SP1", "ádsad", "ádasd", "ád", "12222", "10", "10", "[ảnh]"},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {"SP1", "ádsad", "ádasd", "ád", "12222", "10"},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Mã sản phẩm", "Tên sản phẩm", "Số trang", "Ngôn ngữ", "Giá bìa", "Số lượng", "Giá nhập", "Ảnh bìa"
+                "Mã sản phẩm", "Tên sản phẩm", "Số trang", "Ngôn ngữ", "Giá bìa", "Số lượng"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.setFocusable(false);
         jTable1.setGridColor(new java.awt.Color(0, 0, 0));
         jTable1.setSelectionBackground(new java.awt.Color(0, 102, 255));

@@ -480,7 +480,7 @@
                           <Data value="null"/>
                           <Data value="null"/>
                         </Column>
-                        <Column editable="false" title="Tr&#x1ea1;ng th&#xe1;i" type="java.lang.Object">
+                        <Column editable="false" title="Nh&#xe2;n vi&#xea;n" type="java.lang.Object">
                           <Data value="0"/>
                           <Data value="null"/>
                           <Data value="null"/>

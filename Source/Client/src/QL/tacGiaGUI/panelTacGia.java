@@ -261,7 +261,7 @@ public class panelTacGia extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Mã tác giả", "Họ và tên", "Bút xanh", "Quốc tịch"
+                "Mã tác giả", "Họ và tên", "Bút danh", "Quốc tịch"
             }
         ) {
             boolean[] canEdit = new boolean [] {

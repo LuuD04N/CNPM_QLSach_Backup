@@ -272,7 +272,7 @@ public class panelHoaDon extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Mã hoá đơn", "Ngày lập hoá đơn", "Thành tiền", "Trạng thái"
+                "Mã hoá đơn", "Ngày lập hoá đơn", "Thành tiền", "Nhân viên"
             }
         ) {
             boolean[] canEdit = new boolean [] {
