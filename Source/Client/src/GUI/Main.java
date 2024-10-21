@@ -4,7 +4,10 @@
  */
 package GUI;
 
-import Component.panelTrangChu;
+import TrangChuImg.panelTrangChu;
+import QL.NhapKhoGUI.panelKho;
+import QL.tacGiaGUI.panelTacGia;
+import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
@@ -682,6 +685,10 @@ Color customColor = Color.decode("#C2F2E9");
         panel10.setBackground(Color.WHITE);
         panel11.setBackground(Color.WHITE);
         panelTT.setBackground(Color.WHITE);
+        //tao mot doi tuong panelTacGia
+        panelTacGia tg = new panelTacGia();
+        panelChange.removeAll();
+        panelChange.add(tg).setVisible(true);
     }//GEN-LAST:event_panel3MouseClicked
 
     private void panel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel4MouseClicked
@@ -730,6 +737,9 @@ Color customColor = Color.decode("#C2F2E9");
         panel10.setBackground(Color.WHITE);
         panel11.setBackground(Color.WHITE);
         panelTT.setBackground(Color.WHITE);
+        panelKho kho = new panelKho();
+        panelChange.removeAll();
+        panelChange.add(kho).setVisible(true);
     }//GEN-LAST:event_panel6MouseClicked
 
     private void panel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel7MouseClicked
@@ -858,6 +868,7 @@ Color customColor = Color.decode("#C2F2E9");
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                FlatLightLaf.setup();
                 new Main().setVisible(true);
             }
         });

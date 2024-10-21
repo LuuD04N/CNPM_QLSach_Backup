@@ -2,7 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package Component;
+package TrangChuImg;
+
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
  *
@@ -15,6 +17,9 @@ public class panelTrangChu extends javax.swing.JInternalFrame {
      */
     public panelTrangChu() {
         initComponents();
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
+        bui.setNorthPane(null);
     }
 
     /**
