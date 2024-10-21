@@ -219,6 +219,11 @@ public class suaPhieuNhap extends javax.swing.JFrame {
         jTextField8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jTextField8.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         jTextField8.setSelectionColor(new java.awt.Color(0, 0, 0));
+        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField8ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Ngày nhập");
 
@@ -369,6 +374,10 @@ public class suaPhieuNhap extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField8ActionPerformed
 
     /**
      * @param args the command line arguments
