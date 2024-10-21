@@ -4,9 +4,15 @@
  */
 package GUI;
 
+<<<<<<< HEAD
 import QL.NhanVienGUI.panelNhanVien;
+=======
+import BH.HoaDonGUI.panelHoaDon;
+import QL.NhaXuatBanGUI.panelNhaXuatBan;
+>>>>>>> Luu
 import TrangChuImg.panelTrangChu;
 import QL.NhapKhoGUI.panelKho;
+import QL.TheLoaiGUI.panelTheLoai;
 import QL.tacGiaGUI.panelTacGia;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
@@ -709,6 +715,9 @@ Color customColor = Color.decode("#C2F2E9");
         panel10.setBackground(Color.WHITE);
         panel11.setBackground(Color.WHITE);
         panelTT.setBackground(Color.WHITE);
+        panelTheLoai tl = new panelTheLoai();
+        panelChange.removeAll();
+        panelChange.add(tl).setVisible(true);
     }//GEN-LAST:event_panel4MouseClicked
 
     private void panel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel5MouseClicked
@@ -725,6 +734,9 @@ Color customColor = Color.decode("#C2F2E9");
         panel10.setBackground(Color.WHITE);
         panel11.setBackground(Color.WHITE);
         panelTT.setBackground(Color.WHITE);
+        panelNhaXuatBan nxb = new panelNhaXuatBan();
+        panelChange.removeAll();
+        panelChange.add(nxb).setVisible(true);
     }//GEN-LAST:event_panel5MouseClicked
 
     private void panel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel6MouseClicked
@@ -776,6 +788,9 @@ Color customColor = Color.decode("#C2F2E9");
         panel10.setBackground(Color.WHITE);
         panel11.setBackground(Color.WHITE);
         panelTT.setBackground(Color.WHITE);
+        panelHoaDon hd = new panelHoaDon();
+        panelChange.removeAll();
+        panelChange.add(hd).setVisible(true);
     }//GEN-LAST:event_panel8MouseClicked
 
     private void panel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel9MouseClicked
@@ -840,6 +855,9 @@ Color customColor = Color.decode("#C2F2E9");
         panel8.setBackground(Color.WHITE);
         panel9.setBackground(Color.WHITE);
         panel10.setBackground(Color.WHITE);
+        panelThongTin tt = new panelThongTin();
+        panelChange.removeAll();
+        panelChange.add(tt).setVisible(true);
     }//GEN-LAST:event_panelTTMouseClicked
 
     /**
