@@ -29,6 +29,7 @@ Color customColor = Color.decode("#C2F2E9");
      */
     public Main() {
         initComponents();
+        FlatLightLaf.setup();
         setBorder();
         start();
     }
