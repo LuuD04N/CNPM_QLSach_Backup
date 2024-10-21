@@ -4,6 +4,7 @@
  */
 package server;
 
+import BLL.TaiKhoanBLL;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -45,9 +46,8 @@ public class ClientHandle implements Runnable{
             StringBuilder resultBuilder = new StringBuilder();
             while((bytesRead= input.read(buffer)) != -1)
             {
-                
                 String message = new String(buffer,0,bytesRead);
-                
+                xetDK(message);
             }
             
         }catch(IOException e)
@@ -68,4 +68,18 @@ public class ClientHandle implements Runnable{
         }
     }
     
+    
+    //ham de xem client yeu cau gi
+    public void xetDK(String data)
+    {
+        JSONObject json = new JSONObject(data);
+        String dieukien = json.getString("method");
+        switch(dieukien)
+        {
+            case "LOGIN":
+                    TaiKhoanBLL tkBLL = new TaiKhoanBLL();
+                    sendMessage(String.valueOf(tkBLL.login(data)));
+                    break;
+        }
+    }
 }

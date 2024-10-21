@@ -15,7 +15,7 @@ import java.sql.SQLException;
  * @author HP
  */
 public class ConnectDB {
-    private static final String URL = "jdbc:mysql://localhost:3306/test"; // Thay đổi tên cơ sở dữ liệu
+    private static final String URL = "jdbc:mysql://localhost:3306/qlsach"; // Thay đổi tên cơ sở dữ liệu
     private static final String USER = "root"; // Tên người dùng
     private static final String PASSWORD = ""; // M    ật khẩu
 

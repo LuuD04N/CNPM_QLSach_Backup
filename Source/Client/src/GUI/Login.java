@@ -4,9 +4,11 @@
  */
 package GUI;
 
+import Client.Client;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import org.json.JSONObject;
 
 /**
  *
@@ -17,6 +19,7 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    Client client = new Client();
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -42,8 +45,8 @@ public class Login extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtTK = new javax.swing.JTextField();
+        txtMK = new javax.swing.JPasswordField();
         jPanel5 = new javax.swing.JPanel();
         myButton2 = new Customize.MyButton();
         jCheckBoxCustom1 = new checkbox.JCheckBoxCustom();
@@ -105,12 +108,12 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Mật khẩu:");
 
-        jTextField2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTextField2.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        jTextField2.setSelectionColor(new java.awt.Color(0, 0, 0));
+        txtTK.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        txtTK.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtTK.setSelectionColor(new java.awt.Color(0, 0, 0));
 
-        jPasswordField1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPasswordField1.setSelectionColor(new java.awt.Color(0, 0, 0));
+        txtMK.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        txtMK.setSelectionColor(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -119,10 +122,10 @@ public class Login extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                    .addComponent(txtTK, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addComponent(jPasswordField1))
+                    .addComponent(txtMK))
                 .addGap(55, 55, 55))
         );
         jPanel4Layout.setVerticalGroup(
@@ -131,11 +134,11 @@ public class Login extends javax.swing.JFrame {
                 .addGap(48, 48, 48)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTK, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                .addComponent(txtMK, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -151,6 +154,11 @@ public class Login extends javax.swing.JFrame {
         myButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         myButton2.setPreferredSize(new java.awt.Dimension(160, 30));
         myButton2.setRadius(10);
+        myButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                myButton2MouseClicked(evt);
+            }
+        });
         jPanel5.add(myButton2);
 
         jCheckBoxCustom1.setBackground(new java.awt.Color(51, 102, 255));
@@ -216,6 +224,19 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_myButton1ActionPerformed
 
+    private void myButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_myButton2MouseClicked
+        // TODO add your handling code here:
+        String taikhoan = txtTK.getText();
+        String matkhau = txtMK.getText();
+        String check = client.dangNhap(taikhoan, matkhau);
+        System.out.println(check);
+        if(check.equals("true"))
+        {
+            Main main = new Main();
+            main.setVisible(true);
+        }
+    }//GEN-LAST:event_myButton2MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -246,7 +267,7 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FlatLightLaf.setup();
+//                FlatLightLaf.setup();
                 new Login().setVisible(true);
             }
         });
@@ -265,9 +286,9 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField2;
     private Customize.MyButton myButton2;
     private javax.swing.JPanel panel;
+    private javax.swing.JPasswordField txtMK;
+    private javax.swing.JTextField txtTK;
     // End of variables declaration//GEN-END:variables
 }
