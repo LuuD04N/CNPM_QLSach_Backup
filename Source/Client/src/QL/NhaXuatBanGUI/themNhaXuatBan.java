@@ -15,6 +15,7 @@ public class themNhaXuatBan extends javax.swing.JFrame {
      */
     public themNhaXuatBan() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

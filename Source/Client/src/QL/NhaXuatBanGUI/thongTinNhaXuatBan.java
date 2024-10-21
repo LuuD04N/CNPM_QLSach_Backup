@@ -15,6 +15,7 @@ public class thongTinNhaXuatBan extends javax.swing.JFrame {
      */
     public thongTinNhaXuatBan() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

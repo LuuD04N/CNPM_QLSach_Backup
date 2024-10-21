@@ -15,6 +15,7 @@ public class suaNhanVien extends javax.swing.JFrame {
      */
     public suaNhanVien() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

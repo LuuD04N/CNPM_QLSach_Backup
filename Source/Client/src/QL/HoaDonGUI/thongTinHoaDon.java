@@ -15,6 +15,7 @@ public class thongTinHoaDon extends javax.swing.JFrame {
      */
     public thongTinHoaDon() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

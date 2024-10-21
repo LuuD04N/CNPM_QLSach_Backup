@@ -4,14 +4,12 @@
  */
 package GUI;
 
-<<<<<<< HEAD
 import QL.NhanVienGUI.panelNhanVien;
-=======
 import BH.HoaDonGUI.panelHoaDon;
 import QL.NhaXuatBanGUI.panelNhaXuatBan;
->>>>>>> Luu
 import TrangChuImg.panelTrangChu;
 import QL.NhapKhoGUI.panelKho;
+import QL.TaiKhoanGUI.panelTaiKhoan;
 import QL.TheLoaiGUI.panelTheLoai;
 import QL.tacGiaGUI.panelTacGia;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -807,6 +805,9 @@ Color customColor = Color.decode("#C2F2E9");
         panel10.setBackground(Color.WHITE);
         panel11.setBackground(Color.WHITE);
         panelTT.setBackground(Color.WHITE);
+        panelTaiKhoan tk = new panelTaiKhoan();
+        panelChange.removeAll();
+        panelChange.add(tk).setVisible(true);
     }//GEN-LAST:event_panel9MouseClicked
 
     private void panel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel10MouseClicked

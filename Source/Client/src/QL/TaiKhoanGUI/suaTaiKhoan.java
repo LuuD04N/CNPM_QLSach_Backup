@@ -15,6 +15,7 @@ public class suaTaiKhoan extends javax.swing.JFrame {
      */
     public suaTaiKhoan() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

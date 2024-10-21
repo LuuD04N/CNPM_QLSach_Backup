@@ -15,6 +15,7 @@ public class thongTinNhanVien extends javax.swing.JFrame {
      */
     public thongTinNhanVien() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

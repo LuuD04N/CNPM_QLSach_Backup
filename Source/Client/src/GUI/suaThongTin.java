@@ -15,6 +15,7 @@ public class suaThongTin extends javax.swing.JFrame {
      */
     public suaThongTin() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

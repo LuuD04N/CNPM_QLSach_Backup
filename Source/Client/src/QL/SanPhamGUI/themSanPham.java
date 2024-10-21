@@ -15,6 +15,7 @@ public class themSanPham extends javax.swing.JFrame {
      */
     public themSanPham() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

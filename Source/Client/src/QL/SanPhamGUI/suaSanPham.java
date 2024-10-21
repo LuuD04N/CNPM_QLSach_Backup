@@ -15,6 +15,7 @@ public class suaSanPham extends javax.swing.JFrame {
      */
     public suaSanPham() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

@@ -15,6 +15,7 @@ public class themHoaDon extends javax.swing.JFrame {
      */
     public themHoaDon() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
