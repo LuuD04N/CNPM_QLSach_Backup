@@ -4,6 +4,8 @@
  */
 package BH.HoaDonGUI;
 
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+
 
 /**
  *
@@ -16,6 +18,9 @@ public class panelHoaDon extends javax.swing.JInternalFrame {
      */
     public panelHoaDon() {
         initComponents();
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
+        bui.setNorthPane(null);
     }
 
     /**

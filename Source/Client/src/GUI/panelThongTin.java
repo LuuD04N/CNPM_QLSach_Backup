@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+
 /**
  *
  * @author luuis
@@ -15,6 +17,9 @@ public class panelThongTin extends javax.swing.JInternalFrame {
      */
     public panelThongTin() {
         initComponents();
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
+        bui.setNorthPane(null);
     }
 
     /**
