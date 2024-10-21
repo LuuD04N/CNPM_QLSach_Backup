@@ -15,6 +15,7 @@ public class themNhanVien extends javax.swing.JFrame {
      */
     public themNhanVien() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

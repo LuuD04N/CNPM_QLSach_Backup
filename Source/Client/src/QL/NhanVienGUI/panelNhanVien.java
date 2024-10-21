@@ -250,15 +250,23 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
         jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"NV01", "ng van a", "1/1/1", "nam", "0123456789", "a@gmail.com", "12 ng trãi"},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {"NV01", "ng van a", "1/1/1", "nam", "12 ng trãi"},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã nhân viên", "Họ và tên", "Ngày sinh", "Giới tính", "Số điện thoại", "Emaill", "Địa chỉ"
+                "Mã nhân viên", "Họ và tên", "Ngày sinh", "Giới tính", "Địa chỉ"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.setFocusable(false);
         jTable1.setGridColor(new java.awt.Color(0, 0, 0));
         jTable1.setSelectionBackground(new java.awt.Color(0, 102, 255));
