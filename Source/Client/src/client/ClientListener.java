@@ -42,6 +42,7 @@ public class ClientListener implements Runnable{
                 if(json.getString("Trangthai").equals("true") || json.getString("Trangthai").equals("false"))
                 {
                     this.result=message;
+                    System.out.println(message);
                     stop(); // Dừng thread
                     break;
                 }
