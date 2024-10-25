@@ -19,6 +19,7 @@ public class Client {
     private static String url;
     private static final int PORT = 8000;
     public Socket socket;
+    ClientListener client;
     public Client()
     {
         configIP config = new configIP();
@@ -51,7 +52,7 @@ public class Client {
         try{
             
             //lien tuc doc du lieu tu server
-            ClientListener client = new ClientListener(socket);
+            client = new ClientListener(socket);
             new Thread(client).start();
             //lien tuc ghi du lieu
             OutputStream output = socket.getOutputStream();
@@ -67,30 +68,7 @@ public class Client {
             e.printStackTrace();
         }
     }
-    
-//   public String dangNhap(String tentk,String matkhau)
-//   {
-//        try{
-//            ClientListener client = new ClientListener(socket);
-//            Thread thread = new Thread(client);
-//            OutputStream output = socket.getOutputStream();
-//            JSONObject json = new JSONObject();
-//            json.put("method","LOGIN");
-//            json.put("taikhoan",tentk);
-//            json.put("matkhau",matkhau);
-//            output.write((json.toString()).getBytes());
-//            output.flush();
-//            thread.start();
-//            thread.join();
-//            return client.result;
-//        }catch(IOException e)
-//        {
-//            e.printStackTrace();
-//        } catch (InterruptedException ex) {  
-//            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return "";
-//   }
+
    
    public String dangNhap(String taikhoan, String matkhau)
    {
@@ -117,6 +95,32 @@ public class Client {
          catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
+       return "";
+   }
+   
+   public String getNhanVien(String MaTK)
+   {
+        try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            JSONObject json = new JSONObject();
+            json.put("method","GETNV");
+            json.put("MaTK",MaTK);
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
        return "";
    }
 }

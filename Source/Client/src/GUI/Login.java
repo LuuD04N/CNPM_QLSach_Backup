@@ -225,15 +225,19 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_myButton1ActionPerformed
 
     private void myButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_myButton2MouseClicked
-        // TODO add your handling code here:
+        
         String taikhoan = txtTK.getText();
         String matkhau = txtMK.getText();
         String check = client.dangNhap(taikhoan, matkhau);
-        System.out.println(check);
-        if(check.equals("true"))
+        
+        JSONObject json = new JSONObject(check);
+        
+        if(json.getString("Trangthai").equals("true"))
         {
-            Main main = new Main();
+            
+            Main main = new Main(json.getString("MaTK"),client);
             main.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_myButton2MouseClicked
 

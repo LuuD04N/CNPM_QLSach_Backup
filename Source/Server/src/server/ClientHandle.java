@@ -4,6 +4,7 @@
  */
 package server;
 
+import BLL.NhanVienBLL;
 import BLL.TaiKhoanBLL;
 import java.io.IOException;
 import java.io.InputStream;
@@ -78,7 +79,13 @@ public class ClientHandle implements Runnable{
         {
             case "LOGIN":
                     TaiKhoanBLL tkBLL = new TaiKhoanBLL();
+                    System.out.println(String.valueOf(tkBLL.login(data)));
                     sendMessage(String.valueOf(tkBLL.login(data)));
+                    break;
+            case "GETNV":
+                    NhanVienBLL nvBLL = new NhanVienBLL();
+                    nvBLL.getNV(data);
+                    sendMessage(String.valueOf(nvBLL.getNV(data)));
                     break;
         }
     }

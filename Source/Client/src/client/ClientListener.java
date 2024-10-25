@@ -17,7 +17,7 @@ public class ClientListener implements Runnable{
     private Socket socket;
     private InputStream input;
     public String result;
-     private volatile boolean running = true;
+     public volatile boolean running = true;
     public ClientListener(Socket socket)
     {
         try{
@@ -38,16 +38,13 @@ public class ClientListener implements Runnable{
             while(running && (bytesRead = input.read(buffer)) != -1)
             {
                 String message = new String(buffer, 0, bytesRead);
-                
-                if(message.equals("true") || message.equals("false"))
+                JSONObject json = new JSONObject(message);
+                if(json.getString("Trangthai").equals("true") || json.getString("Trangthai").equals("false"))
                 {
                     this.result=message;
                     stop(); // Dừng thread
                     break;
                 }
-               
-                
-                
             }
          
          
@@ -61,19 +58,19 @@ public class ClientListener implements Runnable{
         this.running = false;
     }
     
-    public int xuli(String data)
-    {
-        JSONObject jsonObject = new JSONObject(data);
-        
-        String trangthai = jsonObject.getString("method");
-        String ketqua = jsonObject.getString("ketqua");
-        if(ketqua.equals("true"))
-        {
-            this.result=ketqua;
-            return 1;
-            
-        }
-        this.result=ketqua;
-        return 0;
-    }
+//    public int xuli(String data)
+//    {
+//        JSONObject jsonObject = new JSONObject(data);
+//        
+//        String trangthai = jsonObject.getString("method");
+//        String ketqua = jsonObject.getString("ketqua");
+//        if(ketqua.equals("true"))
+//        {
+//            this.result=ketqua;
+//            return 1;
+//            
+//        }
+//        this.result=ketqua;
+//        return 0;
+//    }
 }
