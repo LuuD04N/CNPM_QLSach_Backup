@@ -46,4 +46,13 @@ public class TacGiaBLL {
         
         return json.toString();
     }
+    
+    public String themTG(TacGiaDTO tg)
+    {
+        TacGiaDAO tgDAO = new TacGiaDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai", "true");
+        json.put("ketqua",tgDAO.themDT(tg));
+        return json.toString();
+    }
 }

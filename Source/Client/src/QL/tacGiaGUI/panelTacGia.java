@@ -46,7 +46,6 @@ public class panelTacGia extends javax.swing.JInternalFrame {
         
         switch (yeucau) {
             case "ListTacGia": 
-                    client1.getList(yeucau);
                     ArrayList<TacGiaDTO> list = new ArrayList<TacGiaDTO>();
                     json = new JSONObject(client1.getList(yeucau));
                     //chuyen mang chuoi sang mang jsonArray
@@ -388,7 +387,7 @@ public class panelTacGia extends javax.swing.JInternalFrame {
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
         // TODO add your handling code here:
-        themTacGia tttg = new themTacGia();
+        themTacGia tttg = new themTacGia(client1);
         tttg.setDefaultCloseOperation(tttg.DISPOSE_ON_CLOSE); 
         tttg.setVisible(true);
     }//GEN-LAST:event_jPanel7MouseClicked

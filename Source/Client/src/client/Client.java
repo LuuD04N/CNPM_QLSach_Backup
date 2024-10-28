@@ -69,7 +69,51 @@ public class Client {
             e.printStackTrace();
         }
     }
-
+    
+//ham xu li yeu cau them doi tuong
+   public String themDT(String data)
+   {
+       JSONObject json = new JSONObject(data);
+       String yeucau = json.getString("method");
+       switch (yeucau){
+           case "PUTTG":
+               guiThemTG(data);
+               return "thanhcong";
+       }
+       return "";
+   }
+   
+   //gui yeu cau them doi tuong tac gia toi server
+   public String guiThemTG(String data)
+   {
+       JSONObject json = new JSONObject(data);
+       String yeucau = json.getString("method");
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            json.put("method",yeucau);
+            json.put("MaTG",json.getString("MaTG"));
+            json.put("Hovaten",json.getString("Hovaten"));
+            json.put("ButDanh",json.getString("ButDanh"));
+            json.put("GioiTinh", json.getString("GioiTinh"));
+            json.put("QuocTich",json.getString("QuocTich"));
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return "";
+   }
    
    public String dangNhap(String taikhoan, String matkhau)
    {

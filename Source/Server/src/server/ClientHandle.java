@@ -8,6 +8,7 @@ import BLL.NhanVienBLL;
 import BLL.TacGiaBLL;
 import BLL.TaiKhoanBLL;
 import BLL.VaiTroBLL;
+import DTO.TacGiaDTO;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -80,16 +81,19 @@ public class ClientHandle implements Runnable{
         switch(dieukien)
         {
             case "LOGIN":
+                    //dang nhap
                     TaiKhoanBLL tkBLL = new TaiKhoanBLL();
                     System.out.println(String.valueOf(tkBLL.login(data)));
                     sendMessage(String.valueOf(tkBLL.login(data)));
                     break;
             case "GETNV":
+                    //lat 1 doi tuong nhan vien
                     NhanVienBLL nvBLL = new NhanVienBLL();
                     nvBLL.getNV(data);
                     sendMessage(String.valueOf(nvBLL.getNV(data)));
                     break;
             case "GETVT":
+                    //lay vai tro de hien thi thong tin
                     VaiTroBLL vtBLL = new VaiTroBLL();
                     sendMessage(String.valueOf(vtBLL.getVaiTro(data)));
                     break;
@@ -98,9 +102,16 @@ public class ClientHandle implements Runnable{
                     sendMessage(String.valueOf(tgBLL.getList()));
                     break;
             case "TacGia":
+                //lay doi tuong de xem thong tin tac gia
                     TacGiaBLL tgBLL1 = new TacGiaBLL();
                     String MaTG = json.getString("MaTG");
                     sendMessage(String.valueOf(tgBLL1.getTacGia(MaTG)));
+                    break;
+            case "PUTTG":
+                //them doi tuong tac gia
+                    TacGiaBLL tgBLL2 = new TacGiaBLL();
+                    TacGiaDTO tgDTO = new TacGiaDTO(json.getString("MaTG"),json.getString("Hovaten"),json.getString("ButDanh"),json.getString("GioiTinh"),json.getString("QuocTich"));
+                    sendMessage(String.valueOf(tgBLL2.themTG(tgDTO)));
                     break;
         }
     }
