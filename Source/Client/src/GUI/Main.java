@@ -7,17 +7,22 @@ package GUI;
 import QL.NhanVienGUI.panelNhanVien;
 import BH.HoaDonGUI.panelHoaDon;
 import Client.Client;
+import DTO.TacGiaDTO;
 import QL.NhaXuatBanGUI.panelNhaXuatBan;
 import TrangChuImg.panelTrangChu;
 import QL.NhapKhoGUI.panelKho;
+import QL.SanPhamGUI.panelSanPham;
 import QL.TaiKhoanGUI.panelTaiKhoan;
 import QL.TheLoaiGUI.panelTheLoai;
 import QL.khuyenMaiGUI.panelKhuyenMai;
 import QL.tacGiaGUI.panelTacGia;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -722,11 +727,41 @@ Color customColor = Color.decode("#C2F2E9");
         panel11.setBackground(Color.WHITE);
         panelTT.setBackground(Color.WHITE);
         panel12.setBackground(Color.WHITE);
-        panelNhanVien  nv = new panelNhanVien();
+        panelSanPham sp = new panelSanPham();
         panelChange.removeAll();
-        panelChange.add(nv).setVisible(true);
+        panelChange.add(sp).setVisible(true);
+        
     }//GEN-LAST:event_panel2MouseClicked
 
+
+//    private Object[] getList(String yeucau)
+//    {
+//        JSONObject json;
+//        
+//        switch (yeucau) {
+//            case "ListTacGia": 
+//                    client1.getList(yeucau);
+//                    ArrayList<TacGiaDTO> list = new ArrayList<TacGiaDTO>();
+//                    json = new JSONObject(client1.getList(yeucau));
+//                    //chuyen mang chuoi sang mang jsonArray
+//                    JSONArray jsonArray = json.getJSONArray("list");
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        JSONObject tacGiaObject = jsonArray.getJSONObject(i);
+//                        String MaTG = tacGiaObject.getString("MaTG");
+//                        String Hovaten = tacGiaObject.getString("Hovaten");
+//                        String Butdanh = tacGiaObject.getString("ButDanh");
+//                        String GioiTinh = tacGiaObject.getString("GioiTinh");
+//                        String QuocTich = tacGiaObject.getString("QuocTich");
+//                    // Thêm vào ArrayList
+//                    list.add(new TacGiaDTO(MaTG, Hovaten, Butdanh, GioiTinh, QuocTich));
+//        }
+//                    return list.toArray(new TacGiaDTO[0]);
+//                   
+//        }
+//                
+//                    
+//        return new Object[]{};
+//    }
     private void panel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel3MouseClicked
         // TODO add your handling code here:
         panel3.setBackground(customColor);
@@ -743,9 +778,17 @@ Color customColor = Color.decode("#C2F2E9");
         panelTT.setBackground(Color.WHITE);
         panel12.setBackground(Color.WHITE);
         //tao mot doi tuong panelTacGia
-        panelTacGia tg = new panelTacGia();
+        panelTacGia tg = new panelTacGia(client1);
         panelChange.removeAll();
         panelChange.add(tg).setVisible(true);
+        
+        //lay danh sach de hien thi len jtable
+//        getList("ListTacGia");
+//        DefaultTableModel model = (DefaultTableModel) jTableTG.getModel();
+//        for(Object tacgia : getList("ListTacGia"))
+//        {
+//            model.addColumn(tacgia);
+//        }
     }//GEN-LAST:event_panel3MouseClicked
 
     private void panel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel4MouseClicked

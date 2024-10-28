@@ -5,6 +5,7 @@
 package server;
 
 import BLL.NhanVienBLL;
+import BLL.TacGiaBLL;
 import BLL.TaiKhoanBLL;
 import BLL.VaiTroBLL;
 import java.io.IOException;
@@ -91,6 +92,15 @@ public class ClientHandle implements Runnable{
             case "GETVT":
                     VaiTroBLL vtBLL = new VaiTroBLL();
                     sendMessage(String.valueOf(vtBLL.getVaiTro(data)));
+                    break;
+            case "ListTacGia":
+                    TacGiaBLL tgBLL = new TacGiaBLL();
+                    sendMessage(String.valueOf(tgBLL.getList()));
+                    break;
+            case "TacGia":
+                    TacGiaBLL tgBLL1 = new TacGiaBLL();
+                    String MaTG = json.getString("MaTG");
+                    sendMessage(String.valueOf(tgBLL1.getTacGia(MaTG)));
                     break;
         }
     }

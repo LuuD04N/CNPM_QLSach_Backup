@@ -4,6 +4,7 @@
  */
 package Client;
 
+import Client.ClientListener;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -149,4 +150,82 @@ public class Client {
         
        return "";
    }
+   
+   //thuc thi yeu cau lay danh sach
+   public String yeucau(String yeucau)
+   {
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            JSONObject json = new JSONObject();
+            json.put("method",yeucau);
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return "";
+   }
+   
+   //ham gui yeu cau lay danh sach
+   public String getList(String yeucau)
+   {
+       switch (yeucau){
+           case "ListTacGia":
+               return yeucau("ListTacGia");
+               
+       }
+       return "";
+   }
+   
+   
+   //lay mot doi tuong
+   public String getDoiTuong(String doituong,String maDT)
+   {
+      switch(doituong){
+            case "TacGia":
+              return xuLiGetDoiTuong("TacGia", maDT);
+              
+      }
+       return"";
+       
+   }
+   
+   //ham chuyen yeu cau lay du lieu sang server
+   public String xuLiGetDoiTuong(String yeucau,String maDT)
+   {
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            JSONObject json = new JSONObject();
+            json.put("method",yeucau);
+            json.put("MaTG",maDT);
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return "";
+   }
 }
+ 
