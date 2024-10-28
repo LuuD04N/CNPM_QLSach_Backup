@@ -56,7 +56,7 @@ Color customColor = Color.decode("#C2F2E9");
         JSONObject json = new JSONObject(client1.getNhanVien(MaTK1));
         JSONObject json1 = new JSONObject(client1.getVaiTro(json.getString("MaVT")));
         tenNV.setText(json.getString("Hovaten"));
-        vaiTro.setText(json1.getString("TenVT")+"a");
+        vaiTro.setText(json1.getString("TenVT"));
     }
     private void setBorder()
     {
