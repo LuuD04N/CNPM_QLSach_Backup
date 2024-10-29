@@ -22,7 +22,7 @@ public class NhanVienDTO {
     private String maVT;           // Mã Vị Trí (Varchar)
     private int trangThai;
     // Constructor
-    public NhanVienDTO(String maNV, String hoVaTen, Date ngaySinh, String gioiTinh, String soDienThoai, String email, String diaChi, String maTK, String maVT) {
+    public NhanVienDTO(String maNV, String hoVaTen, Date ngaySinh, String gioiTinh, String soDienThoai, String email, String diaChi, String maTK, String maVT,int trangThai) {
         this.maNV = maNV;
         this.hoVaTen = hoVaTen;
         this.ngaySinh = ngaySinh;
@@ -32,6 +32,7 @@ public class NhanVienDTO {
         this.diaChi = diaChi;
         this.maTK = maTK;
         this.maVT = maVT;
+        this.trangThai=trangThai;
     }
 
     // Getters và Setters

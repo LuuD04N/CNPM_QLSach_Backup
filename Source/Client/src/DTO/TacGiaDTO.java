@@ -16,12 +16,13 @@ public class TacGiaDTO {
     private String quocTich;    // Quốc tịch (Nvarchar)
     private int trangThai;
     // Constructor
-    public TacGiaDTO(String maTG, String hoVaTen, String butDanh, String gioiTinh, String quocTich) {
+    public TacGiaDTO(String maTG, String hoVaTen, String butDanh, String gioiTinh, String quocTich,int trangThai) {
         this.maTG = maTG;
         this.hoVaTen = hoVaTen;
         this.butDanh = butDanh;
         this.gioiTinh = gioiTinh;
         this.quocTich = quocTich;
+        this.trangThai=trangThai;
     }
 
     // Getters và Setters

@@ -16,7 +16,7 @@ public class SanPhamDTO {
     private String maTG;          // Mã Tác Giả (Varchar)
     private int trangThai;
     // Constructor
-    public SanPhamDTO(String maSP, String tenSP, int soTrang, String ngonNgu, double giaBia, byte[] anhBia, int soLuong, double giaNhap, String maTG) {
+    public SanPhamDTO(String maSP, String tenSP, int soTrang, String ngonNgu, double giaBia, byte[] anhBia, int soLuong, double giaNhap, String maTG,int trangThai) {
         this.maSP = maSP;
         this.tenSP = tenSP;
         this.soTrang = soTrang;
@@ -26,6 +26,7 @@ public class SanPhamDTO {
         this.soLuong = soLuong;
         this.giaNhap = giaNhap;
         this.maTG = maTG;
+        this.trangThai=trangThai;
     }
 
     // Getters và Setters

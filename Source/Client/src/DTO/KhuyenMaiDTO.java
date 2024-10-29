@@ -18,12 +18,13 @@ public class KhuyenMaiDTO {
     private String maLoaiKM;    // Mã Loại Khuyến Mãi (Varchar)
     private int trangThai;
     // Constructor
-    public KhuyenMaiDTO(String maKM, String tenKM, Date ngayBatDau, Date ngayKetThuc, String maLoaiKM) {
+    public KhuyenMaiDTO(String maKM, String tenKM, Date ngayBatDau, Date ngayKetThuc, String maLoaiKM,int trangThai) {
         this.maKM = maKM;
         this.tenKM = tenKM;
         this.ngayBatDau = ngayBatDau;
         this.ngayKetThuc = ngayKetThuc;
         this.maLoaiKM = maLoaiKM;
+        this.trangThai=trangThai;
     }
 
     // Getters và Setters

@@ -45,7 +45,8 @@ public class NhanVienDAO {
                     String Diachi = rs.getString("Diachi");
                     String MaTK = rs.getString("MaTK");
                     String MaVT = rs.getString("MaVT");
-                    list.add(new NhanVienDTO(MaNV,Hovaten,NgaySinh,Gioitinh,Sodienthoai,Email,Diachi,MaTK,MaVT));
+                    int Trangthai = rs.getInt("Trangthai");
+                    list.add(new NhanVienDTO(MaNV,Hovaten,NgaySinh,Gioitinh,Sodienthoai,Email,Diachi,MaTK,MaVT,Trangthai));
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(TaiKhoanDAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -65,4 +65,14 @@ public class TacGiaBLL {
         json.put("ketqua",tgDAO.suaTG(tg));
         return json.toString();
     }
+    
+    //ham xoa tac gia va tra ve trang thai
+    public String xoaTG(TacGiaDTO tg)
+    {
+        TacGiaDAO tgDAO = new TacGiaDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai", "true");
+        json.put("ketqua",tgDAO.xoaTG(tg));
+        return json.toString();
+    }
 }

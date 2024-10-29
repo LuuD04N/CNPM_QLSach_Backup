@@ -7,12 +7,13 @@ public class NhaXuatBanDTO {
     private String email;       // Email nhà xuất bản
     private int trangThai;
     // Constructor
-    public NhaXuatBanDTO(String maNXB, String tenNXB, String diaChi, String soDienThoai, String email) {
+    public NhaXuatBanDTO(String maNXB, String tenNXB, String diaChi, String soDienThoai, String email,int trangThai) {
         this.maNXB = maNXB;
         this.tenNXB = tenNXB;
         this.diaChi = diaChi;
         this.soDienThoai = soDienThoai;
         this.email = email;
+        this.trangThai=trangThai;
     }
 
     // Getters và Setters

@@ -70,6 +70,46 @@ public class Client {
         }
     }
     
+    //ham xu li yeu cau xoa doi tuong
+    public String xoaDT(String data)
+    {
+        JSONObject json = new JSONObject(data);
+        String yeucau = json.getString("method");
+        switch(yeucau){
+            case "DELETETG":
+                return guiXoaTG(data);
+        }
+        return "";
+    }
+    
+    //ham gui yeu cau xoa doi tuong tac gia qua server
+    private String guiXoaTG(String data)
+    {
+        JSONObject json = new JSONObject(data);
+        String yeucau = json.getString("method");
+        try {
+             ClientListener client = new ClientListener(socket);
+             Thread thread = new Thread(client);
+             json.put("method",yeucau);
+             json.put("MaDT",json.getString("MaDT"));
+             OutputStream output;
+             output = socket.getOutputStream();
+             output.write((json.toString()).getBytes());
+             output.flush();
+             thread.start();
+             thread.join();
+             return client.result;
+         } 
+         catch (InterruptedException ex) {
+                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+             }
+         catch (IOException ex) {
+             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+         }
+
+        return "";
+    }
+    
     //ham xu li yeu cau sua doi tuong
     public String suaDT(String data)
     {

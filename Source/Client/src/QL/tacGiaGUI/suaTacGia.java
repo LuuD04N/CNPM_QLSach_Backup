@@ -18,13 +18,15 @@ public class suaTacGia extends javax.swing.JFrame {
     /**
      * Creates new form suaTacGia
      */
+    private static panelTacGia panelTacGia1;
     private static String MaDT1;
     private static Client client1;
-    public suaTacGia(String MaDT,Client client) {
+    public suaTacGia(String MaDT,Client client,panelTacGia panelTacGia) {
         initComponents();
         this.setLocationRelativeTo(null);
         MaDT1 = MaDT;
         client1=client;
+        panelTacGia1=panelTacGia;
         setUp();
     }
     
@@ -215,6 +217,7 @@ public class suaTacGia extends javax.swing.JFrame {
         if(json1.getString("ketqua").equals("true"))
         {
             JOptionPane.showMessageDialog(null, "Sửa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            panelTacGia1.setUp();
             this.setVisible(false);
         }
         else
@@ -256,7 +259,7 @@ public class suaTacGia extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                new suaTacGia(MaDT1,client1).setVisible(true);
+                new suaTacGia(MaDT1,client1,panelTacGia1).setVisible(true);
             }
         });
     }

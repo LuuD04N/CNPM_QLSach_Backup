@@ -58,8 +58,10 @@ public class panelTacGia extends javax.swing.JInternalFrame {
                         String Butdanh = tacGiaObject.getString("butDanh");
                         String GioiTinh = tacGiaObject.getString("gioiTinh");
                         String QuocTich = tacGiaObject.getString("quocTich");
+                        int Trangthai = tacGiaObject.getInt("trangThai");
                     // Thêm vào ArrayList
-                    list.add(new TacGiaDTO(MaTG, Hovaten, Butdanh, GioiTinh, QuocTich));
+                    //xem lai trang thai
+                    list.add(new TacGiaDTO(MaTG, Hovaten, Butdanh, GioiTinh, QuocTich,Trangthai));
         }
                     
                     return list;
@@ -70,13 +72,19 @@ public class panelTacGia extends javax.swing.JInternalFrame {
         return new ArrayList<>();
     }
     //ham thiet lap bang danh sach
-    private void setUp()
+    public void setUp()
     {
         DefaultTableModel model = (DefaultTableModel) jTableTG.getModel();
+        model.setColumnCount(0);
         for(TacGiaDTO tacgia : getList("ListTacGia"))
         {
+            System.out.println(tacgia.getTrangThai());
             //them tung doi tuong vao bang
-            model.addRow(new Object[] {tacgia.getMaTG(),tacgia.getHoVaTen(),tacgia.getButDanh(),tacgia.getQuocTich()});
+            if(tacgia.getTrangThai()==1)
+            {
+//             
+                model.addRow(new Object[] {tacgia.getMaTG(),tacgia.getHoVaTen(),tacgia.getButDanh(),tacgia.getQuocTich()});
+            }
         }
     }
     
@@ -189,6 +197,11 @@ public class panelTacGia extends javax.swing.JInternalFrame {
         );
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel10MouseClicked(evt);
+            }
+        });
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/iconxoa.jpg"))); // NOI18N
@@ -388,7 +401,7 @@ public class panelTacGia extends javax.swing.JInternalFrame {
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
         // TODO add your handling code here:
-        themTacGia tttg = new themTacGia(client1);
+        themTacGia tttg = new themTacGia(client1,this);
         tttg.setDefaultCloseOperation(tttg.DISPOSE_ON_CLOSE); 
         tttg.setVisible(true);
     }//GEN-LAST:event_jPanel7MouseClicked
@@ -402,7 +415,7 @@ public class panelTacGia extends javax.swing.JInternalFrame {
             return;
         }
         
-        suaTacGia stg = new suaTacGia(MaDT,client1);
+        suaTacGia stg = new suaTacGia(MaDT,client1,this);
         stg.setDefaultCloseOperation(stg.DISPOSE_ON_CLOSE);
         stg.setVisible(true);
         
@@ -412,7 +425,7 @@ public class panelTacGia extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if(MaDT.equals("0"))
         {
-            JOptionPane.showMessageDialog(null, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Chưa chọn đối tượng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         }
         else
         {
@@ -432,6 +445,29 @@ public class panelTacGia extends javax.swing.JInternalFrame {
         
 
     }//GEN-LAST:event_jTableTGMouseClicked
+
+    private void jPanel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseClicked
+        // TODO add your handling code here:
+        if(MaDT.equals("0"))
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn đối tượng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        JSONObject json = new JSONObject();
+        json.put("method","DELETETG");
+        json.put("MaDT",MaDT);
+        JSONObject json1 = new JSONObject(client1.xoaDT(json.toString()));
+        if(json1.getString("ketqua").equals("true"))
+        {
+            JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            setUp();
+            this.setVisible(false);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Xóa không thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jPanel10MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

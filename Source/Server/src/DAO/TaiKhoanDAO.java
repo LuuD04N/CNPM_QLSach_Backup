@@ -35,7 +35,8 @@ public class TaiKhoanDAO {
                     String maTK = rs.getString("MaTK");
                     String taikhoan = rs.getString("TenTK");
                     String matkhau = rs.getString("MatKhauTK");
-                    list.add(new TaiKhoanDTO(maTK,taikhoan,matkhau));
+                    int trangthai = rs.getInt("Trangthai");
+                    list.add(new TaiKhoanDTO(maTK,taikhoan,matkhau,trangthai));
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(TaiKhoanDAO.class.getName()).log(Level.SEVERE, null, ex);

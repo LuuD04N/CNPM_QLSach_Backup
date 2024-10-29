@@ -14,10 +14,11 @@ public class TaiKhoanDTO {
     private String matKhauTK;     // Mật Khẩu Tài Khoản (Nvarchar)
     private int trangThai;
     // Constructor
-    public TaiKhoanDTO(String maTK, String tenTK, String matKhauTK) {
+    public TaiKhoanDTO(String maTK, String tenTK, String matKhauTK,int trangThai) {
         this.maTK = maTK;
         this.tenTK = tenTK;
         this.matKhauTK = matKhauTK;
+        this.trangThai=trangThai;
     }
 
     // Getters và Setters
