@@ -20,7 +20,7 @@ public class NhanVienDTO {
     private String diaChi;         // Địa Chỉ (Nvarchar)
     private String maTK;           // Mã Tài Khoản (Varchar)
     private String maVT;           // Mã Vị Trí (Varchar)
-
+    private int trangThai;
     // Constructor
     public NhanVienDTO(String maNV, String hoVaTen, Date ngaySinh, String gioiTinh, String soDienThoai, String email, String diaChi, String maTK, String maVT) {
         this.maNV = maNV;
@@ -106,7 +106,14 @@ public class NhanVienDTO {
     public void setMaVT(String maVT) {
         this.maVT = maVT;
     }
-
+    
+    public void setTrangThai(int trangThai)
+    {
+        this.trangThai=trangThai;
+    }
+    public int getTrangThai() {
+        return trangThai;
+    }
     // Phương thức toString để in đối tượng dễ dàng
     @Override
     public String toString() {

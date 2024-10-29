@@ -5,7 +5,7 @@ public class NhaXuatBanDTO {
     private String diaChi;      // Địa chỉ nhà xuất bản
     private String soDienThoai; // Số điện thoại
     private String email;       // Email nhà xuất bản
-
+    private int trangThai;
     // Constructor
     public NhaXuatBanDTO(String maNXB, String tenNXB, String diaChi, String soDienThoai, String email) {
         this.maNXB = maNXB;
@@ -56,6 +56,13 @@ public class NhaXuatBanDTO {
         this.email = email;
     }
 
+    public void setTrangThai(int trangThai)
+    {
+        this.trangThai=trangThai;
+    }
+    public int getTrangThai() {
+        return trangThai;
+    }
     // Phương thức toString để in đối tượng dễ dàng
     @Override
     public String toString() {

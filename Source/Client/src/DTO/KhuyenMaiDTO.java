@@ -16,7 +16,7 @@ public class KhuyenMaiDTO {
     private Date ngayBatDau;    // Ngày Bắt Đầu (Date)
     private Date ngayKetThuc;   // Ngày Kết Thúc (Date)
     private String maLoaiKM;    // Mã Loại Khuyến Mãi (Varchar)
-
+    private int trangThai;
     // Constructor
     public KhuyenMaiDTO(String maKM, String tenKM, Date ngayBatDau, Date ngayKetThuc, String maLoaiKM) {
         this.maKM = maKM;
@@ -67,6 +67,13 @@ public class KhuyenMaiDTO {
         this.maLoaiKM = maLoaiKM;
     }
 
+    public void setTrangThai(int trangThai)
+    {
+        this.trangThai=trangThai;
+    }
+    public int getTrangThai() {
+        return trangThai;
+    }
     // Phương thức toString để in đối tượng dễ dàng
     @Override
     public String toString() {
