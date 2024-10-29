@@ -220,7 +220,7 @@ public class themTacGia extends javax.swing.JFrame {
         json.put("QuocTich", quoctich);
         json.put("GioiTinh",gioitinh);
         json.put("ButDanh", butdanh);
-        System.out.println(client1.themDT(json.toString()));
+        
         this.setVisible(false);
         if(client1.themDT(json.toString()).equals("thanhcong"))
         {

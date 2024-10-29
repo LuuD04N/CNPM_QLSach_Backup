@@ -7,6 +7,7 @@ package DAO;
 import ConnectDB.ConnectDB;
 import DTO.NhanVienDTO;
 import DTO.TacGiaDTO;
+import com.sun.jdi.connect.spi.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -46,7 +47,7 @@ public class TacGiaDAO {
             }
         return list;
     }
-    
+    //ham them doi tuong vao csdl
     public String themDT(TacGiaDTO tg)
     {
         java.sql.Connection conn;
@@ -67,5 +68,29 @@ public class TacGiaDAO {
             Logger.getLogger(TacGiaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "false";
+    }
+    
+    //ham cap nhat doi tuong len csdl
+    public String suaTG(TacGiaDTO tg)
+    {
+        java.sql.Connection conn;
+        String query = "UPDATE tacgia SET Hovaten=?,ButDanh=?,GioiTinh=?,QuocTich=? WHERE MaTG=?";
+        conn = database.connect();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,tg.getHoVaTen());
+            pstmt.setString(2,tg.getButDanh());
+            pstmt.setString(3,tg.getGioiTinh());
+            pstmt.setString(4,tg.getQuocTich());
+            pstmt.setString(5,tg.getMaTG());
+            if(pstmt.executeUpdate() > 0)
+            {
+                return "true";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TacGiaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "false";
+        
     }
 }
