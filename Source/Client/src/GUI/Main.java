@@ -6,17 +6,24 @@ package GUI;
 
 import QL.NhanVienGUI.panelNhanVien;
 import BH.HoaDonGUI.panelHoaDon;
+import Client.Client;
+import DTO.TacGiaDTO;
 import QL.NhaXuatBanGUI.panelNhaXuatBan;
 import TrangChuImg.panelTrangChu;
 import QL.NhapKhoGUI.panelKho;
+import QL.SanPhamGUI.panelSanPham;
 import QL.TaiKhoanGUI.panelTaiKhoan;
 import QL.TheLoaiGUI.panelTheLoai;
 import QL.khuyenMaiGUI.panelKhuyenMai;
 import QL.tacGiaGUI.panelTacGia;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -27,8 +34,13 @@ Color customColor = Color.decode("#C2F2E9");
     /**
      * Creates new form Main
      */
-    public Main() {
+     private static String MaTK1;
+     private static Client client1;
+    public Main(String MaTK,Client client) {
+        MaTK1 = MaTK;
+        client1=client;
         initComponents();
+        FlatLightLaf.setup();
         setBorder();
         start();
     }
@@ -39,6 +51,17 @@ Color customColor = Color.decode("#C2F2E9");
         panelTrangChu  tt = new panelTrangChu();
         panelChange.removeAll();
         panelChange.add(tt).setVisible(true);
+        setUp();
+    }
+    
+    //thiet lap thong tin cua nguoi dung
+    public void setUp()
+    {
+       
+        JSONObject json = new JSONObject(client1.getNhanVien(MaTK1));
+        JSONObject json1 = new JSONObject(client1.getVaiTro(json.getString("MaVT")));
+        tenNV.setText(json.getString("Hovaten"));
+        vaiTro.setText(json1.getString("TenVT"));
     }
     private void setBorder()
     {
@@ -72,8 +95,8 @@ Color customColor = Color.decode("#C2F2E9");
         jPanel2 = new javax.swing.JPanel();
         panelTT = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        tenNV = new javax.swing.JLabel();
+        vaiTro = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         panel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -129,10 +152,10 @@ Color customColor = Color.decode("#C2F2E9");
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon1.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Đinh Bá Phong");
+        tenNV.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        tenNV.setText("Đinh Bá Phong");
 
-        jLabel3.setText("Quản lý");
+        vaiTro.setText("Quản lý");
 
         javax.swing.GroupLayout panelTTLayout = new javax.swing.GroupLayout(panelTT);
         panelTT.setLayout(panelTTLayout);
@@ -143,8 +166,8 @@ Color customColor = Color.decode("#C2F2E9");
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelTTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tenNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(vaiTro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelTTLayout.setVerticalGroup(
@@ -154,9 +177,9 @@ Color customColor = Color.decode("#C2F2E9");
                 .addGroup(panelTTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelTTLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(tenNV)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3)))
+                        .addComponent(vaiTro)))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -704,11 +727,41 @@ Color customColor = Color.decode("#C2F2E9");
         panel11.setBackground(Color.WHITE);
         panelTT.setBackground(Color.WHITE);
         panel12.setBackground(Color.WHITE);
-        panelNhanVien  nv = new panelNhanVien();
+        panelSanPham sp = new panelSanPham();
         panelChange.removeAll();
-        panelChange.add(nv).setVisible(true);
+        panelChange.add(sp).setVisible(true);
+        
     }//GEN-LAST:event_panel2MouseClicked
 
+
+//    private Object[] getList(String yeucau)
+//    {
+//        JSONObject json;
+//        
+//        switch (yeucau) {
+//            case "ListTacGia": 
+//                    client1.getList(yeucau);
+//                    ArrayList<TacGiaDTO> list = new ArrayList<TacGiaDTO>();
+//                    json = new JSONObject(client1.getList(yeucau));
+//                    //chuyen mang chuoi sang mang jsonArray
+//                    JSONArray jsonArray = json.getJSONArray("list");
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        JSONObject tacGiaObject = jsonArray.getJSONObject(i);
+//                        String MaTG = tacGiaObject.getString("MaTG");
+//                        String Hovaten = tacGiaObject.getString("Hovaten");
+//                        String Butdanh = tacGiaObject.getString("ButDanh");
+//                        String GioiTinh = tacGiaObject.getString("GioiTinh");
+//                        String QuocTich = tacGiaObject.getString("QuocTich");
+//                    // Thêm vào ArrayList
+//                    list.add(new TacGiaDTO(MaTG, Hovaten, Butdanh, GioiTinh, QuocTich));
+//        }
+//                    return list.toArray(new TacGiaDTO[0]);
+//                   
+//        }
+//                
+//                    
+//        return new Object[]{};
+//    }
     private void panel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel3MouseClicked
         // TODO add your handling code here:
         panel3.setBackground(customColor);
@@ -725,9 +778,17 @@ Color customColor = Color.decode("#C2F2E9");
         panelTT.setBackground(Color.WHITE);
         panel12.setBackground(Color.WHITE);
         //tao mot doi tuong panelTacGia
-        panelTacGia tg = new panelTacGia();
+        panelTacGia tg = new panelTacGia(client1);
         panelChange.removeAll();
         panelChange.add(tg).setVisible(true);
+        
+        //lay danh sach de hien thi len jtable
+//        getList("ListTacGia");
+//        DefaultTableModel model = (DefaultTableModel) jTableTG.getModel();
+//        for(Object tacgia : getList("ListTacGia"))
+//        {
+//            model.addColumn(tacgia);
+//        }
     }//GEN-LAST:event_panel3MouseClicked
 
     private void panel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel4MouseClicked
@@ -957,7 +1018,7 @@ Color customColor = Color.decode("#C2F2E9");
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 FlatLightLaf.setup();
-                new Main().setVisible(true);
+                new Main(MaTK1,client1).setVisible(true);
             }
         });
     }
@@ -974,7 +1035,6 @@ Color customColor = Color.decode("#C2F2E9");
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -983,7 +1043,6 @@ Color customColor = Color.decode("#C2F2E9");
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1007,5 +1066,7 @@ Color customColor = Color.decode("#C2F2E9");
     private javax.swing.JPanel panel9;
     private javax.swing.JPanel panelChange;
     private javax.swing.JPanel panelTT;
+    private javax.swing.JLabel tenNV;
+    private javax.swing.JLabel vaiTro;
     // End of variables declaration//GEN-END:variables
 }

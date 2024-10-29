@@ -6,6 +6,7 @@ create table NhaXuatBan(
 	Diachi varchar(100),
 	Sodienthoai varchar(10),	
 	Email varchar(100),
+	Trangthai int,
 	Primary key (MaNXB)
 );
 
@@ -19,6 +20,7 @@ create table SanPham(
 	Soluong Int,
 	GiaNhap double PRECISION,
 	MaTG Varchar(10),
+	Trangthai int,
 	Primary key (MaSP)
 );
 
@@ -28,12 +30,14 @@ create table TacGia(
 	ButDanh varchar(50),
 	GioiTinh varchar(10),
 	QuocTich varchar(50),
+	Trangthai int,
 	primary key (MaTG)
 );
 
 create table TheLoai(
 	MaTL Varchar(10),
 	TenTL varchar(100),
+	Trangthai int,
 	primary key (MaTL)
 );
 
@@ -43,6 +47,7 @@ create table KhuyenMai(
 	NgayBatDau Date,
 	NgayKetThuc Date,
 	MaloaiKM varchar(10),
+	Trangthai int,
 	primary key (MaKM)
 );
 
@@ -64,7 +69,7 @@ create table NhanVien(
 	DiaChi varchar(100),
 	MaTK Varchar(10),
 	MaVT Varchar(10),
-
+	Trangthai int,
 	primary key (MaNV)
 );
 
@@ -82,7 +87,7 @@ create table TaiKhoan(
 	MaTK Varchar(10),
 	TenTK varchar(50),
 	MatkhauTK varchar(10),
-
+	Trangthai int,
 	primary key(MaTK)
 );
 

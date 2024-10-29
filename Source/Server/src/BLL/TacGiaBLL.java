@@ -4,10 +4,55 @@
  */
 package BLL;
 
+import DAO.TacGiaDAO;
+import DTO.TacGiaDTO;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  *
  * @author PC
  */
 public class TacGiaBLL {
+    //lay danh sach tac gia
+    public String getList()
+    {
+        TacGiaDAO tgDAO = new TacGiaDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai","true");
+//        JSONArray jsonArray = new JSONArray(tgDAO.getList());
+        json.put("list", tgDAO.getList());
+        return json.toString();
+    }
     
+    //lay 1 tac gia 
+    public String getTacGia(String MaTG)
+    {
+        TacGiaDAO tgDAO = new TacGiaDAO();
+        JSONObject json = new JSONObject();
+        for(TacGiaDTO x : tgDAO.getList())
+        {
+            if(x.getMaTG().equals(MaTG))
+            {
+                json.put("Trangthai","true");
+                json.put("MaTG",x.getMaTG());
+                json.put("Hovaten",x.getHoVaTen());
+                json.put("ButDanh",x.getButDanh());
+                json.put("GioiTinh", x.getGioiTinh());
+                json.put("QuocTich", x.getQuocTich());
+                break;
+            }
+        }
+        
+        return json.toString();
+    }
+    
+    public String themTG(TacGiaDTO tg)
+    {
+        TacGiaDAO tgDAO = new TacGiaDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai", "true");
+        json.put("ketqua",tgDAO.themDT(tg));
+        return json.toString();
+    }
 }

@@ -9,15 +9,15 @@ package DTO;
  * @author PC
  */
 public class TacGiaDTO {
-    private String maTG;        // Mã Tác Giả (Varchar)
+    private String MaTG;        // Mã Tác Giả (Varchar)
     private String hoVaTen;     // Họ và tên (Nvarchar)
     private String butDanh;     // Bút danh (Nvarchar)
     private String gioiTinh;    // Giới tính (Nvarchar)
     private String quocTich;    // Quốc tịch (Nvarchar)
 
     // Constructor
-    public TacGiaDTO(String maTG, String hoVaTen, String butDanh, String gioiTinh, String quocTich) {
-        this.maTG = maTG;
+    public TacGiaDTO(String MaTG, String hoVaTen, String butDanh, String gioiTinh, String quocTich) {
+        this.MaTG = MaTG;
         this.hoVaTen = hoVaTen;
         this.butDanh = butDanh;
         this.gioiTinh = gioiTinh;
@@ -26,11 +26,11 @@ public class TacGiaDTO {
 
     // Getters và Setters
     public String getMaTG() {
-        return maTG;
+        return MaTG;
     }
 
     public void setMaTG(String maTG) {
-        this.maTG = maTG;
+        this.MaTG = maTG;
     }
 
     public String getHoVaTen() {
@@ -69,7 +69,7 @@ public class TacGiaDTO {
     @Override
     public String toString() {
         return "TacGiaDTO{" +
-               "maTG='" + maTG + '\'' +
+               "maTG='" + MaTG + '\'' +
                ", hoVaTen='" + hoVaTen + '\'' +
                ", butDanh='" + butDanh + '\'' +
                ", gioiTinh='" + gioiTinh + '\'' +

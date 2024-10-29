@@ -4,11 +4,19 @@
  */
 package QL.tacGiaGUI;
 
+import Client.Client;
+import DTO.TacGiaDTO;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -19,14 +27,60 @@ public class panelTacGia extends javax.swing.JInternalFrame {
     /**
      * Creates new form panelTacGia
      */
-    public panelTacGia() {
+    private String MaDT = "0";
+    private static Client client1;
+    public panelTacGia(Client client) {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
-        
-    }
+        client1=client;
+        setUp();
+    }   
+    
 
+    //ham lay danh sach
+    private ArrayList<TacGiaDTO> getList(String yeucau)
+    {
+        JSONObject json;
+        
+        switch (yeucau) {
+            case "ListTacGia": 
+                    ArrayList<TacGiaDTO> list = new ArrayList<TacGiaDTO>();
+                    json = new JSONObject(client1.getList(yeucau));
+                    //chuyen mang chuoi sang mang jsonArray
+                    JSONArray jsonArray = json.getJSONArray("list");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject tacGiaObject = jsonArray.getJSONObject(i);
+                        String MaTG = tacGiaObject.getString("maTG");
+                        String Hovaten = tacGiaObject.getString("hoVaTen");
+                        String Butdanh = tacGiaObject.getString("butDanh");
+                        String GioiTinh = tacGiaObject.getString("gioiTinh");
+                        String QuocTich = tacGiaObject.getString("quocTich");
+                    // Thêm vào ArrayList
+                    list.add(new TacGiaDTO(MaTG, Hovaten, Butdanh, GioiTinh, QuocTich));
+        }
+                    
+                    return list;
+                   
+        }
+                
+                    
+        return new ArrayList<>();
+    }
+    //ham thiet lap bang danh sach
+    private void setUp()
+    {
+        DefaultTableModel model = (DefaultTableModel) jTableTG.getModel();
+        for(TacGiaDTO tacgia : getList("ListTacGia"))
+        {
+            //them tung doi tuong vao bang
+            model.addRow(new Object[] {tacgia.getMaTG(),tacgia.getHoVaTen(),tacgia.getButDanh(),tacgia.getQuocTich()});
+        }
+    }
+    
+ 
+      
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,7 +109,7 @@ public class panelTacGia extends javax.swing.JInternalFrame {
         cbxType = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableTG = new javax.swing.JTable();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -252,13 +306,10 @@ public class panelTacGia extends javax.swing.JInternalFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableTG.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTableTG.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"TG01", "ádsad", "ádasd", "ád"},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Mã tác giả", "Họ và tên", "Bút danh", "Quốc tịch"
@@ -272,11 +323,16 @@ public class panelTacGia extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setFocusable(false);
-        jTable1.setGridColor(new java.awt.Color(0, 0, 0));
-        jTable1.setSelectionBackground(new java.awt.Color(0, 102, 255));
-        jTable1.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(jTable1);
+        jTableTG.setFocusable(false);
+        jTableTG.setGridColor(new java.awt.Color(0, 0, 0));
+        jTableTG.setSelectionBackground(new java.awt.Color(0, 102, 255));
+        jTableTG.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jTableTG.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableTGMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableTG);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -331,7 +387,7 @@ public class panelTacGia extends javax.swing.JInternalFrame {
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
         // TODO add your handling code here:
-        themTacGia tttg = new themTacGia();
+        themTacGia tttg = new themTacGia(client1);
         tttg.setDefaultCloseOperation(tttg.DISPOSE_ON_CLOSE); 
         tttg.setVisible(true);
     }//GEN-LAST:event_jPanel7MouseClicked
@@ -345,10 +401,28 @@ public class panelTacGia extends javax.swing.JInternalFrame {
 
     private void jPanel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseClicked
         // TODO add your handling code here:
-        thongTinTacGia tttg = new thongTinTacGia();
-        tttg.setDefaultCloseOperation(tttg.DISPOSE_ON_CLOSE);
-        tttg.setVisible(true);
+        if(MaDT.equals("0"))
+        {
+            
+        }
+        else
+        {
+            thongTinTacGia tttg = new thongTinTacGia(MaDT,client1);
+            tttg.setDefaultCloseOperation(tttg.DISPOSE_ON_CLOSE);
+            tttg.setVisible(true);
+        }
+        
     }//GEN-LAST:event_jPanel11MouseClicked
+
+    private void jTableTGMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTGMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel table = (DefaultTableModel) jTableTG.getModel();
+        int index = jTableTG.getSelectedRow();
+        String value = table.getValueAt(index, 0).toString();
+        MaDT = value;
+        
+
+    }//GEN-LAST:event_jTableTGMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -370,7 +444,7 @@ public class panelTacGia extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableTG;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
