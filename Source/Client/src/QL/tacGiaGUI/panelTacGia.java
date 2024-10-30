@@ -74,15 +74,16 @@ public class panelTacGia extends javax.swing.JInternalFrame {
     //ham thiet lap bang danh sach
     public void setUp()
     {
+        
         DefaultTableModel model = (DefaultTableModel) jTableTG.getModel();
-        model.setColumnCount(0);
+        model.setRowCount(0);
         for(TacGiaDTO tacgia : getList("ListTacGia"))
         {
             System.out.println(tacgia.getTrangThai());
             //them tung doi tuong vao bang
             if(tacgia.getTrangThai()==1)
             {
-//             
+                System.out.println(tacgia.getHoVaTen());
                 model.addRow(new Object[] {tacgia.getMaTG(),tacgia.getHoVaTen(),tacgia.getButDanh(),tacgia.getQuocTich()});
             }
         }
@@ -489,7 +490,7 @@ public class panelTacGia extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableTG;
+    public javax.swing.JTable jTableTG;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

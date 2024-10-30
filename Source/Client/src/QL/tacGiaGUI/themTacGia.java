@@ -7,6 +7,7 @@ package QL.tacGiaGUI;
 import Client.Client;
 import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -227,7 +228,9 @@ public class themTacGia extends javax.swing.JFrame {
         if(client1.themDT(json.toString()).equals("thanhcong"))
         {
             JOptionPane.showMessageDialog(null, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            
             panelTacGia1.setUp();
+            
             this.setVisible(false);
         }
     }//GEN-LAST:event_jButton1MouseClicked
