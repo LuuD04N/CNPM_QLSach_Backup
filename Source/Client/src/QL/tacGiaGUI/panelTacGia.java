@@ -462,7 +462,7 @@ public class panelTacGia extends javax.swing.JInternalFrame {
         {
             JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             setUp();
-            this.setVisible(false);
+            
         }
         else
         {
