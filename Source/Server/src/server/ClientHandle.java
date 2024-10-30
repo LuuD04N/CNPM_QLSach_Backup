@@ -110,9 +110,22 @@ public class ClientHandle implements Runnable{
             case "PUTTG":
                 //them doi tuong tac gia
                     TacGiaBLL tgBLL2 = new TacGiaBLL();
-                    TacGiaDTO tgDTO = new TacGiaDTO(json.getString("MaTG"),json.getString("Hovaten"),json.getString("ButDanh"),json.getString("GioiTinh"),json.getString("QuocTich"));
+                    TacGiaDTO tgDTO = new TacGiaDTO(json.getString("MaTG"),json.getString("Hovaten"),json.getString("ButDanh"),json.getString("GioiTinh"),json.getString("QuocTich"),1);
                     sendMessage(String.valueOf(tgBLL2.themTG(tgDTO)));
                     break;
+            case "UPDATETG":
+                //sau doi tuong tacgia
+                    TacGiaBLL tgBLL3 = new TacGiaBLL();
+                    TacGiaDTO tgDTO1 = new TacGiaDTO(json.getString("MaTG"),json.getString("Hovaten"),json.getString("ButDanh"),json.getString("GioiTinh"),json.getString("QuocTich"),1);
+                    sendMessage(String.valueOf(tgBLL3.suaTG(tgDTO1)));
+                    break;
+            case "DELETETG":
+                //xoa doi tuong tac gia
+                    TacGiaBLL tgBLL4 = new TacGiaBLL();
+                    String MaTG1 = json.getString("MaDT");
+                    TacGiaDTO tgDTO3 = new TacGiaDTO(MaTG1,"","","","",0);
+                    sendMessage(String.valueOf(tgBLL4.xoaTG(tgDTO3)));
+                    
         }
     }
 }
