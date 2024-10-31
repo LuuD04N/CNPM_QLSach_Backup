@@ -314,7 +314,8 @@ public class Client {
        switch (yeucau){
            case "ListTacGia":
                return yeucau("ListTacGia");
-               
+           case "ListSanPham":
+               return yeucau("ListSanPham");
        }
        return "";
    }

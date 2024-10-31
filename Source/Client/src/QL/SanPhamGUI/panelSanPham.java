@@ -4,7 +4,14 @@
  */
 package QL.SanPhamGUI;
 
+import Client.Client;
+import DTO.SanPhamDTO;
+import DTO.TacGiaDTO;
+import java.util.ArrayList;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -15,11 +22,66 @@ public class panelSanPham extends javax.swing.JInternalFrame {
     /**
      * Creates new form panelSanPham
      */
-    public panelSanPham() {
+    private static Client client1;
+    public panelSanPham(Client client) {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        client1=client;
+        setUp();
+    }
+    //ham lay danh sach
+    private ArrayList<SanPhamDTO> getList(String yeucau)
+    {
+        JSONObject json;
+        ArrayList<SanPhamDTO> list = new ArrayList<SanPhamDTO>();
+        switch (yeucau) {
+            case "ListSanPham": 
+                    
+                    json = new JSONObject(client1.getList(yeucau));
+                    //chuyen mang chuoi sang mang jsonArray
+                    JSONArray jsonArray = json.getJSONArray("list");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                          JSONObject tacGiaObject = jsonArray.getJSONObject(i);
+                          String MaSP = tacGiaObject.getString("maSP");
+                          String TenSP = tacGiaObject.getString("tenSP");
+                          int SoTrang =  tacGiaObject.getInt("soTrang");
+                          String NgonNgu = tacGiaObject.getString("ngonNgu");
+                          Double GiaBia = tacGiaObject.getDouble("giaBia");
+                          int SoLuong = tacGiaObject.getInt("soLuong");
+                          int Trangthai = tacGiaObject.getInt("trangThai");
+                          Double giaNhap = tacGiaObject.getDouble("giaNhap");
+                          String maTG = tacGiaObject.getString("maTG");
+                          list.add(new SanPhamDTO(MaSP,  TenSP,  SoTrang,  NgonNgu,  GiaBia, null, SoLuong, giaNhap, maTG,Trangthai));
+                }
+                 return list;
+        }
+                    
+                   
+                   return new ArrayList<>();
+        }
+                
+                    
+        
+    
+    
+    //ham thiet lap bang danh sach
+    public void setUp()
+    {
+        
+        DefaultTableModel model = (DefaultTableModel) jTableSP.getModel();
+        model.setRowCount(0);
+        
+        for(SanPhamDTO sanpham : getList("ListSanPham"))
+        {
+            System.out.println(sanpham.getTrangThai());
+            //them tung doi tuong vao bang
+            if(sanpham.getTrangThai()==1)
+            {
+                model.addRow(new Object[] {sanpham.getMaSP(),sanpham.getTenSP(),String.valueOf(sanpham.getSoTrang()),sanpham.getNgonNgu(),String.valueOf(sanpham.getGiaBia()),String.valueOf(sanpham.getSoLuong())});
+            }
+        }
     }
 
     /**
@@ -50,7 +112,7 @@ public class panelSanPham extends javax.swing.JInternalFrame {
         cbxType = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableSP = new javax.swing.JTable();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -249,8 +311,8 @@ public class panelSanPham extends javax.swing.JInternalFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableSP.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTableSP.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"SP1", "ádsad", "ádasd", "ád", "12222", "10"},
                 {null, null, null, null, null, null},
@@ -269,11 +331,11 @@ public class panelSanPham extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setFocusable(false);
-        jTable1.setGridColor(new java.awt.Color(0, 0, 0));
-        jTable1.setSelectionBackground(new java.awt.Color(0, 102, 255));
-        jTable1.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(jTable1);
+        jTableSP.setFocusable(false);
+        jTableSP.setGridColor(new java.awt.Color(0, 0, 0));
+        jTableSP.setSelectionBackground(new java.awt.Color(0, 102, 255));
+        jTableSP.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setViewportView(jTableSP);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -368,7 +430,7 @@ public class panelSanPham extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableSP;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

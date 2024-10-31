@@ -5,6 +5,7 @@
 package server;
 
 import BLL.NhanVienBLL;
+import BLL.SanPhamBLL;
 import BLL.TacGiaBLL;
 import BLL.TaiKhoanBLL;
 import BLL.VaiTroBLL;
@@ -98,8 +99,14 @@ public class ClientHandle implements Runnable{
                     sendMessage(String.valueOf(vtBLL.getVaiTro(data)));
                     break;
             case "ListTacGia":
+                    //lay danh sach tac gia
                     TacGiaBLL tgBLL = new TacGiaBLL();
                     sendMessage(String.valueOf(tgBLL.getList()));
+                    break;
+            case "ListSanPham":
+                    //lay danh sach san pham
+                    SanPhamBLL spBLL = new SanPhamBLL();
+                    sendMessage(String.valueOf(spBLL.getList()));
                     break;
             case "TacGia":
                 //lay doi tuong de xem thong tin tac gia
