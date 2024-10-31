@@ -38,7 +38,7 @@ public class themNhaXuatBan extends javax.swing.JFrame {
         for(int i=0;i<jsonArray.length();i++)
         {
             JSONObject nxbObject = jsonArray.getJSONObject(i);
-              String chuoi = nxbObject.getString("maNXB");
+            String chuoi = nxbObject.getString("maNXB");
             if(Integer.parseInt(chuoi.substring(4)) > max)
             {
                 max = Integer.parseInt(chuoi.substring(4));
@@ -254,6 +254,7 @@ public class themNhaXuatBan extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**

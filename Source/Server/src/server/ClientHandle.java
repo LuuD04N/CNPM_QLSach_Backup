@@ -9,8 +9,10 @@ import BLL.TacGiaBLL;
 import BLL.TaiKhoanBLL;
 import BLL.VaiTroBLL;
 import BLL.NhaXuatBanBLL;
+import BLL.TheLoaiBLL;
 import DTO.TacGiaDTO;
 import DTO.NhaXuatBanDTO;
+import DTO.TheLoaiDTO;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -127,6 +129,8 @@ public class ClientHandle implements Runnable{
                     String MaTG1 = json.getString("MaDT");
                     TacGiaDTO tgDTO3 = new TacGiaDTO(MaTG1,"","","","",0);
                     sendMessage(String.valueOf(tgBLL4.xoaTG(tgDTO3)));
+                    
+            // Xu li nha xuat ban
             case "ListNhaXuatBan":
                     NhaXuatBanBLL nxbBLL = new NhaXuatBanBLL();
                     sendMessage(String.valueOf(nxbBLL.getList()));
@@ -155,6 +159,35 @@ public class ClientHandle implements Runnable{
                     String MaNXB1 = json.getString("MaNXB");
                     NhaXuatBanDTO nxbDTO3 = new NhaXuatBanDTO(MaNXB1,"","","","",0);
                     sendMessage(String.valueOf(nxbBLL4.xoaNXB(nxbDTO3)));
+                    
+            // Xu li the loai
+            case "ListTheLoai":
+                    TheLoaiBLL tlBLL = new TheLoaiBLL();
+                    sendMessage(String.valueOf(tlBLL.getList()));
+                    break;
+            case "TheLoai":
+                    //lay doi tuong de xem thong tin the loai
+                    TheLoaiBLL tlBLL1 = new TheLoaiBLL();
+                    String MaTL = json.getString("MaTL");
+                    sendMessage(String.valueOf(tlBLL1.getTheLoai(MaTL)));
+                    break;
+            case "PUTTL":
+                    //them doi tuong the loai
+                    TheLoaiBLL tlBLL2 = new TheLoaiBLL();
+                    TheLoaiDTO tlDTO = new TheLoaiDTO(json.getString("MaTL"), json.getString("TenTL"), 1);
+                    sendMessage(String.valueOf(tlBLL2.themTheLoai(tlDTO)));
+                    break;
+            case "UPDATETL":
+                    //sua doi tuong the loai
+                    TheLoaiBLL tlBLL3 = new TheLoaiBLL();
+                    TheLoaiDTO tlDTO1 = new TheLoaiDTO(json.getString("MaTL"), json.getString("TenTL"), 1);
+                    sendMessage(String.valueOf(tlBLL3.suaTheLoai(tlDTO1)));
+            case "DELETETL":
+                    //xoa doi tuong the loai
+                    TheLoaiBLL tlBLL4 = new TheLoaiBLL();
+                    String MaTL1 = json.getString("MaTL");
+                    TheLoaiDTO tlDTO3 = new TheLoaiDTO(MaTL1, "", 0);
+                    sendMessage(String.valueOf(tlBLL4.xoaTheLoai(tlDTO3)));
         }
     }
 }
