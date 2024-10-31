@@ -8,7 +8,9 @@ import BLL.NhanVienBLL;
 import BLL.TacGiaBLL;
 import BLL.TaiKhoanBLL;
 import BLL.VaiTroBLL;
+import BLL.NhaXuatBanBLL;
 import DTO.TacGiaDTO;
+import DTO.NhaXuatBanDTO;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -125,7 +127,34 @@ public class ClientHandle implements Runnable{
                     String MaTG1 = json.getString("MaDT");
                     TacGiaDTO tgDTO3 = new TacGiaDTO(MaTG1,"","","","",0);
                     sendMessage(String.valueOf(tgBLL4.xoaTG(tgDTO3)));
-                    
+            case "ListNhaXuatBan":
+                    NhaXuatBanBLL nxbBLL = new NhaXuatBanBLL();
+                    sendMessage(String.valueOf(nxbBLL.getList()));
+                    break;
+            case "NhaXuatBan":
+                //lay doi tuong de xem thong tin nxb
+                    NhaXuatBanBLL nxbBLL1 = new NhaXuatBanBLL();
+                    String MaNXB = json.getString("MaNXB");
+                    sendMessage(String.valueOf(nxbBLL1.getNhaXuatBan(MaNXB)));
+                    break;
+            case "PUTNXB":
+                //them doi tuong nxb
+                    NhaXuatBanBLL nxbBLL2 = new NhaXuatBanBLL();
+                    NhaXuatBanDTO nxbDTO = new NhaXuatBanDTO(json.getString("MaNXB"), json.getString("TenNXB"), json.getString("Diachi"), json.getString("Sodienthoai"), json.getString("Email"), 1);
+                    sendMessage(String.valueOf(nxbBLL2.themNXB(nxbDTO))); 
+                    break;
+            case "UPDATENXB":
+                //sua doi tuong nxb
+                    NhaXuatBanBLL nxbBLL3 = new NhaXuatBanBLL();
+                    NhaXuatBanDTO nxbDTO1 = new NhaXuatBanDTO(json.getString("MaNXB"), json.getString("TenNXB"), json.getString("Diachi"), json.getString("Sodienthoai"), json.getString("Email"), 1);
+                    sendMessage(String.valueOf(nxbBLL3.suaNXB(nxbDTO1))); 
+                    break;
+            case "DELETENXB":
+                //xoa doi tuong nxb
+                    NhaXuatBanBLL nxbBLL4 = new NhaXuatBanBLL();
+                    String MaNXB1 = json.getString("MaNXB");
+                    NhaXuatBanDTO nxbDTO3 = new NhaXuatBanDTO(MaNXB1,"","","","",0);
+                    sendMessage(String.valueOf(nxbBLL4.xoaNXB(nxbDTO3)));
         }
     }
 }

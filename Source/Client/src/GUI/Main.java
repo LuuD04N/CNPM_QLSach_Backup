@@ -826,7 +826,7 @@ Color customColor = Color.decode("#C2F2E9");
         panel11.setBackground(Color.WHITE);
         panelTT.setBackground(Color.WHITE);
         panel12.setBackground(Color.WHITE);
-        panelNhaXuatBan nxb = new panelNhaXuatBan();
+        panelNhaXuatBan nxb = new panelNhaXuatBan(client1);
         panelChange.removeAll();
         panelChange.add(nxb).setVisible(true);
     }//GEN-LAST:event_panel5MouseClicked

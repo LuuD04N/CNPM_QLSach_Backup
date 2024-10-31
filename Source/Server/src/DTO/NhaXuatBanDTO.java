@@ -1,4 +1,4 @@
-
+package DTO;
 public class NhaXuatBanDTO {
     private String maNXB;          // Mã NXB, khóa chính
     private String tenNXB;      // Tên nhà xuất bản
