@@ -33,7 +33,7 @@ public class ClientListener implements Runnable{
     public void run() {
         try{
         
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[1024 * 1024];
             int bytesRead;
             while(running && (bytesRead = input.read(buffer)) != -1)
             {
@@ -41,10 +41,11 @@ public class ClientListener implements Runnable{
                 JSONObject json = new JSONObject(message);
                 if(json.getString("Trangthai").equals("true") || json.getString("Trangthai").equals("false"))
                 {
-                    this.result=message;
-                    System.out.println(message);
-                    stop(); // Dừng thread
-                    break;
+                    
+                        this.result=message;
+                        System.out.println(message);
+                        stop();
+                    
                 }
             }
          
