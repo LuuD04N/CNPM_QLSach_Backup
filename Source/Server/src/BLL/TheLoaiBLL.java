@@ -16,10 +16,10 @@ public class TheLoaiBLL {
     // lay danh sach the loai
     public String getList()
     {
-        TheLoaiDAO theLoaiDAO = new TheLoaiDAO();
+        TheLoaiDAO tlDAO = new TheLoaiDAO();
         JSONObject json = new JSONObject();
         json.put("Trangthai", "true");
-        json.put("list", theLoaiDAO.getList());
+        json.put("list", tlDAO.getList());
         return json.toString();
     }
     

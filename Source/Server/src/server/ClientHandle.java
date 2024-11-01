@@ -182,6 +182,7 @@ public class ClientHandle implements Runnable{
                     TheLoaiBLL tlBLL3 = new TheLoaiBLL();
                     TheLoaiDTO tlDTO1 = new TheLoaiDTO(json.getString("MaTL"), json.getString("TenTL"), 1);
                     sendMessage(String.valueOf(tlBLL3.suaTheLoai(tlDTO1)));
+                    break;
             case "DELETETL":
                     //xoa doi tuong the loai
                     TheLoaiBLL tlBLL4 = new TheLoaiBLL();

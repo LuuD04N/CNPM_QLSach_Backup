@@ -79,7 +79,7 @@ public class TheLoaiDAO {
                 return "true";
             }
         } catch (SQLException ex) {
-            Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TheLoaiDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "false";
     }
