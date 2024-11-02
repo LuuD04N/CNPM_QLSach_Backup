@@ -4,6 +4,8 @@
  */
 package QL.SanPhamGUI;
 
+import Client.Client;
+
 /**
  *
  * @author admin
@@ -13,11 +15,17 @@ public class themSanPham extends javax.swing.JFrame {
     /**
      * Creates new form themSanPham
      */
-    public themSanPham() {
+    private static panelSanPham pnsp1;
+    private String MaTL1="";
+    private String TenTL1="";
+    private static Client client1;
+    private doiTuongGUI dt1 = new doiTuongGUI();
+    public themSanPham(Client client,panelSanPham pnsp) {
         initComponents();
         this.setLocationRelativeTo(null);
-        JInternalThemSP p = new JInternalThemSP(this);
-        mainTSP.removeAll();
+        client1=client;
+        pnsp1=pnsp;
+        JInternalThemSP p = new JInternalThemSP(this,client1,MaTL1,TenTL1,dt1,pnsp1);
         mainTSP.add(p).setVisible(true);
     }
 
@@ -132,7 +140,7 @@ public class themSanPham extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new themSanPham().setVisible(true);
+                new themSanPham(client1,pnsp1).setVisible(true);
             }
         });
     }

@@ -6,6 +6,8 @@ package DAO;
 
 import ConnectDB.ConnectDB;
 import DTO.SanPhamDTO;
+import DTO.TacGiaDTO;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -45,5 +47,33 @@ public class SanPhamDAO {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+    
+    public String themDT(SanPhamDTO sp)
+    {
+        java.sql.Connection conn;
+        String query = "INSERT INTO sanpham(MaSP,TenSP,SoTrang,NgonNgu,GiaBia,AnhBia,SoLuong,GiaNhap,MaTG,Trangthai) values(?,?,?,?,?,?,?,?,?,?)";
+        conn = database.connect();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,sp.getMaSP());
+            pstmt.setString(2,sp.getTenSP());
+            pstmt.setInt(3,sp.getSoTrang());
+            pstmt.setString(4,sp.getNgonNgu());
+            pstmt.setDouble(5,sp.getGiaBia());
+            pstmt.setBytes(6,sp.getAnhBia());
+            pstmt.setInt(7,sp.getSoLuong());
+            pstmt.setDouble(8,sp.getGiaNhap());
+            pstmt.setString(9,sp.getMaTG());
+            pstmt.setDouble(10,sp.getTrangThai());
+            
+            if(pstmt.executeUpdate() > 0)
+            {
+                return "true";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TacGiaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "false";
     }
 }

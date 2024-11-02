@@ -6,7 +6,9 @@ package BLL;
 
 import ConnectDB.ConnectDB;
 import DAO.SanPhamDAO;
+import DAO.TacGiaDAO;
 import DTO.SanPhamDTO;
+import DTO.TacGiaDTO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,6 +29,16 @@ public class SanPhamBLL {
         JSONObject json = new JSONObject();
         json.put("Trangthai","true");
         json.put("list", spDAO.getList());
+        return json.toString();
+    }
+    
+    //ham them san pham
+    public String themTG(SanPhamDTO sp)
+    {
+        SanPhamDAO spDAO = new SanPhamDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai", "true");
+        json.put("ketqua",spDAO.themDT(sp));
         return json.toString();
     }
 }

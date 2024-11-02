@@ -4,7 +4,15 @@
  */
 package QL.SanPhamGUI;
 
+import Client.Client;
+import DTO.TheLoaiDTO;
+import QL.SanPhamGUI.panelSanPham;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -15,15 +23,68 @@ public class chonTheLoai extends javax.swing.JInternalFrame {
     /**
      * Creates new form chonTheLoai
      */
+    private static panelSanPham pnsp1;
+    private static Client client1;
     private themSanPham tsp1;
-    public chonTheLoai(themSanPham tsp) {
+    private String MaTL1="";
+    private String TenTL1="";
+    private doiTuongGUI dt1;
+    public chonTheLoai(themSanPham tsp, Client client,doiTuongGUI dt,panelSanPham pnsp) {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        client1=client;
         tsp1=tsp;
+        pnsp1=pnsp;
+        dt1=dt;
+        setUp();
+    }
+    private ArrayList<TheLoaiDTO> getList(String yeucau) 
+    {
+        JSONObject json;
+        
+        switch (yeucau) 
+        {
+            case "ListTheLoai":
+                ArrayList<TheLoaiDTO> list = new ArrayList<>();
+                json = new JSONObject(client1.getList(yeucau));
+                
+                // chuyen mang chuoi sang mang jsonArray
+                JSONArray jsonArray = json.getJSONArray("list");
+                for (int i = 0; i < jsonArray.length(); i++) 
+                {
+                    JSONObject tlObject = jsonArray.getJSONObject(i);
+                    String MaTL = tlObject.getString("maTL");
+                    String TenTL = tlObject.getString("tenTL");
+                    int Trangthai = tlObject.getInt("trangThai");
+                    // them vao arraylist
+                    // xem lai trang thai
+                    list.add(new TheLoaiDTO(MaTL, TenTL, Trangthai));
+                    
+                }
+                return list;
+        }
+                
+        return new ArrayList<>();
     }
 
+    // ham thiet lap bang danh sach
+    public void setUp() 
+    {
+        DefaultTableModel model = (DefaultTableModel) jTableTheLoai.getModel();
+        model.setRowCount(0);
+        for (TheLoaiDTO theloai : getList("ListTheLoai")) 
+        {
+            System.out.println(theloai.getTrangThai());
+            // them tung doi tuong vao bang
+            if (theloai.getTrangThai() == 1) 
+            {
+                System.out.println(theloai.getTenTL());
+                model.addRow(new Object[] {theloai.getMaTL(), theloai.getTenTL()});
+            }
+        }
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,14 +97,14 @@ public class chonTheLoai extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableTheLoai = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableTheLoai.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTableTheLoai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"TL1", "Viễn tưởng"},
                 {null, null},
@@ -62,17 +123,27 @@ public class chonTheLoai extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setFocusable(false);
-        jTable1.setGridColor(new java.awt.Color(0, 0, 0));
-        jTable1.setSelectionBackground(new java.awt.Color(0, 102, 255));
-        jTable1.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(jTable1);
+        jTableTheLoai.setFocusable(false);
+        jTableTheLoai.setGridColor(new java.awt.Color(0, 0, 0));
+        jTableTheLoai.setSelectionBackground(new java.awt.Color(0, 102, 255));
+        jTableTheLoai.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jTableTheLoai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableTheLoaiMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableTheLoai);
 
         jButton1.setBackground(new java.awt.Color(102, 255, 102));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jButton1.setText("Thêm");
         jButton1.setBorder(null);
         jButton1.setBorderPainted(false);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -87,6 +158,11 @@ public class chonTheLoai extends javax.swing.JInternalFrame {
         jButton3.setMinimumSize(new java.awt.Dimension(43, 22));
         jButton3.setOpaque(true);
         jButton3.setPreferredSize(new java.awt.Dimension(43, 22));
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -143,12 +219,45 @@ public class chonTheLoai extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+       //ham chon the loai cho san pham
+       if(MaTL1.equals("") || TenTL1.equals(""))
+       {
+           JOptionPane.showMessageDialog(null, "Chua chon doi tuong!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+       }
+       else
+       {
+           dt1.list.add(new Object[] {MaTL1,TenTL1});
+           JInternalThemSP jTSP = new JInternalThemSP(tsp1,client1,MaTL1,TenTL1,dt1,pnsp1);
+           tsp1.mainTSP.removeAll();
+           tsp1.mainTSP.add(jTSP).setVisible(true);
+       }
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jTableTheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTheLoaiMouseClicked
+        //ham lay gia tri cua bang jtable
+        DefaultTableModel table = (DefaultTableModel) jTableTheLoai.getModel();
+        int index = jTableTheLoai.getSelectedRow();
+        String MaTL = table.getValueAt(index, 0).toString();
+        String TenTL = table.getValueAt(index, 1).toString();
+        MaTL1 = MaTL;
+        TenTL1 = TenTL;
+    }//GEN-LAST:event_jTableTheLoaiMouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+
+        dt1.list.add(new Object[] {MaTL1,TenTL1});
+        JInternalThemSP jTSP = new JInternalThemSP(tsp1,client1,MaTL1,TenTL1,dt1,pnsp1);
+        tsp1.mainTSP.removeAll();
+        tsp1.mainTSP.add(jTSP).setVisible(true);
+    }//GEN-LAST:event_jButton3MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableTheLoai;
     // End of variables declaration//GEN-END:variables
 }

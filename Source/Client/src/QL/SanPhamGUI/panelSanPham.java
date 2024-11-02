@@ -391,7 +391,7 @@ public class panelSanPham extends javax.swing.JInternalFrame {
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
         // TODO add your handling code here:
-        themSanPham tsp = new themSanPham();
+        themSanPham tsp = new themSanPham(client1,this);
         tsp.setDefaultCloseOperation(tsp.DISPOSE_ON_CLOSE);
         tsp.setVisible(true);
     }//GEN-LAST:event_jPanel7MouseClicked

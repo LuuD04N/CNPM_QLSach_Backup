@@ -13,12 +13,14 @@ import BLL.NhaXuatBanBLL;
 import BLL.TheLoaiBLL;
 import DTO.TacGiaDTO;
 import DTO.NhaXuatBanDTO;
+import DTO.SanPhamDTO;
 import DTO.TheLoaiDTO;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.Base64;
 import org.json.JSONObject;
 /**
  *
@@ -50,7 +52,7 @@ public class ClientHandle implements Runnable{
     public void run() {
         try{
             
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[1024*1024];
             int bytesRead;
             StringBuilder resultBuilder = new StringBuilder();
             while((bytesRead= input.read(buffer)) != -1)
@@ -83,6 +85,7 @@ public class ClientHandle implements Runnable{
     {
         JSONObject json = new JSONObject(data);
         String dieukien = json.getString("method");
+        System.out.println(dieukien);
         switch(dieukien)
         {
             case "LOGIN":
@@ -106,11 +109,6 @@ public class ClientHandle implements Runnable{
                     //lay danh sach tac gia
                     TacGiaBLL tgBLL = new TacGiaBLL();
                     sendMessage(String.valueOf(tgBLL.getList()));
-                    break;
-            case "ListSanPham":
-                    //lay danh sach san pham
-                    SanPhamBLL spBLL = new SanPhamBLL();
-                    sendMessage(String.valueOf(spBLL.getList()));
                     break;
             case "TacGia":
                 //lay doi tuong de xem thong tin tac gia
@@ -196,6 +194,17 @@ public class ClientHandle implements Runnable{
                     String MaTL1 = json.getString("MaTL");
                     TheLoaiDTO tlDTO3 = new TheLoaiDTO(MaTL1, "", 0);
                     sendMessage(String.valueOf(tlBLL4.xoaTheLoai(tlDTO3)));
+             case "ListSanPham":
+                    //lay danh sach san pham
+                    SanPhamBLL spBLL = new SanPhamBLL();
+                    sendMessage(String.valueOf(spBLL.getList()));
+                    break;
+             case "PUTSP":
+                     //them doi tuong san pham
+                     SanPhamBLL spBLL1 = new SanPhamBLL();
+                     byte[] anhBiaBytes = Base64.getDecoder().decode(json.getString("AnhBia"));
+                     SanPhamDTO sp = new SanPhamDTO(json.getString("MaSP"),json.getString("TenSP"),json.getInt("SoTrang"),json.getString("NgonNgu"),json.getDouble("GiaBia"),anhBiaBytes,json.getInt("SoLuong"),json.getDouble("GiaNhap"),json.getString("MaTG"),json.getInt("Trangthai"));
+                     sendMessage(String.valueOf(spBLL1.themTG(sp)));
         }
     }
 }

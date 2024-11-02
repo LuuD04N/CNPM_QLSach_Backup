@@ -295,11 +295,49 @@ public class Client {
             case "PUTTL":
                 guiThemTL(data);
                 return "thanhcong";
-                
+            case "PUTSP":
+                guithemSP(data);
+                return "thanhcong";
        }
        return "";
    }
    
+   //ham gui them doi tuong tac gia toi server
+   public String guithemSP(String data)
+   {
+       JSONObject json = new JSONObject(data);
+       String yeucau = json.getString("method");
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            json.put("method",yeucau);
+            json.put("MaSP",json.getString("MaSP"));
+            json.put("TenSP",json.getString("TenSP"));
+            json.put("SoTrang",json.getInt("SoTrang"));
+            json.put("NgonNgu",json.getString("NgonNgu"));
+            json.put("GiaBia",json.getDouble("GiaBia"));
+            json.put("AnhBia",json.getString("AnhBia"));
+            json.put("SoLuong",json.getInt("SoLuong"));
+            json.put("GiaNhap",json.getDouble("GiaNhap"));
+            json.put("MaTG",json.getString("MaTG"));
+            json.put("Trangthai",json.getInt("Trangthai"));
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return "";
+   }
    //gui yeu cau them doi tuong tac gia toi server
    public String guiThemTG(String data)
    {
@@ -504,20 +542,17 @@ public class Client {
    public String getList(String yeucau)
    {
        switch (yeucau){
-<<<<<<< HEAD
-           case "ListTacGia":
-               return yeucau("ListTacGia");
-           case "ListSanPham":
-               return yeucau("ListSanPham");
-=======
+
             case "ListTacGia":
-                return yeucau("ListTacGia");
+               return yeucau("ListTacGia");
+            case "ListSanPham":
+               return yeucau("ListSanPham");
             case "ListNhaXuatBan":
                 return yeucau("ListNhaXuatBan");
             case "ListTheLoai":
                 return yeucau("ListTheLoai");
                
->>>>>>> Khoa
+
        }
        return "";
    }
