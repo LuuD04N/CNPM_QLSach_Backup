@@ -15,11 +15,13 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
     /**
      * Creates new form JInternalThemSP
      */
-    public JInternalThemSP() {
+    private themSanPham tsp1;
+    public JInternalThemSP(themSanPham tsp) {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        tsp1=tsp;
     }
 
     /**
@@ -145,6 +147,11 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
         jButton4.setText("Chọn thể loại");
         jButton4.setBorder(null);
         jButton4.setBorderPainted(false);
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
+            }
+        });
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -288,6 +295,13 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+            //ham chon the loai cho san pham
+           chonTheLoai ctl = new chonTheLoai(tsp1);
+           tsp1.mainTSP.removeAll();
+           tsp1.mainTSP.add(ctl).setVisible(true);
+    }//GEN-LAST:event_jButton4MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

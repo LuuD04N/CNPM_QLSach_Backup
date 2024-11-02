@@ -16,7 +16,7 @@ public class themSanPham extends javax.swing.JFrame {
     public themSanPham() {
         initComponents();
         this.setLocationRelativeTo(null);
-        JInternalThemSP p = new JInternalThemSP();
+        JInternalThemSP p = new JInternalThemSP(this);
         mainTSP.removeAll();
         mainTSP.add(p).setVisible(true);
     }
@@ -141,6 +141,6 @@ public class themSanPham extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel mainTSP;
+    public javax.swing.JPanel mainTSP;
     // End of variables declaration//GEN-END:variables
 }
