@@ -110,8 +110,8 @@
                           <Component id="jLabel1" min="-2" pref="38" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabel2" max="32767" attributes="0"/>
-                              <Component id="jLabel3" max="32767" attributes="0"/>
+                              <Component id="tenNV" max="32767" attributes="0"/>
+                              <Component id="vaiTro" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -124,9 +124,9 @@
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel1" min="-2" pref="38" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tenNV" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="vaiTro" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace pref="30" max="32767" attributes="0"/>
@@ -143,7 +143,7 @@
                     <Property name="text" type="java.lang.String" value="jLabel1"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel2">
+                <Component class="javax.swing.JLabel" name="tenNV">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="14" style="1"/>
@@ -151,7 +151,7 @@
                     <Property name="text" type="java.lang.String" value="&#x110;inh B&#xe1; Phong"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel3">
+                <Component class="javax.swing.JLabel" name="vaiTro">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd;"/>
                   </Properties>

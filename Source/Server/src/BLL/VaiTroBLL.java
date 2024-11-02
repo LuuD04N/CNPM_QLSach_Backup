@@ -4,10 +4,31 @@
  */
 package BLL;
 
+import DAO.VaiTroDAO;
+import DTO.VaiTroDTO;
+import org.json.JSONObject;
+
 /**
  *
  * @author PC
  */
 public class VaiTroBLL {
-    
+    public String getVaiTro(String data)
+    {
+        JSONObject json = new JSONObject(data);
+        JSONObject json1 = new JSONObject();
+        VaiTroDAO vtDAO = new VaiTroDAO();
+        for(VaiTroDTO x : vtDAO.getAll())
+        {
+            if(json.getString("MaVT").equals(x.getMaVT()))
+            {
+                json1.put("Trangthai","true");
+                json1.put("MaVT",x.getMaVT());
+                json1.put("TenVT",x.getTenVT());
+                return json1.toString();
+            }
+        }
+        json1.put("trangthai","false");
+        return json1.toString(0);
+    }
 }
