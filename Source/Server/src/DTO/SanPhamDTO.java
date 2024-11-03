@@ -10,13 +10,13 @@ public class SanPhamDTO {
     private int soTrang;          // Số trang (int)
     private String ngonNgu;       // Ngôn ngữ (Nvarchar)
     private double giaBia;        // Giá bìa (Double)
-    private byte[] anhBia;        // Ảnh bìa (BLOB - Binary Large Object)
+    private String anhBia;        // Ảnh bìa (BLOB - Binary Large Object)
     private int soLuong;          // Số lượng (Int)
     private double giaNhap;       // Giá nhập (Double)
     private String maTG;          // Mã Tác Giả (Varchar)
     private int trangThai;
     // Constructor
-    public SanPhamDTO(String maSP, String tenSP, int soTrang, String ngonNgu, double giaBia, byte[] anhBia, int soLuong, double giaNhap, String maTG,int trangThai) {
+    public SanPhamDTO(String maSP, String tenSP, int soTrang, String ngonNgu, double giaBia, String anhBia, int soLuong, double giaNhap, String maTG,int trangThai) {
         this.maSP = maSP;
         this.tenSP = tenSP;
         this.soTrang = soTrang;
@@ -70,11 +70,11 @@ public class SanPhamDTO {
         this.giaBia = giaBia;
     }
 
-    public byte[] getAnhBia() {
+    public String getAnhBia() {
         return anhBia;
     }
 
-    public void setAnhBia(byte[] anhBia) {
+    public void setAnhBia(String anhBia) {
         this.anhBia = anhBia;
     }
 

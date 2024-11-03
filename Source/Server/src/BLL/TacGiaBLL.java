@@ -43,7 +43,6 @@ public class TacGiaBLL {
                 break;
             }
         }
-        
         return json.toString();
     }
     //ham them tac gia va tra ve trang thai

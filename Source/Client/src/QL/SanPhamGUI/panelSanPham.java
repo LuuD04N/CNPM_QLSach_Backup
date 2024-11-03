@@ -7,7 +7,9 @@ package QL.SanPhamGUI;
 import Client.Client;
 import DTO.SanPhamDTO;
 import DTO.TacGiaDTO;
+import QL.tacGiaGUI.thongTinTacGia;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
@@ -22,6 +24,7 @@ public class panelSanPham extends javax.swing.JInternalFrame {
     /**
      * Creates new form panelSanPham
      */
+    private String MaDT = "0";
     private static Client client1;
     public panelSanPham(Client client) {
         initComponents();
@@ -38,7 +41,7 @@ public class panelSanPham extends javax.swing.JInternalFrame {
         ArrayList<SanPhamDTO> list = new ArrayList<SanPhamDTO>();
         switch (yeucau) {
             case "ListSanPham": 
-                    
+
                     json = new JSONObject(client1.getList(yeucau));
                     //chuyen mang chuoi sang mang jsonArray
                     JSONArray jsonArray = json.getJSONArray("list");
@@ -335,6 +338,11 @@ public class panelSanPham extends javax.swing.JInternalFrame {
         jTableSP.setGridColor(new java.awt.Color(0, 0, 0));
         jTableSP.setSelectionBackground(new java.awt.Color(0, 102, 255));
         jTableSP.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jTableSP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableSPMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableSP);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -405,10 +413,27 @@ public class panelSanPham extends javax.swing.JInternalFrame {
 
     private void jPanel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseClicked
         // TODO add your handling code here:
-        thongTinSanPham ttsp = new thongTinSanPham();
-        ttsp.setDefaultCloseOperation(ttsp.DISPOSE_ON_CLOSE);
-        ttsp.setVisible(true);
+        
+        
+        if(MaDT.equals("0"))
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn đối tượng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else
+        {
+            thongTinSanPham ttsp = new thongTinSanPham(MaDT,client1);
+            ttsp.setDefaultCloseOperation(ttsp.DISPOSE_ON_CLOSE);
+            ttsp.setVisible(true);
+        }
     }//GEN-LAST:event_jPanel11MouseClicked
+
+    private void jTableSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSPMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel table = (DefaultTableModel) jTableSP.getModel();
+        int index = jTableSP.getSelectedRow();
+        String value = table.getValueAt(index, 0).toString();
+        MaDT = value;
+    }//GEN-LAST:event_jTableSPMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

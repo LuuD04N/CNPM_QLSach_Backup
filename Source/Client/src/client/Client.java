@@ -568,10 +568,67 @@ public class Client {
                 return xuLiGetNXB("NhaXuatBan", maDT);
             case "TheLoai":
                 return xuLiGetTheLoai("TheLoai", maDT);
-              
+            case "SanPham":
+                return xuLiGetSanPham("SanPham",maDT);
+            case "AnhBia":
+                return xuLiGetAnhBia("AnhBia",maDT);
       }
        return "";
        
+   }
+   
+   //ham chuyen yeu cau lay du lieu sang server
+   public String xuLiGetAnhBia(String yeucau, String maDT)
+   {
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            JSONObject json = new JSONObject();
+            json.put("method",yeucau);
+            json.put("MaAB",maDT);
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return "";
+   }
+   
+   //ham chuyen yeu cau lay du lieu sang server
+   public String xuLiGetSanPham(String yeucau,String maDT)
+   {
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            JSONObject json = new JSONObject();
+            json.put("method",yeucau);
+            json.put("MaSP",maDT);
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return "";
    }
    
    //ham chuyen yeu cau lay du lieu sang server
