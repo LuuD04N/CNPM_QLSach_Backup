@@ -129,6 +129,7 @@ public class ClientHandle implements Runnable{
                     String MaTG1 = json.getString("MaDT");
                     TacGiaDTO tgDTO3 = new TacGiaDTO(MaTG1,"","","","",0);
                     sendMessage(String.valueOf(tgBLL4.xoaTG(tgDTO3)));
+                    break;
                     
             // Xu li nha xuat ban
             case "ListNhaXuatBan":
@@ -159,7 +160,7 @@ public class ClientHandle implements Runnable{
                     String MaNXB1 = json.getString("MaNXB");
                     NhaXuatBanDTO nxbDTO3 = new NhaXuatBanDTO(MaNXB1,"","","","",0);
                     sendMessage(String.valueOf(nxbBLL4.xoaNXB(nxbDTO3)));
-                    
+                    break;
             // Xu li the loai
             case "ListTheLoai":
                     TheLoaiBLL tlBLL = new TheLoaiBLL();
@@ -189,6 +190,7 @@ public class ClientHandle implements Runnable{
                     String MaTL1 = json.getString("MaTL");
                     TheLoaiDTO tlDTO3 = new TheLoaiDTO(MaTL1, "", 0);
                     sendMessage(String.valueOf(tlBLL4.xoaTheLoai(tlDTO3)));
+                    break;
         }
     }
 }

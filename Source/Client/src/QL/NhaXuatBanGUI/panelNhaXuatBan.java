@@ -10,6 +10,7 @@ import DTO.NhaXuatBanDTO;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Customize.TimKiem;
 import org.json.JSONArray;
 import org.json.JSONObject;
 /**
@@ -23,6 +24,7 @@ public class panelNhaXuatBan extends javax.swing.JInternalFrame {
      */
     private String MaDT = "0";
     private static Client client1;
+    private static TimKiem timkiem = new TimKiem();
     
     public panelNhaXuatBan(Client client) {
         initComponents();
@@ -31,6 +33,8 @@ public class panelNhaXuatBan extends javax.swing.JInternalFrame {
         bui.setNorthPane(null);
         client1 = client;
         setUp();
+        timkiem.setPlaceholder(timKiemField, "Tìm kiếm theo mã hoặc tên...");
+        timkiem.setUpSearchListener(timKiemField, this::timKiem);
     }
     
     // ham lay danh sach
@@ -82,7 +86,30 @@ public class panelNhaXuatBan extends javax.swing.JInternalFrame {
         }
     }
     
+    private void timKiem() 
+    {        
+        String searchText = timkiem.KhongLayDau(timKiemField.getText().trim().toLowerCase());
+        DefaultTableModel model = (DefaultTableModel) jTableNXB.getModel();
+        model.setRowCount(0); 
 
+        ArrayList<NhaXuatBanDTO> allPublishers = getList("ListNhaXuatBan");
+
+        for (NhaXuatBanDTO nxb : allPublishers) {
+            if (nxb.getTrangThai() == 1) {
+                String maNXB = timkiem.KhongLayDau(nxb.getMaNXB().toLowerCase());
+                String tenNXB = timkiem.KhongLayDau(nxb.getTenNXB().toLowerCase());
+
+                if (maNXB.contains(searchText) || tenNXB.contains(searchText)) {
+                    model.addRow(new Object[]{nxb.getMaNXB(), nxb.getTenNXB(), nxb.getDiaChi(), nxb.getSoDienThoai(), nxb.getEmail()});
+                }
+            }
+        }
+
+        if (model.getRowCount() == 0 && !searchText.isEmpty()) {
+            // xu li thong bao khi khong tim thay
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -107,7 +134,7 @@ public class panelNhaXuatBan extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        timKiemField = new javax.swing.JTextField();
         cbxType = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -286,9 +313,13 @@ public class panelNhaXuatBan extends javax.swing.JInternalFrame {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField1.setText("Tìm kiếm....");
-        jTextField1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTextField1.setSelectionColor(new java.awt.Color(0, 0, 0));
+        timKiemField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        timKiemField.setSelectionColor(new java.awt.Color(0, 0, 0));
+        timKiemField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                timKiemFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -298,7 +329,7 @@ public class panelNhaXuatBan extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(timKiemField, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
         );
         jPanel8Layout.setVerticalGroup(
@@ -306,7 +337,7 @@ public class panelNhaXuatBan extends javax.swing.JInternalFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(timKiemField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -446,6 +477,10 @@ public class panelNhaXuatBan extends javax.swing.JInternalFrame {
         MaDT = value;
     }//GEN-LAST:event_jTableNXBMouseClicked
 
+    private void timKiemFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timKiemFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_timKiemFieldActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JComboBox<String> cbxType;
@@ -464,9 +499,9 @@ public class panelNhaXuatBan extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableNXB;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel suaButton;
     private javax.swing.JPanel themButton;
+    private javax.swing.JTextField timKiemField;
     private javax.swing.JPanel xoaButton;
     // End of variables declaration//GEN-END:variables
 }

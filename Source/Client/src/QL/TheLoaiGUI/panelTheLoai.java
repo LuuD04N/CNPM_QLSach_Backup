@@ -5,6 +5,7 @@
 package QL.TheLoaiGUI;
 
 import Client.Client;
+import Customize.TimKiem;
 import java.util.ArrayList;
 import DTO.TheLoaiDTO;
 import javax.swing.JOptionPane;
@@ -24,6 +25,7 @@ public class panelTheLoai extends javax.swing.JInternalFrame {
      */
     private String MaDT = "0";
     private static Client client1;
+    private static TimKiem timkiem = new TimKiem();
     
     public panelTheLoai(Client client) {
         initComponents();
@@ -32,6 +34,8 @@ public class panelTheLoai extends javax.swing.JInternalFrame {
         bui.setNorthPane(null);
         client1 = client;
         setUp();
+        timkiem.setPlaceholder(timKiemField, "Tìm kiếm theo mã hoặc tên...");
+        timkiem.setUpSearchListener(timKiemField, this::timKiem);
     }
     
     // ham lay danh sach
@@ -81,6 +85,30 @@ public class panelTheLoai extends javax.swing.JInternalFrame {
         }
     }
     
+    private void timKiem() 
+    {        
+        String searchText = timkiem.KhongLayDau(timKiemField.getText().trim().toLowerCase());
+        DefaultTableModel model = (DefaultTableModel) jTableTheLoai.getModel();
+        model.setRowCount(0); 
+
+        ArrayList<TheLoaiDTO> allPublishers = getList("ListTheLoai");
+
+        for (TheLoaiDTO tl : allPublishers) {
+            if (tl.getTrangThai() == 1) {
+                String maTL = timkiem.KhongLayDau(tl.getMaTL().toLowerCase());
+                String tenTL = timkiem.KhongLayDau(tl.getTenTL().toLowerCase());
+
+                if (maTL.contains(searchText) || tenTL.contains(searchText)) {
+                    model.addRow(new Object[]{tl.getMaTL(), tl.getTenTL()});
+                }
+            }
+        }
+
+        if (model.getRowCount() == 0 && !searchText.isEmpty()) {
+            // xu li thong bao khi khong tim thay
+        }
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -93,7 +121,7 @@ public class panelTheLoai extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        timKiemField = new javax.swing.JTextField();
         cbxType = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -113,9 +141,8 @@ public class panelTheLoai extends javax.swing.JInternalFrame {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField1.setText("Tìm kiếm....");
-        jTextField1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTextField1.setSelectionColor(new java.awt.Color(0, 0, 0));
+        timKiemField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        timKiemField.setSelectionColor(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -125,7 +152,7 @@ public class panelTheLoai extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(timKiemField, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(224, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
@@ -133,7 +160,7 @@ public class panelTheLoai extends javax.swing.JInternalFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(timKiemField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
@@ -422,9 +449,9 @@ public class panelTheLoai extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableTheLoai;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel suaButton;
     private javax.swing.JPanel themButton;
+    private javax.swing.JTextField timKiemField;
     private javax.swing.JPanel xoaButton;
     // End of variables declaration//GEN-END:variables
 }
