@@ -268,6 +268,11 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
         jButton3.setMinimumSize(new java.awt.Dimension(43, 22));
         jButton3.setOpaque(true);
         jButton3.setPreferredSize(new java.awt.Dimension(43, 22));
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -281,7 +286,7 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Title 1"
+                "Thể loại"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -557,6 +562,8 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
         }
         return true;
     }
+    
+    //gui du lieu toi server
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         //lay du lieu de them moi 1 san pham
         String maSP = txtTMaSP.getText();
@@ -599,9 +606,10 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
                 json.put("Trangthai",sp.getTrangThai());
                 if(client1.themDT(json.toString()).equals("thanhcong"))
                 {
+                    //ham de them the loai san pham
+                    setTL();
                     JOptionPane.showMessageDialog(null, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     tsp1.setVisible(false);
-                    System.out.println(pnsp1);
                     pnsp1.setUp();
                 }
             }
@@ -618,6 +626,32 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jButton1MouseClicked
 
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+//        setTL();
+    }//GEN-LAST:event_jButton3MouseClicked
+
+    //ham de them the loai cua san pham
+    private void setTL()
+    {
+        String maSP = txtTMaSP.getText();
+        DefaultTableModel table = (DefaultTableModel) jTableTheLoai.getModel();
+        int row = table.getRowCount();
+        int col = table.getColumnCount();
+        JSONObject json = new JSONObject();
+        json.put("method","PUTTLSP");
+        json.put("MaSP",maSP);
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+            {
+                Object value = table.getValueAt(i, j);
+                json.put("MaTL", value);
+                // gui yeu cau toi server
+                client1.themDT(json.toString());
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboboxTG;

@@ -296,14 +296,46 @@ public class Client {
                 guiThemTL(data);
                 return "thanhcong";
             case "PUTSP":
-                guithemSP(data);
+                guiThemSP(data);
+                return "thanhcong";
+            case "PUTTLSP":
+                guiThemTLSP(data);
                 return "thanhcong";
        }
        return "";
    }
    
+   
+   //ham gui them the loai cua san pham toi server
+   public String guiThemTLSP(String data)
+   {
+       JSONObject json = new JSONObject(data);
+       String yeucau = json.getString("method");
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            json.put("method",yeucau);
+            json.put("MaSP",json.getString("MaSP"));
+            json.put("MaTL", json.getString("MaTL"));
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return "";
+   }
    //ham gui them doi tuong tac gia toi server
-   public String guithemSP(String data)
+   public String guiThemSP(String data)
    {
        JSONObject json = new JSONObject(data);
        String yeucau = json.getString("method");
@@ -552,11 +584,9 @@ public class Client {
             case "ListTheLoai":
                 return yeucau("ListTheLoai");
                
-
        }
        return "";
    }
-   
    
    //lay mot doi tuong
    public String getDoiTuong(String doituong,String maDT)
@@ -631,6 +661,32 @@ public class Client {
        return "";
    }
    
+   //xu li get the loai cua san pham
+   public String xuLiGetSachTheLoai(String yeucau,String maDT)
+   {
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            JSONObject json = new JSONObject();
+            json.put("method",yeucau);
+            json.put("MaSP",maDT);
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return "";
+   }
    //ham chuyen yeu cau lay du lieu sang server
    public String xuLiGetDoiTuong(String yeucau,String maDT)
    {
@@ -691,7 +747,7 @@ public class Client {
             Thread thread = new Thread(client);
             JSONObject json = new JSONObject();
             json.put("method",yeucau);
-            json.put("MaTL",maDT);
+            json.put("MaSP",maDT);
             OutputStream output;
             output = socket.getOutputStream();
             output.write((json.toString()).getBytes());

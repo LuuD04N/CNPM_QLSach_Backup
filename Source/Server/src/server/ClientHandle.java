@@ -10,9 +10,11 @@ import BLL.TacGiaBLL;
 import BLL.TaiKhoanBLL;
 import BLL.VaiTroBLL;
 import BLL.NhaXuatBanBLL;
+import BLL.SachTheLoaiBLL;
 import BLL.TheLoaiBLL;
 import DTO.TacGiaDTO;
 import DTO.NhaXuatBanDTO;
+import DTO.SachTheLoaiDTO;
 import DTO.SanPhamDTO;
 import DTO.TheLoaiDTO;
 import java.io.IOException;
@@ -58,6 +60,7 @@ public class ClientHandle implements Runnable{
             while((bytesRead= input.read(buffer)) != -1)
             {
                 String message = new String(buffer,0,bytesRead);
+                System.out.println(message);
                 xetDK(message);
             }
             
@@ -230,6 +233,13 @@ public class ClientHandle implements Runnable{
                     String MaAB = json.getString("MaAB");
                     sendMessage(String.valueOf(spBLL3.getAnhBia(MaAB)));
                     break;
+             case "SachTheLoai":
+                    SachTheLoaiBLL stl1 = new SachTheLoaiBLL();
+                    
+                    String MaSP3 = json.getString("MaSP");
+                    System.out.println(String.valueOf(stl1.getSachTheLoai(new SachTheLoaiDTO(MaSP3,""))));
+                    sendMessage(String.valueOf(stl1.getSachTheLoai(new SachTheLoaiDTO(MaSP3,""))));
+                    break;
              case "PUTSP":
                      //them doi tuong san pham
                      SanPhamBLL spBLL1 = new SanPhamBLL();
@@ -238,6 +248,14 @@ public class ClientHandle implements Runnable{
                      SanPhamDTO sp = new SanPhamDTO(json.getString("MaSP"),json.getString("TenSP"),json.getInt("SoTrang"),json.getString("NgonNgu"),json.getDouble("GiaBia"),base64String,json.getInt("SoLuong"),json.getDouble("GiaNhap"),json.getString("MaTG"),json.getInt("Trangthai"));
                      sendMessage(String.valueOf(spBLL1.themSP(sp)));
                      break;
+             case "PUTTLSP":
+                    // them the loai cua san pham
+                    SachTheLoaiBLL stl = new SachTheLoaiBLL();
+                    String MaSP1 = json.getString("MaSP");
+                    String MaTL2 = json.getString("MaTL");
+                    sendMessage(String.valueOf(stl.themSTL(new SachTheLoaiDTO(MaSP1,MaTL2))));
+                    break;
+                  
         }
     }
 }

@@ -5,48 +5,48 @@
 package QL.SanPhamGUI;
 
 import Client.Client;
+import DTO.TheLoaiDTO;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
  *
- * @author admin
+ * @author PC
  */
-public class thongTinSanPham extends javax.swing.JFrame {
+public class thongTinSanPhamQL extends javax.swing.JFrame {
 
     /**
-     * Creates new form thongTinSanPham
+     * Creates new form thongTinSanPhamQL
      */
     private static String MaDT1;
     private static Client client1;
-    public thongTinSanPham(String MaDT,Client client) {
+    public thongTinSanPhamQL(String MaDT,Client client) {
         initComponents();
-        this.setLocationRelativeTo(null);
         MaDT1=MaDT;
         client1=client;
         setUp();
     }
-
-    //ham thiet lap thong tin san pham
+    
     private void setUp()
     {
         String data = client1.getDoiTuong("SanPham",MaDT1);
         String data1 = client1.getDoiTuong("AnhBia",MaDT1);
-        
+        client1.xuLiGetSachTheLoai("SachTheLoai", MaDT1);
         JSONObject json = new JSONObject(data);
         JSONObject json1 = new JSONObject(data1);
 
-         System.out.println(json1.getString("anhbia"));
         try {
             byte[] imageBytes = Base64.getDecoder().decode(json1.getString("anhbia"));
             InputStream is = new ByteArrayInputStream(imageBytes);
@@ -56,7 +56,7 @@ public class thongTinSanPham extends javax.swing.JFrame {
             ImageIcon icon = new ImageIcon(img);
             lb_img.setIcon(icon);
         } catch (IOException ex) {
-            Logger.getLogger(thongTinSanPham.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(thongTinSanPhamQL.class.getName()).log(Level.SEVERE, null, ex);
         }
             //hien thi anh len giao dien
             
@@ -67,11 +67,28 @@ public class thongTinSanPham extends javax.swing.JFrame {
           spinnerST.setValue(json.getInt("SoTrang"));
           txtNN.setText(json.getString("NgonNgu"));
           txtTG.setText(json.getString("MaTG"));
-//        tenTG.setText(json.getString("Hovaten"));
-//        maTG.setText(json.getString("MaTG"));
-//        quocTich.setText(json.getString("QuocTich"));
-//        butDanh.setText(json.getString("ButDanh"));
-//        gioiTinh.setText(json.getString("GioiTinh"));
+          setSTL();
+        
+    }
+
+    private void setSTL()
+    {
+        JSONObject json;
+        ArrayList<TheLoaiDTO> list = new ArrayList<TheLoaiDTO>();
+        json = new JSONObject(client1.xuLiGetSachTheLoai("SachTheLoai", MaDT1));
+        //chuyen mang chuoi sang mang jsonArray
+        JSONArray jsonArray = json.getJSONArray("ketqua");
+        for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject tacGiaObject = jsonArray.getJSONObject(i);
+                String TenTL = tacGiaObject.getString("tenTL");
+                list.add(new TheLoaiDTO("",TenTL,1));
+             }
+        
+        DefaultTableModel table = (DefaultTableModel) jTableTheLoai.getModel();
+        for(TheLoaiDTO tl: list)
+        {
+            table.addRow(new Object[]{tl.getTenTL()});
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -372,20 +389,20 @@ public class thongTinSanPham extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(thongTinSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(thongTinSanPhamQL.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(thongTinSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(thongTinSanPhamQL.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(thongTinSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(thongTinSanPhamQL.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(thongTinSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(thongTinSanPhamQL.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new thongTinSanPham(MaDT1,client1).setVisible(true);
+                new thongTinSanPhamQL(MaDT1,client1).setVisible(true);
             }
         });
     }

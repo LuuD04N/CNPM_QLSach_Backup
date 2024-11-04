@@ -4,10 +4,11 @@
  */
 package QL.SanPhamGUI;
 
+
+
 import Client.Client;
 import DTO.SanPhamDTO;
 import DTO.TacGiaDTO;
-import QL.tacGiaGUI.thongTinTacGia;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -24,7 +25,7 @@ public class panelSanPham extends javax.swing.JInternalFrame {
     /**
      * Creates new form panelSanPham
      */
-    private String MaDT = "0";
+    private static String MaDT = "0";
     private static Client client1;
     public panelSanPham(Client client) {
         initComponents();
@@ -421,7 +422,7 @@ public class panelSanPham extends javax.swing.JInternalFrame {
         }
         else
         {
-            thongTinSanPham ttsp = new thongTinSanPham(MaDT,client1);
+            thongTinSanPhamQL ttsp = new thongTinSanPhamQL(MaDT,client1);
             ttsp.setDefaultCloseOperation(ttsp.DISPOSE_ON_CLOSE);
             ttsp.setVisible(true);
         }
