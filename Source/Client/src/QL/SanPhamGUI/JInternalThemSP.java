@@ -112,7 +112,7 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
             }
             
         }
-        txtTMaSP.setText("TG_"+ String.valueOf(max+1));
+        txtTMaSP.setText("SP_"+ String.valueOf(max+1));
     }
     
     
@@ -567,7 +567,17 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
         int soTrang = (Integer) spinnerST.getValue();
         String ngonNgu = txtNN.getText();
         Date ngayXuatBan = dateNgay.getDate();
-        byte[] anhbia = dt1.getAnhBia();
+        byte[] anhbia;
+        //neu anh ma null la do chua chon nut chon the loai
+        if(dt1.getAnhBia()==null)
+        {
+            anhbia = imageInByteArray1;
+        }
+        else
+        {
+            anhbia = dt1.getAnhBia();
+        }
+        
         if(checkDL( maSP, tenSP, tenTG, giaNhap, giaBia, soTrang, ngonNgu, ngayXuatBan, anhbia))
         {
             SanPhamDTO sp = new SanPhamDTO( maSP, tenSP, soTrang, ngonNgu, Double.parseDouble(giaBia), anhbia, 0, Double.parseDouble(giaNhap),getMaTG(comboboxTG.getItemAt(tenTG)), 1);
@@ -578,6 +588,7 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
             json.put("SoTrang",sp.getSoTrang());
             json.put("NgonNgu",sp.getNgonNgu());
             json.put("GiaBia",sp.getGiaBia());
+  
             if(sp.getAnhBia()!=null)
             {
                 String anhBiaBase64 = Base64.getEncoder().encodeToString(sp.getAnhBia());

@@ -111,8 +111,9 @@ public class SanPhamDAO {
             pstmt.setString(4,sp.getNgonNgu());
             pstmt.setDouble(5,sp.getGiaBia());
             //xem lai
-            byte[] anhbia = Base64.getDecoder().decode(sp.getAnhBia());
-            pstmt.setBytes(6,anhbia);
+            
+            byte[] imageBytes = Base64.getDecoder().decode(sp.getAnhBia());
+            pstmt.setBytes(6,imageBytes);
             pstmt.setInt(7,sp.getSoLuong());
             pstmt.setDouble(8,sp.getGiaNhap());
             pstmt.setString(9,sp.getMaTG());

@@ -87,7 +87,7 @@ public class SanPhamBLL {
     }
     
     //ham them san pham
-    public String themTG(SanPhamDTO sp)
+    public String themSP(SanPhamDTO sp)
     {
         SanPhamDAO spDAO = new SanPhamDAO();
         JSONObject json = new JSONObject();

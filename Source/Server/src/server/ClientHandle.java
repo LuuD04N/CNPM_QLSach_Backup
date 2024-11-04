@@ -230,13 +230,14 @@ public class ClientHandle implements Runnable{
                     String MaAB = json.getString("MaAB");
                     sendMessage(String.valueOf(spBLL3.getAnhBia(MaAB)));
                     break;
-//             case "PUTSP":
-//                     //them doi tuong san pham
-//                     SanPhamBLL spBLL1 = new SanPhamBLL();
-//                     byte[] anhBiaBytes = Base64.getDecoder().decode(json.getString("AnhBia"));
-//                     SanPhamDTO sp = new SanPhamDTO(json.getString("MaSP"),json.getString("TenSP"),json.getInt("SoTrang"),json.getString("NgonNgu"),json.getDouble("GiaBia"),anhBiaBytes,json.getInt("SoLuong"),json.getDouble("GiaNhap"),json.getString("MaTG"),json.getInt("Trangthai"));
-//                     sendMessage(String.valueOf(spBLL1.themTG(sp)));
-//                     sendMessage("END");
+             case "PUTSP":
+                     //them doi tuong san pham
+                     SanPhamBLL spBLL1 = new SanPhamBLL();
+                     byte[] anhBiaBytes = Base64.getDecoder().decode(json.getString("AnhBia"));
+                     String base64String = Base64.getEncoder().encodeToString(anhBiaBytes);
+                     SanPhamDTO sp = new SanPhamDTO(json.getString("MaSP"),json.getString("TenSP"),json.getInt("SoTrang"),json.getString("NgonNgu"),json.getDouble("GiaBia"),base64String,json.getInt("SoLuong"),json.getDouble("GiaNhap"),json.getString("MaTG"),json.getInt("Trangthai"));
+                     sendMessage(String.valueOf(spBLL1.themSP(sp)));
+                     break;
         }
     }
 }
