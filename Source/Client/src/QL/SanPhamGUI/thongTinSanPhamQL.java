@@ -34,6 +34,7 @@ public class thongTinSanPhamQL extends javax.swing.JFrame {
     private static Client client1;
     public thongTinSanPhamQL(String MaDT,Client client) {
         initComponents();
+        this.setLocationRelativeTo(null);
         MaDT1=MaDT;
         client1=client;
         setUp();
@@ -66,21 +67,27 @@ public class thongTinSanPhamQL extends javax.swing.JFrame {
           txtGB.setText(String.valueOf(json.getDouble("GiaBia")));
           spinnerST.setValue(json.getInt("SoTrang"));
           txtNN.setText(json.getString("NgonNgu"));
-          txtTG.setText(json.getString("MaTG"));
-          setSTL();
-        
+          String data2 = client1.getDoiTuong("TacGia", json.getString("MaTG"));
+          JSONObject json3 = new JSONObject(data2);
+          System.out.println(data2+" a");
+          txtTG.setText(json3.getString("Hovaten"));
+          setSTL(); 
     }
 
     private void setSTL()
     {
         JSONObject json;
         ArrayList<TheLoaiDTO> list = new ArrayList<TheLoaiDTO>();
-        json = new JSONObject(client1.xuLiGetSachTheLoai("SachTheLoai", MaDT1));
+        json = new JSONObject(client1.xuLiGetTenSachTheLoai("TenSachTheLoai", MaDT1));
         //chuyen mang chuoi sang mang jsonArray
-        JSONArray jsonArray = json.getJSONArray("ketqua");
+        JSONArray jsonArray = new JSONArray(json.getString("ketqua"));
+        System.out.println(jsonArray +" bbbb");
         for (int i = 0; i < jsonArray.length(); i++) {
+            
                 JSONObject tacGiaObject = jsonArray.getJSONObject(i);
+                System.out.println(tacGiaObject+" aaa");
                 String TenTL = tacGiaObject.getString("tenTL");
+                
                 list.add(new TheLoaiDTO("",TenTL,1));
              }
         

@@ -215,7 +215,7 @@ public class ClientHandle implements Runnable{
                     String MaTL1 = json.getString("MaTL");
                     TheLoaiDTO tlDTO3 = new TheLoaiDTO(MaTL1, "", 0);
                     sendMessage(String.valueOf(tlBLL4.xoaTheLoai(tlDTO3)));
-                    
+                    break;
              case "ListSanPham":
                     //lay danh sach san pham
                     SanPhamBLL spBLL = new SanPhamBLL();
@@ -235,10 +235,13 @@ public class ClientHandle implements Runnable{
                     break;
              case "SachTheLoai":
                     SachTheLoaiBLL stl1 = new SachTheLoaiBLL();
-                    
                     String MaSP3 = json.getString("MaSP");
-                    System.out.println(String.valueOf(stl1.getSachTheLoai(new SachTheLoaiDTO(MaSP3,""))));
                     sendMessage(String.valueOf(stl1.getSachTheLoai(new SachTheLoaiDTO(MaSP3,""))));
+                    break;
+             case "TenSachTheLoai":
+                    SachTheLoaiBLL stl2 = new SachTheLoaiBLL();
+                    String MaSP4 = json.getString("MaSP");
+                    sendMessage(String.valueOf(stl2.getSachTenTheLoai(new SachTheLoaiDTO(MaSP4,""))));
                     break;
              case "PUTSP":
                      //them doi tuong san pham
@@ -255,7 +258,22 @@ public class ClientHandle implements Runnable{
                     String MaTL2 = json.getString("MaTL");
                     sendMessage(String.valueOf(stl.themSTL(new SachTheLoaiDTO(MaSP1,MaTL2))));
                     break;
-                  
+             case "UPDATESP":
+                 //cap nhat the loai cua san pham va gia bia
+                    SachTheLoaiBLL stl4 = new SachTheLoaiBLL();
+                    String MaSP2 = json.getString("MaSP");
+                    stl4.updateSachTheLoai(json);
+                    SanPhamBLL sp4 = new SanPhamBLL();
+                    sp4.suaSP(json);
+                    sendMessage(String.valueOf(stl4.updateSachTheLoai(json)));
+                    break;
+             case "DELETESP":
+                    SanPhamBLL stl5 = new SanPhamBLL ();
+                    String MaSP5 = json.getString("MaSP");
+                    
+                    SanPhamDTO sp1 = new SanPhamDTO(json.getString("MaSP"),"",0,"",0,null,0,0,"",json.getInt("Trangthai"));
+                    sendMessage(String.valueOf(stl5.xoaTheLoai(sp1)));
+                    break;
         }
     }
 }

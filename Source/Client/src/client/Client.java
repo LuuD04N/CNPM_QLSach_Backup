@@ -82,7 +82,37 @@ public class Client {
                 return guiXoaNXB(data);
             case "DELETETL":
                 return guiXoaTL(data);
+            case "DELETESP":
+                 return guiXoaSP(data);
         }
+        return "";
+    }
+    
+    //ham gui yeu cau xoa doi tuong tac gia qua server
+    private String guiXoaSP(String data)
+    {
+        JSONObject json = new JSONObject(data);
+        String yeucau = json.getString("method");
+        try {
+             ClientListener client = new ClientListener(socket);
+             Thread thread = new Thread(client);
+             json.put("method",yeucau);
+             json.put("MaSP",json.getString("MaSP"));
+             OutputStream output;
+             output = socket.getOutputStream();
+             output.write((json.toString()).getBytes());
+             output.flush();
+             thread.start();
+             thread.join();
+             return client.result;
+         } 
+         catch (InterruptedException ex) {
+                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+             }
+         catch (IOException ex) {
+             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+         }
+
         return "";
     }
     
@@ -182,11 +212,39 @@ public class Client {
                 return guiSuaNXB(data);
             case "UPDATETL":
                 return guiSuaTL(data);
- 
+            case "UPDATESP":
+                return guiSuaSTL(data);
         }
         return "";
     }
     
+    //ham gui yeu cau sua doi tuong tac gia toi server
+    private String guiSuaSTL(String data)
+    {
+        JSONObject json = new JSONObject(data);
+        String yeucau = json.getString("method");
+        try {
+             ClientListener client = new ClientListener(socket);
+             Thread thread = new Thread(client);
+             json.put("method",yeucau);
+             json.put("list",json.getString("list"));
+             OutputStream output;
+             output = socket.getOutputStream();
+             output.write((json.toString()).getBytes());
+             output.flush();
+             thread.start();
+             thread.join();
+             return client.result;
+         } 
+         catch (InterruptedException ex) {
+                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+             }
+         catch (IOException ex) {
+             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+         }
+
+        return "";
+    }
     
     //ham gui yeu cau sua doi tuong tac gia toi server
     private String guiSuaTG(String data)
@@ -687,6 +745,34 @@ public class Client {
         
        return "";
    }
+   
+   //xu li lay ten the loai cua san pham
+   public String xuLiGetTenSachTheLoai(String yeucau,String maDT)
+   {
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            JSONObject json = new JSONObject();
+            json.put("method",yeucau);
+            json.put("MaSP",maDT);
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return "";
+   }
+   
    //ham chuyen yeu cau lay du lieu sang server
    public String xuLiGetDoiTuong(String yeucau,String maDT)
    {

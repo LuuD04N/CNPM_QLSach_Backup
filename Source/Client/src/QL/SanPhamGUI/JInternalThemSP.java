@@ -59,7 +59,6 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
         setButDanh();
         setUpTL();
         setMaSP();
-        
     }
     private void setUpTL() {
     if (dt1.list.size() != 0) {
@@ -136,7 +135,6 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
         txtGN.setText(String.valueOf(dt1.getGiaNhap()));
         txtGB.setText(String.valueOf(dt1.getGiaBia()));
         txtNN.setText(dt1.getNgonNgu());
-        dateNgay.setDate(dt1.getNgayxuatBan());
         spinnerST.setValue(dt1.getSoTrang());
         try {
             if(dt1.getAnhBia()==null)
@@ -181,8 +179,6 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
         txtNN = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        dateNgay = new com.toedter.calendar.JDateChooser();
         comboboxTG = new javax.swing.JComboBox<>();
         spinnerST = new javax.swing.JSpinner();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -279,8 +275,6 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel4.setText("Ngày xuất bản");
-
         jTableTheLoai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -364,11 +358,7 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
                                             .addComponent(txtNN, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                                             .addComponent(jLabel9))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel4)
-                                        .addComponent(dateNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -393,11 +383,6 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtTMaSP, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addGap(16, 16, 16)
-                                    .addComponent(dateNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -475,7 +460,6 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
            String giaBia = txtGB.getText();
            int soTrang = (Integer) spinnerST.getValue();
            String ngonNgu = txtNN.getText();
-           Date ngayXuatBan = dateNgay.getDate();
            //kiem tra xem gia nhap hoac gia bia co bang chuoi rong khong
            if(giaNhap.equals(""))
            {
@@ -500,7 +484,7 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
            {
                imageInByteArray1=dt1.getAnhBia();
            }
-           doiTuongGUI dt = new doiTuongGUI(tenSP, soTrang, ngonNgu, Double.parseDouble(giaBia),imageInByteArray1, Double.parseDouble(giaNhap),  tenTG,  ngayXuatBan, list);
+           doiTuongGUI dt = new doiTuongGUI(tenSP, soTrang, ngonNgu, Double.parseDouble(giaBia),imageInByteArray1, Double.parseDouble(giaNhap),  tenTG, list);
            chonTheLoai ctl = new chonTheLoai(tsp1,client1,dt,pnsp1);
            tsp1.mainTSP.removeAll();
            tsp1.mainTSP.add(ctl).setVisible(true);
@@ -550,7 +534,7 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
         return "";
     }
     
-    private boolean checkDL(String maSP,String tenSP,int tenTG,String giaNhap,String giaBia,int soTrang,String ngonNgu,Date ngayXuatBan,byte[] anhbia)
+    private boolean checkDL(String maSP,String tenSP,int tenTG,String giaNhap,String giaBia,int soTrang,String ngonNgu,byte[] anhbia)
     {
         if(giaNhap.equals(""))
         {
@@ -573,7 +557,6 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
         String giaBia = txtGB.getText();
         int soTrang = (Integer) spinnerST.getValue();
         String ngonNgu = txtNN.getText();
-        Date ngayXuatBan = dateNgay.getDate();
         byte[] anhbia;
         //neu anh ma null la do chua chon nut chon the loai
         if(dt1.getAnhBia()==null)
@@ -585,7 +568,7 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
             anhbia = dt1.getAnhBia();
         }
         
-        if(checkDL( maSP, tenSP, tenTG, giaNhap, giaBia, soTrang, ngonNgu, ngayXuatBan, anhbia))
+        if(checkDL( maSP, tenSP, tenTG, giaNhap, giaBia, soTrang, ngonNgu, anhbia))
         {
             SanPhamDTO sp = new SanPhamDTO( maSP, tenSP, soTrang, ngonNgu, Double.parseDouble(giaBia), anhbia, 0, Double.parseDouble(giaNhap),getMaTG(comboboxTG.getItemAt(tenTG)), 1);
             JSONObject json = new JSONObject();
@@ -655,7 +638,6 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboboxTG;
-    private com.toedter.calendar.JDateChooser dateNgay;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -664,7 +646,6 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;

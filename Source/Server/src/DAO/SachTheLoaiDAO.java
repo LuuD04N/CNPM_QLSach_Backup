@@ -47,7 +47,7 @@ public class SachTheLoaiDAO {
         return list;
     }
      //ham them doi tuong
-     public String themSTL(SachTheLoaiDTO stl)
+    public String themSTL(SachTheLoaiDTO stl)
     {
         java.sql.Connection conn;
         String query = "INSERT INTO sachtheloai(MaSP,MaTL) values(?,?)";
@@ -66,5 +66,23 @@ public class SachTheLoaiDAO {
         return "false";
     }
      
-     
+     //ham xoa doi tuong the loai de cap nhat the loai cho san pham
+     public String xoaSTL(SachTheLoaiDTO stl)
+     {
+         java.sql.Connection conn;
+        String query = "delete from sachtheloai where MaSP=?";
+        conn = database.connect();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, stl.getMaSP());
+
+            if (pstmt.executeUpdate() > 0)
+            {
+                return "true";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "false";
+     }
 }

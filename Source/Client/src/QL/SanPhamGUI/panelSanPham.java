@@ -197,6 +197,11 @@ public class panelSanPham extends javax.swing.JInternalFrame {
         );
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel10MouseClicked(evt);
+            }
+        });
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/iconxoa.jpg"))); // NOI18N
@@ -406,8 +411,8 @@ public class panelSanPham extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jPanel7MouseClicked
 
     private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
-        // TODO add your handling code here:
-        suaSanPham ssp = new suaSanPham();
+        // TODO add your handling code here:        
+        suaSanPham ssp = new suaSanPham(client1,this,MaDT);
         ssp.setDefaultCloseOperation(ssp.DISPOSE_ON_CLOSE);
         ssp.setVisible(true);
     }//GEN-LAST:event_jPanel9MouseClicked
@@ -435,6 +440,30 @@ public class panelSanPham extends javax.swing.JInternalFrame {
         String value = table.getValueAt(index, 0).toString();
         MaDT = value;
     }//GEN-LAST:event_jTableSPMouseClicked
+
+    private void jPanel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseClicked
+        // TODO add your handling code here:
+        if(MaDT.equals("0"))
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn đối tượng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        JSONObject json = new JSONObject();
+        json.put("method","DELETESP");
+        json.put("MaSP",MaDT);
+        json.put("Trangthai",0);
+        JSONObject json1 = new JSONObject(client1.xoaDT(json.toString()));
+        if(json1.getString("ketqua").equals("true"))
+        {
+            JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            setUp();
+            
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Xóa không thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jPanel10MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

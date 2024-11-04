@@ -95,4 +95,21 @@ public class SanPhamBLL {
         json.put("ketqua",spDAO.themDT(sp));
         return json.toString();
     }
+    
+    public String suaSP(JSONObject sp)
+    {
+        SanPhamDAO spDAO = new SanPhamDAO();
+        JSONObject json = new JSONObject();
+        json.put("ketqua",spDAO.suaSP(sp.getString("MaSP"),Double.parseDouble(sp.getString("GiaBia"))));
+        return json.toString();
+    }
+    
+    public String xoaTheLoai(SanPhamDTO sp)
+    {
+        SanPhamDAO spDAO = new SanPhamDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai", "true");
+        json.put("ketqua",spDAO.xoaSP(sp));
+        return json.toString();
+    }
 }

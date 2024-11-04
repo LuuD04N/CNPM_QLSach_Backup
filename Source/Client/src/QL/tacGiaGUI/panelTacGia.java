@@ -457,6 +457,7 @@ public class panelTacGia extends javax.swing.JInternalFrame {
         JSONObject json = new JSONObject();
         json.put("method","DELETETG");
         json.put("MaDT",MaDT);
+        json.put("Trangthai",0);
         JSONObject json1 = new JSONObject(client1.xoaDT(json.toString()));
         if(json1.getString("ketqua").equals("true"))
         {

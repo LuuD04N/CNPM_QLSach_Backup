@@ -95,13 +95,7 @@
                                       </Group>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jButton4" min="-2" pref="155" max="-2" attributes="0"/>
-                                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="dateNgay" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                                  <Component id="jButton4" min="-2" pref="155" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jButton1" min="-2" pref="155" max="-2" attributes="0"/>
@@ -135,13 +129,6 @@
                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="txtTMaSP" min="-2" pref="30" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="16" pref="16" max="-2" attributes="0"/>
-                                      <Component id="dateNgay" min="-2" pref="30" max="-2" attributes="0"/>
-                                  </Group>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
@@ -341,13 +328,6 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton3MouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel4">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Ng&#xe0;y xu&#x1ea5;t b&#x1ea3;n"/>
-          </Properties>
-        </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="dateNgay">
         </Component>
         <Component class="javax.swing.JComboBox" name="comboboxTG">
           <Properties>

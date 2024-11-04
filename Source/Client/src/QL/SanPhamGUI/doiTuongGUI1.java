@@ -3,17 +3,17 @@ package QL.SanPhamGUI;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class doiTuongGUI {
+public class doiTuongGUI1 {
     private String tenSP;         // Tên Sản Phẩm (Nvarchar)
     private int soTrang;          // Số trang (int)
     private String ngonNgu;       // Ngôn ngữ (Nvarchar)
     private double giaBia;        // Giá bìa (Double)
     private byte[] anhBia;        // Ảnh bìa (BLOB - Binary Large Object)
     private double giaNhap;       // Giá nhập (Double)
-    private int tenTG;         // Tên Tác Giả
+    private String tenTG;         // Tên Tác Giả
     public ArrayList<Object[]> list; // Danh sách các đối tượng
 
-    public doiTuongGUI()
+    public doiTuongGUI1()
     {
         tenSP="";
         soTrang=0;
@@ -21,11 +21,11 @@ public class doiTuongGUI {
         giaBia=0;
         anhBia=null;
         giaNhap=0;
-        tenTG=0;
+        tenTG="";
         list=new ArrayList<Object[]>();
     }
     // Constructor với tất cả thuộc tính
-    public doiTuongGUI(String tenSP, int soTrang, String ngonNgu, double giaBia, byte[] anhBia, double giaNhap, int tenTG,ArrayList<Object[]> list) {
+    public doiTuongGUI1(String tenSP, int soTrang, String ngonNgu, double giaBia, byte[] anhBia, double giaNhap, String tenTG,ArrayList<Object[]> list) {
         this.tenSP = tenSP;
         this.soTrang = soTrang;
         this.ngonNgu = ngonNgu;
@@ -86,11 +86,11 @@ public class doiTuongGUI {
         this.giaNhap = giaNhap;
     }
 
-    public int getTenTG() {
+    public String getTenTG() {
         return tenTG;
     }
 
-    public void setTenTG(int tenTG) {
+    public void setTenTG(String tenTG) {
         this.tenTG = tenTG;
     }
 

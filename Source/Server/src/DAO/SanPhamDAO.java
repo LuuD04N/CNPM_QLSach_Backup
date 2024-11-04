@@ -129,4 +129,45 @@ public class SanPhamDAO {
         return "false";
     }
     
+    
+    //ham cap nhat doi tuong len csdl
+    public String suaSP(String MaSP,Double GiaBia)
+    {
+        java.sql.Connection conn;
+        String query = "UPDATE sanpham SET GiaBia=? WHERE MaSP=?";
+        conn = database.connect();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setDouble(1,GiaBia);
+            pstmt.setString(2,MaSP);
+            if(pstmt.executeUpdate() > 0)
+            {
+                return "true";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TacGiaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "false";
+        
+    }
+    
+    public String xoaSP(SanPhamDTO sp)
+    {
+        java.sql.Connection conn;
+        String query = "UPDATE sanpham SET Trangthai=? WHERE MaSP=?";
+        conn = database.connect();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,sp.getTrangThai());
+            pstmt.setString(2,sp.getMaSP());
+            if(pstmt.executeUpdate() > 0)
+            {
+                return "true";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TacGiaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "false";
+        
+    }
 }
