@@ -19,10 +19,10 @@ INSERT INTO TheLoai (MaTL, TenTL, Trangthai) VALUES
 ('TL002', 'Học Tập', '1'),
 ('TL003', 'Tiếng Anh', '1');
 
-INSERT INTO LoaiKhuyenMai (MaloaiKM, TenloaiKM, Phantramgiam) VALUES
-('LKM001', 'Giảm Giá Theo %', 10),
-('LKM002', 'Mua Nhiều Tặng Nhiều', 0),
-('LKM003', 'Khuyến Mãi Dưới 50%', 15); 
+INSERT INTO LoaiKhuyenMai (MaloaiKM, TenloaiKM, Phantramgiam,Trangthai) VALUES
+('LKM001', 'Giảm Giá Theo %', 10,1),
+('LKM002', 'Mua Nhiều Tặng Nhiều', 0,1),
+('LKM003', 'Khuyến Mãi Dưới 50%', 15,1); 
 
 INSERT INTO KhuyenMai (MaKM, TenKM, NgayBatDau, NgayKetThuc, MaloaiKM, Trangthai) VALUES
 ('KM001', 'Giảm Giá 10%', '2024-10-01', '2024-10-31', 'LKM001', '1'),

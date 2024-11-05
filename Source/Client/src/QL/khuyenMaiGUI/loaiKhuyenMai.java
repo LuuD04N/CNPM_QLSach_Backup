@@ -4,6 +4,13 @@
  */
 package QL.khuyenMaiGUI;
 
+import Client.Client;
+import DTO.LoaiKhuyenMaiDTO;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  *
  * @author PC
@@ -13,11 +20,55 @@ public class loaiKhuyenMai extends javax.swing.JFrame {
     /**
      * Creates new form loaiKhuyenMai
      */
-    public loaiKhuyenMai() {
+    private static Client client1;
+    public loaiKhuyenMai(Client client) {
         initComponents();
         this.setLocationRelativeTo(null);
+        client1=client;
+        setUp();
     }
 
+    //ham lay danh sach
+    private ArrayList<LoaiKhuyenMaiDTO> getList(String yeucau)
+    {
+        JSONObject json;
+        
+        switch (yeucau) {
+            case "ListLoaiKhuyenMai": 
+                    ArrayList<LoaiKhuyenMaiDTO> list = new ArrayList<LoaiKhuyenMaiDTO>();
+                    json = new JSONObject(client1.getList(yeucau));
+                    //chuyen mang chuoi sang mang jsonArray
+                    JSONArray jsonArray = json.getJSONArray("list");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject tacGiaObject = jsonArray.getJSONObject(i);
+                        String MaLoaiKM = tacGiaObject.getString("maLoaiKM");
+                        String TenLoaiKM = tacGiaObject.getString("tenLoaiKM");
+                        int PhanTramGiam = tacGiaObject.getInt("phanTramGiam");
+                        int Trangthai = tacGiaObject.getInt("trangThai");
+                    // Thêm vào ArrayList
+                    //xem lai trang thai
+                    list.add(new LoaiKhuyenMaiDTO(MaLoaiKM, TenLoaiKM, PhanTramGiam, Trangthai));
+        }  
+                    return list;              
+        }           
+        return new ArrayList<>();
+    }
+    //ham thiet lap bang danh sach
+    public void setUp()
+    {
+        
+        DefaultTableModel model = (DefaultTableModel) jTableLKM.getModel();
+        model.setRowCount(0);
+        for(LoaiKhuyenMaiDTO khuyenmaiDTO : getList("ListLoaiKhuyenMai"))
+        {
+            System.out.println(khuyenmaiDTO.getTrangThai() +"ssss");
+            //them tung doi tuong vao bang
+            if(khuyenmaiDTO.getTrangThai()==1)
+            {
+                model.addRow(new Object[] {khuyenmaiDTO.getMaLoaiKM(),khuyenmaiDTO.getTenLoaiKM()});
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,11 +80,9 @@ public class loaiKhuyenMai extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        cbxType = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableLKM = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -45,6 +94,7 @@ public class loaiKhuyenMai extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,35 +102,21 @@ public class loaiKhuyenMai extends javax.swing.JFrame {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField1.setText("Tìm kiếm....");
-        jTextField1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTextField1.setSelectionColor(new java.awt.Color(0, 0, 0));
-
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 64, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(11, Short.MAX_VALUE))
+            .addGap(0, 72, Short.MAX_VALUE)
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableLKM.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTableLKM.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"TL1", "Viễn tưởng"},
                 {null, null},
@@ -99,11 +135,11 @@ public class loaiKhuyenMai extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setFocusable(false);
-        jTable1.setGridColor(new java.awt.Color(0, 0, 0));
-        jTable1.setSelectionBackground(new java.awt.Color(0, 102, 255));
-        jTable1.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(jTable1);
+        jTableLKM.setFocusable(false);
+        jTableLKM.setGridColor(new java.awt.Color(0, 0, 0));
+        jTableLKM.setSelectionBackground(new java.awt.Color(0, 102, 255));
+        jTableLKM.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setViewportView(jTableLKM);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -272,20 +308,32 @@ public class loaiKhuyenMai extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jTextField1.setText("Tìm kiếm....");
+        jTextField1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTextField1.setSelectionColor(new java.awt.Color(0, 0, 0));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(514, 514, 514)
+                .addGap(466, 466, 466)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -351,13 +399,12 @@ public class loaiKhuyenMai extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new loaiKhuyenMai().setVisible(true);
+                new loaiKhuyenMai(client1).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JComboBox<String> cbxType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -372,7 +419,7 @@ public class loaiKhuyenMai extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableLKM;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables

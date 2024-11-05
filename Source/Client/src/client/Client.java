@@ -641,7 +641,10 @@ public class Client {
                 return yeucau("ListNhaXuatBan");
             case "ListTheLoai":
                 return yeucau("ListTheLoai");
-               
+            case "ListKhuyenMai":
+                return yeucau("ListKhuyenMai");
+            case "ListLoaiKhuyenMai":
+                return yeucau("ListLoaiKhuyenMai");
        }
        return "";
    }

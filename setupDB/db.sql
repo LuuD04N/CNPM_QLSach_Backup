@@ -55,7 +55,8 @@ create table LoaiKhuyenMai(
 	MaloaiKM varchar(10),
 	TenloaiKM varchar(50),
 	Phantramgiam int,
-
+	Trangthai int(11),
+	
 	primary key (MaloaiKM)
 );
 

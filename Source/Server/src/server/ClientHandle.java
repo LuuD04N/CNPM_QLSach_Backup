@@ -4,6 +4,8 @@
  */
 package server;
 
+import BLL.KhuyenMaiBLL;
+import BLL.LoaiKhuyenMaiBLL;
 import BLL.NhanVienBLL;
 import BLL.SanPhamBLL;
 import BLL.TacGiaBLL;
@@ -273,6 +275,15 @@ public class ClientHandle implements Runnable{
                     
                     SanPhamDTO sp1 = new SanPhamDTO(json.getString("MaSP"),"",0,"",0,null,0,0,"",json.getInt("Trangthai"));
                     sendMessage(String.valueOf(stl5.xoaTheLoai(sp1)));
+                    break;
+              case "ListKhuyenMai":
+                    //lay danh sach san pham
+                    KhuyenMaiBLL kmBLL = new KhuyenMaiBLL();
+                    sendMessage(String.valueOf(kmBLL.getList()));
+                    break;
+              case "ListLoaiKhuyenMai":
+                    LoaiKhuyenMaiBLL lkmBLL = new LoaiKhuyenMaiBLL();
+                    sendMessage(String.valueOf(lkmBLL.getList()));
                     break;
         }
     }

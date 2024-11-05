@@ -5,7 +5,19 @@
 
 package QL.khuyenMaiGUI;
 
+import Client.Client;
+import DTO.KhuyenMaiDTO;
+import DTO.TacGiaDTO;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -14,13 +26,76 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 public class panelKhuyenMai extends javax.swing.JInternalFrame {
 
     /** Creates new form panelKhuyenMai */
-    public panelKhuyenMai() {
+    private static Client client1;
+    public panelKhuyenMai(Client client) {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        client1=client;
+        setUp();
     }
 
+    //ham lay danh sach
+    private ArrayList<KhuyenMaiDTO> getList(String yeucau)
+    {
+        JSONObject json;
+        switch (yeucau) {
+            case "ListKhuyenMai": 
+                
+                    ArrayList<KhuyenMaiDTO> list = new ArrayList<KhuyenMaiDTO>();
+                    json = new JSONObject(client1.getList(yeucau));
+                    System.out.println(json);;
+                    //chuyen mang chuoi sang mang jsonArray
+                    JSONArray jsonArray = json.getJSONArray("list");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject tacGiaObject = jsonArray.getJSONObject(i);
+                        String MaKM = tacGiaObject.getString("maKM");
+                        String TenKM = tacGiaObject.getString("tenKM");
+                        String NgayBatDau = tacGiaObject.getString("ngayBatDau");
+                        String NgayKetThuc = tacGiaObject.getString("ngayKetThuc");
+                        String MaLKM = tacGiaObject.getString("maLoaiKM");
+                        int Trangthai = tacGiaObject.getInt("trangThai");
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                        
+                        Date ngayBatDau;
+            try {
+                ngayBatDau = formatter.parse(NgayBatDau);
+                Date ngayKetThuc = formatter.parse(NgayKetThuc);
+                // Thêm vào ArrayList
+                //xem lai trang thai
+                list.add(new KhuyenMaiDTO( MaKM,  TenKM,  ngayBatDau,  ngayKetThuc,  MaLKM, Trangthai));
+            } catch (ParseException ex) {
+                Logger.getLogger(panelKhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                        
+        } 
+                    return list;
+        }
+                
+                    
+        return new ArrayList<>();
+    }
+    
+    //ham thiet lap bang danh sach
+    public void setUp()
+    {
+        DefaultTableModel model = (DefaultTableModel) jTableKM.getModel();
+        model.setRowCount(0);
+        for(KhuyenMaiDTO khuyenmai : getList("ListKhuyenMai"))
+        {
+            System.out.println(khuyenmai.getTrangThai());
+            //them tung doi tuong vao bang
+            if(khuyenmai.getTrangThai()==1)
+            {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                String ngaybatdau = formatter.format(khuyenmai.getNgayBatDau());
+                String ngayketthuc = formatter.format(khuyenmai.getNgayKetThuc());
+                model.addRow(new Object[] {khuyenmai.getMaKM(),khuyenmai.getTenKM(),ngaybatdau,ngayketthuc});
+            }
+        }
+    }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -49,7 +124,7 @@ public class panelKhuyenMai extends javax.swing.JInternalFrame {
         cbxType = new javax.swing.JComboBox<>();
         jPanel28 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableKM = new javax.swing.JTable();
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -246,8 +321,8 @@ public class panelKhuyenMai extends javax.swing.JInternalFrame {
 
         jPanel28.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableKM.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTableKM.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"TG01", "ádsad", "ádasd", "ád"},
                 {null, null, null, null},
@@ -266,11 +341,11 @@ public class panelKhuyenMai extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setFocusable(false);
-        jTable1.setGridColor(new java.awt.Color(0, 0, 0));
-        jTable1.setSelectionBackground(new java.awt.Color(0, 102, 255));
-        jTable1.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(jTable1);
+        jTableKM.setFocusable(false);
+        jTableKM.setGridColor(new java.awt.Color(0, 0, 0));
+        jTableKM.setSelectionBackground(new java.awt.Color(0, 102, 255));
+        jTableKM.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setViewportView(jTableKM);
 
         javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
         jPanel28.setLayout(jPanel28Layout);
@@ -339,7 +414,7 @@ public class panelKhuyenMai extends javax.swing.JInternalFrame {
 
     private void jPanel30MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel30MouseClicked
         // TODO add your handling code here:
-        loaiKhuyenMai lkm = new loaiKhuyenMai();
+        loaiKhuyenMai lkm = new loaiKhuyenMai(client1);
         lkm.setDefaultCloseOperation(lkm.DISPOSE_ON_CLOSE);
        lkm.setVisible(true);
     }//GEN-LAST:event_jPanel30MouseClicked
@@ -364,7 +439,7 @@ public class panelKhuyenMai extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel30;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableKM;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
