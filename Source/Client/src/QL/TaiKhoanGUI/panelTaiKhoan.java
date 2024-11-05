@@ -4,7 +4,20 @@
  */
 package QL.TaiKhoanGUI;
 
+import Client.Client;
+import DTO.TaiKhoanDTO;
+import com.formdev.flatlaf.FlatLightLaf;
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -15,13 +28,65 @@ public class panelTaiKhoan extends javax.swing.JInternalFrame {
     /**
      * Creates new form panelTaiKhoan
      */
-    public panelTaiKhoan() {
+    private String MaDT ="0";
+    private static Client client1;
+    public panelTaiKhoan(Client client) {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        client1=client;
+        setUp();
     }
 
+    //ham lay danh sach
+    private ArrayList<TaiKhoanDTO> getList(String yeucau)
+    {
+        JSONObject json;
+        
+        switch (yeucau) {
+            case "ListTacGia": 
+                    ArrayList<TaiKhoanDTO> list = new ArrayList<TaiKhoanDTO>();
+                    json = new JSONObject(client1.getList(yeucau));
+                    //chuyen mang chuoi sang mang jsonArray
+                    JSONArray jsonArray = json.getJSONArray("list");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject tkObject = jsonArray.getJSONObject(i);
+                        String MaTK = tkObject.getString("MaTK");
+                        String TenTK = tkObject.getString("TenTK");
+                        String MatKhauTK = tkObject.getString("MatKhauTK");
+                        int Trangthai = tkObject.getInt("trangThai");
+                    // Thêm vào ArrayList
+                    //xem lai trang thai
+                    list.add(new TaiKhoanDTO(MaTK, TenTK, MatKhauTK, Trangthai));
+        }
+                    
+                    return list;
+                   
+        }
+                
+                    
+        return new ArrayList<>();
+    }
+    
+    //ham thiet lap bang danh sach
+    public void setUp()
+    {
+        
+        DefaultTableModel model = (DefaultTableModel) jTableTK.getModel();
+        model.setRowCount(0);
+        for(TaiKhoanDTO taikhoan : getList("ListTaiKhoan"))
+        {
+            System.out.println(taikhoan.getTrangThai());
+            //them tung doi tuong vao bang
+            if(taikhoan.getTrangThai()==1)
+            {
+                System.out.println(taikhoan.getTenTK());
+                model.addRow(new Object[] {taikhoan.getMaTK(),taikhoan.getTenTK(),taikhoan.getMatKhauTK()});
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,7 +109,7 @@ public class panelTaiKhoan extends javax.swing.JInternalFrame {
         cbxType = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableTK = new javax.swing.JTable();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -168,8 +233,8 @@ public class panelTaiKhoan extends javax.swing.JInternalFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableTK.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTableTK.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"TK01", "hello2", "123"},
                 {null, null, null},
@@ -187,11 +252,16 @@ public class panelTaiKhoan extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setFocusable(false);
-        jTable1.setGridColor(new java.awt.Color(0, 0, 0));
-        jTable1.setSelectionBackground(new java.awt.Color(0, 102, 255));
-        jTable1.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(jTable1);
+        jTableTK.setFocusable(false);
+        jTableTK.setGridColor(new java.awt.Color(0, 0, 0));
+        jTableTK.setSelectionBackground(new java.awt.Color(0, 102, 255));
+        jTableTK.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jTableTK.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableTKMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableTK);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -246,17 +316,39 @@ public class panelTaiKhoan extends javax.swing.JInternalFrame {
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
         // TODO add your handling code here:
-        suaTaiKhoan stk = new suaTaiKhoan();
+        
+        if(MaDT.equals("0"))
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn đối tượng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        suaTaiKhoan stk = new suaTaiKhoan(MaDT, client1, this);
         stk.setDefaultCloseOperation(stk.DISPOSE_ON_CLOSE);
         stk.setVisible(true);
     }//GEN-LAST:event_jPanel7MouseClicked
 
     private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
         // TODO add your handling code here:
-        thongTinTaiKhoan tttk = new thongTinTaiKhoan();
+        
+        if(MaDT.equals("0"))
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn đối tượng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        thongTinTaiKhoan tttk = new thongTinTaiKhoan(MaDT, client1);
         tttk.setDefaultCloseOperation(tttk.DISPOSE_ON_CLOSE);
         tttk.setVisible(true);
     }//GEN-LAST:event_jPanel9MouseClicked
+
+    private void jTableTKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTKMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel table = (DefaultTableModel) jTableTK.getModel();
+        int index = jTableTK.getSelectedRow();
+        String value = table.getValueAt(index, 0).toString();
+        MaDT = value;
+    }//GEN-LAST:event_jTableTKMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -272,7 +364,7 @@ public class panelTaiKhoan extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableTK;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

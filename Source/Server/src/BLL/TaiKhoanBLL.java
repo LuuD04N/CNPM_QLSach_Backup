@@ -19,7 +19,7 @@ public class TaiKhoanBLL {
         String taikhoan = json.getString("taikhoan");
         String matkhau = json.getString("matkhau");
         TaiKhoanDAO tkDAO = new TaiKhoanDAO();
-        for(TaiKhoanDTO x : tkDAO.getAll())
+        for(TaiKhoanDTO x : tkDAO.getList())
         {
             
             if(x.getTenTK().equals(taikhoan) && x.getMatKhauTK().equals(matkhau))
@@ -32,5 +32,65 @@ public class TaiKhoanBLL {
         }
         json1.put("trangthai","false");
         return json1.toString(0);
+    }
+    
+    public String getList()
+    {
+        TaiKhoanDAO tkDAO = new TaiKhoanDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai","true");
+//        JSONArray jsonArray = new JSONArray(tgDAO.getList());
+        json.put("list", tkDAO.getList());
+        return json.toString();
+    }
+    
+    //lay 1 tai khoan 
+    public String getTaiKhoan(String MaTG)
+    {
+        TaiKhoanDAO tkDAO = new TaiKhoanDAO();
+        JSONObject json = new JSONObject();
+        for(TaiKhoanDTO x : tkDAO.getList())
+        {
+            if(x.getMaTK().equals(MaTG))
+            {
+                json.put("Trangthai","true");
+                json.put("MaTK",x.getMaTK());
+                json.put("TenTK",x.getTenTK());
+                json.put("MatKhauTK",x.getMatKhauTK());
+                
+                break;
+            }
+        }
+        
+        return json.toString();
+    }
+    
+    public String themTK(TaiKhoanDTO tk)
+    {
+        TaiKhoanDAO tkDAO = new TaiKhoanDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai", "true");
+        json.put("ketqua",tkDAO.themTK(tk));
+        return json.toString();
+    }
+    
+    //ham sua tac gia va tra ve trang thai
+    public String suaTK(TaiKhoanDTO tk)
+    {
+        TaiKhoanDAO tkDAO = new TaiKhoanDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai", "true");
+        json.put("ketqua",tkDAO.suaTK(tk));
+        return json.toString();
+    }
+    
+    //ham xoa tac gia va tra ve trang thai
+    public String xoaTK(TaiKhoanDTO tk)
+    {
+        TaiKhoanDAO tkDAO = new TaiKhoanDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai", "true");
+        json.put("ketqua",tkDAO.xoaTK(tk));
+        return json.toString();
     }
 }

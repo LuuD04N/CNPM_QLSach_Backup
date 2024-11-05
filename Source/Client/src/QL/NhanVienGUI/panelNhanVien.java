@@ -4,7 +4,23 @@
  */
 package QL.NhanVienGUI;
 
+import Client.Client;
+import DTO.NhanVienDTO;
+import com.formdev.flatlaf.FlatLightLaf;
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
+import java.sql.Date;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -15,13 +31,74 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
     /**
      * Creates new form panelNhanVien
      */
-    public panelNhanVien() {
+    private String MaDT = "0";
+    private static Client client1;
+    public panelNhanVien(Client client) {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        client1 = client;
+        setUp();
     }
 
+    //ham lay danh sách
+    private ArrayList<NhanVienDTO> getList(String yeucau)
+    {
+        JSONObject json;
+        
+        switch (yeucau) {
+            case "ListNhanVien": 
+                    ArrayList<NhanVienDTO> list = new ArrayList<NhanVienDTO>();
+                    json = new JSONObject(client1.getList(yeucau));
+                    //chuyen mang chuoi sang mang jsonArray
+                    JSONArray jsonArray = json.getJSONArray("list");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject nvObject = jsonArray.getJSONObject(i);
+                        String MaNV = nvObject.getString("maNV");
+                        String Hovaten = nvObject.getString("hoVaTen");
+                        String Ngaysinh = Date.valueOf(nvObject.getString("ngaySinh"));
+                        String GioiTinh = nvObject.getString("gioiTinh");
+                        String Email = nvObject.getString("email");
+                        String DiaChi = nvObject.getString("diaChi");
+                        String MaTK = nvObject.getString("maTK");
+                        String MaVT = nvObject.getString("maVT");
+                        int Trangthai = nvObject.getInt("trangThai");
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    
+                        
+                      
+                    // Thêm vào ArrayList
+                    //xem lai trang thai
+                    list.add(new NhanVienDTO(MaNV, Hovaten, Ngaysinh, GioiTinh, DiaChi, Email, DiaChi, MaTK, MaVT, Trangthai));
+        }
+                    
+                    return list;
+                   
+        }
+                
+                    
+        return new ArrayList<>();
+    }
+    
+    //ham thiet lap bang danh sach
+    public void setUp()
+    {
+        
+        DefaultTableModel model = (DefaultTableModel) jTableNV.getModel();
+        model.setRowCount(0);
+        for(NhanVienDTO nhanvien : getList("ListNhanVien"))
+        {
+            System.out.println(nhanvien.getTrangThai());
+            //them tung doi tuong vao bang
+            if(nhanvien.getTrangThai()==1)
+            {
+                System.out.println(nhanvien.getHoVaTen());
+                model.addRow(new Object[] {nhanvien.getMaNV(),nhanvien.getHoVaTen(),nhanvien.getNgaySinh(),nhanvien.getGioiTinh(),nhanvien.getEmail(),nhanvien.getDiaChi()});
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,16 +110,16 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
+        ThemButton = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
+        SuaButton = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
+        XoaButton = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
+        ChiTietButton = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
@@ -50,16 +127,16 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
         cbxType = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableNV = new javax.swing.JTable();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
+        ThemButton.setBackground(new java.awt.Color(255, 255, 255));
+        ThemButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel7MouseClicked(evt);
+                ThemButtonMouseClicked(evt);
             }
         });
 
@@ -70,32 +147,32 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Thêm");
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        javax.swing.GroupLayout ThemButtonLayout = new javax.swing.GroupLayout(ThemButton);
+        ThemButton.setLayout(ThemButtonLayout);
+        ThemButtonLayout.setHorizontalGroup(
+            ThemButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ThemButtonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(jPanel7Layout.createSequentialGroup()
+            .addGroup(ThemButtonLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addContainerGap(18, Short.MAX_VALUE))
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        ThemButtonLayout.setVerticalGroup(
+            ThemButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ThemButtonLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2))
         );
 
-        jPanel9.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel9.addMouseListener(new java.awt.event.MouseAdapter() {
+        SuaButton.setBackground(new java.awt.Color(255, 255, 255));
+        SuaButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel9MouseClicked(evt);
+                SuaButtonMouseClicked(evt);
             }
         });
 
@@ -106,29 +183,34 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Sửa");
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
+        javax.swing.GroupLayout SuaButtonLayout = new javax.swing.GroupLayout(SuaButton);
+        SuaButton.setLayout(SuaButtonLayout);
+        SuaButtonLayout.setHorizontalGroup(
+            SuaButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SuaButtonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(jPanel9Layout.createSequentialGroup()
+            .addGroup(SuaButtonLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(jLabel3)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
+        SuaButtonLayout.setVerticalGroup(
+            SuaButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SuaButtonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4))
         );
 
-        jPanel10.setBackground(new java.awt.Color(255, 255, 255));
+        XoaButton.setBackground(new java.awt.Color(255, 255, 255));
+        XoaButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                XoaButtonMouseClicked(evt);
+            }
+        });
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/iconxoa.jpg"))); // NOI18N
@@ -137,32 +219,32 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Xóa");
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+        javax.swing.GroupLayout XoaButtonLayout = new javax.swing.GroupLayout(XoaButton);
+        XoaButton.setLayout(XoaButtonLayout);
+        XoaButtonLayout.setHorizontalGroup(
+            XoaButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(XoaButtonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(jPanel10Layout.createSequentialGroup()
+            .addGroup(XoaButtonLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(jLabel5)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+        XoaButtonLayout.setVerticalGroup(
+            XoaButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(XoaButtonLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6))
         );
 
-        jPanel11.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel11.addMouseListener(new java.awt.event.MouseAdapter() {
+        ChiTietButton.setBackground(new java.awt.Color(255, 255, 255));
+        ChiTietButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel11MouseClicked(evt);
+                ChiTietButtonMouseClicked(evt);
             }
         });
 
@@ -173,22 +255,22 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Chi tiết");
 
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
+        javax.swing.GroupLayout ChiTietButtonLayout = new javax.swing.GroupLayout(ChiTietButton);
+        ChiTietButton.setLayout(ChiTietButtonLayout);
+        ChiTietButtonLayout.setHorizontalGroup(
+            ChiTietButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ChiTietButtonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(jPanel11Layout.createSequentialGroup()
+            .addGroup(ChiTietButtonLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(jLabel7)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
+        ChiTietButtonLayout.setVerticalGroup(
+            ChiTietButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ChiTietButtonLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -201,21 +283,21 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ThemButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(SuaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(XoaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ChiTietButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(128, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(XoaButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(ThemButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(SuaButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(ChiTietButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
@@ -247,8 +329,8 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableNV.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTableNV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"NV01", "ng van a", "1/1/1", "nam", "12 ng trãi"},
                 {null, null, null, null, null},
@@ -267,11 +349,16 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setFocusable(false);
-        jTable1.setGridColor(new java.awt.Color(0, 0, 0));
-        jTable1.setSelectionBackground(new java.awt.Color(0, 102, 255));
-        jTable1.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(jTable1);
+        jTableNV.setFocusable(false);
+        jTableNV.setGridColor(new java.awt.Color(0, 0, 0));
+        jTableNV.setSelectionBackground(new java.awt.Color(0, 102, 255));
+        jTableNV.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jTableNV.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableNVMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableNV);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -324,29 +411,80 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
+    private void ThemButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ThemButtonMouseClicked
         // TODO add your handling code here:
-        themNhanVien tnv = new themNhanVien();
-        tnv.setDefaultCloseOperation(tnv.DISPOSE_ON_CLOSE);
-        tnv.setVisible(true);
-    }//GEN-LAST:event_jPanel7MouseClicked
+//        themNhanVien tnv = new themNhanVien();
+//        tnv.setDefaultCloseOperation(tnv.DISPOSE_ON_CLOSE);
+//        tnv.setVisible(true);
+    }//GEN-LAST:event_ThemButtonMouseClicked
 
-    private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
+    private void SuaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SuaButtonMouseClicked
         // TODO add your handling code here:
+        //neu nhu chua chon doi tuong thi khong co 
+        if(MaDT.equals("0"))
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn đối tượng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
         suaNhanVien snv = new suaNhanVien();
         snv.setDefaultCloseOperation(snv.DISPOSE_ON_CLOSE);
         snv.setVisible(true);
-    }//GEN-LAST:event_jPanel9MouseClicked
+    }//GEN-LAST:event_SuaButtonMouseClicked
 
-    private void jPanel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseClicked
+    private void ChiTietButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChiTietButtonMouseClicked
         // TODO add your handling code here:
+        if(MaDT.equals("0"))
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn đối tượng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else
+        {
         thongTinNhanVien ttnv = new thongTinNhanVien();
         ttnv.setDefaultCloseOperation(ttnv.DISPOSE_ON_CLOSE);
         ttnv.setVisible(true);
-    }//GEN-LAST:event_jPanel11MouseClicked
+        }
+    }//GEN-LAST:event_ChiTietButtonMouseClicked
+
+    private void jTableNVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableNVMouseClicked
+        // TODO add your handling code here:
+         // TODO add your handling code here:
+        DefaultTableModel table = (DefaultTableModel) jTableNV.getModel();
+        int index = jTableNV.getSelectedRow();
+        String value = table.getValueAt(index, 0).toString();
+        MaDT = value;
+    }//GEN-LAST:event_jTableNVMouseClicked
+
+    private void XoaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_XoaButtonMouseClicked
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        if(MaDT.equals("0"))
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn đối tượng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        JSONObject json = new JSONObject();
+        json.put("method","DELETENV");
+        json.put("MaDT",MaDT);
+        JSONObject json1 = new JSONObject(client1.xoaDT(json.toString()));
+        if(json1.getString("ketqua").equals("true"))
+        {
+            JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            setUp();
+            
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Xóa không thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_XoaButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel ChiTietButton;
+    private javax.swing.JPanel SuaButton;
+    private javax.swing.JPanel ThemButton;
+    private javax.swing.JPanel XoaButton;
     public javax.swing.JComboBox<String> cbxType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -357,15 +495,11 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableNV;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

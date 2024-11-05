@@ -12,6 +12,7 @@ import BLL.NhaXuatBanBLL;
 import BLL.TheLoaiBLL;
 import DTO.TacGiaDTO;
 import DTO.NhaXuatBanDTO;
+import DTO.TaiKhoanDTO;
 import DTO.TheLoaiDTO;
 import java.io.IOException;
 import java.io.InputStream;
@@ -190,6 +191,17 @@ public class ClientHandle implements Runnable{
                     String MaTL1 = json.getString("MaTL");
                     TheLoaiDTO tlDTO3 = new TheLoaiDTO(MaTL1, "", 0);
                     sendMessage(String.valueOf(tlBLL4.xoaTheLoai(tlDTO3)));
+                    break;
+                    
+            //Xu ly tai khoan
+            case "ListTaiKhoan":
+                    TaiKhoanBLL tkBLL1 = new TaiKhoanBLL();
+                    sendMessage(String.valueOf(tkBLL1.getList()));
+                    break;
+            case "UPDATETK":
+                    TaiKhoanBLL tkBLL2 = new TaiKhoanBLL();
+                    TaiKhoanDTO tkDTO = new TaiKhoanDTO(json.getString("MaTK"),json.getString("TenTK"),json.getString("MatKhauTK"),1);
+                    sendMessage(String.valueOf(tkBLL2.suaTK(tkDTO)));
                     break;
         }
     }

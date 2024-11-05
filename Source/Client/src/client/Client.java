@@ -82,6 +82,7 @@ public class Client {
                 return guiXoaNXB(data);
             case "DELETETL":
                 return guiXoaTL(data);
+            
         }
         return "";
     }
@@ -182,7 +183,8 @@ public class Client {
                 return guiSuaNXB(data);
             case "UPDATETL":
                 return guiSuaTL(data);
- 
+            case "UPDATETK":
+                return guiSuaTK(data);
         }
         return "";
     }
@@ -280,6 +282,36 @@ public class Client {
 
         return "";
     }
+    
+     private String guiSuaTK(String data)
+    {
+        JSONObject json = new JSONObject(data);
+        String yeucau = json.getString("method");
+        try {
+             ClientListener client = new ClientListener(socket);
+             Thread thread = new Thread(client);
+             json.put("method",yeucau);
+             json.put("MaTK",json.getString("MaTK"));
+             json.put("TenTK",json.getString("TenTK"));
+             json.put("MatKhauTK",json.getString("MatKhauTK"));
+             OutputStream output;
+             output = socket.getOutputStream();
+             output.write((json.toString()).getBytes());
+             output.flush();
+             thread.start();
+             thread.join();
+             return client.result;
+         } 
+         catch (InterruptedException ex) {
+                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+             }
+         catch (IOException ex) {
+             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+         }
+
+        return "";
+    }
+    
 //ham xu li yeu cau them doi tuong
    public String themDT(String data)
    {
