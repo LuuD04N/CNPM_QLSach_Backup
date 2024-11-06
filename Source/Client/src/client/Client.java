@@ -84,7 +84,37 @@ public class Client {
                 return guiXoaTL(data);
             case "DELETESP":
                  return guiXoaSP(data);
+            case "DELETELKM":
+                return guiXoaLKM(data);
         }
+        return "";
+    }
+    
+    //ham gui yeu cau xoa doi tuong loai khuyen mai qua server
+    private String guiXoaLKM(String data)
+    {
+        JSONObject json = new JSONObject(data);
+        String yeucau = json.getString("method");
+        try {
+             ClientListener client = new ClientListener(socket);
+             Thread thread = new Thread(client);
+             json.put("method",yeucau);
+             json.put("MaLoaiKM",json.getString("MaLoaiKM"));
+             OutputStream output;
+             output = socket.getOutputStream();
+             output.write((json.toString()).getBytes());
+             output.flush();
+             thread.start();
+             thread.join();
+             return client.result;
+         } 
+         catch (InterruptedException ex) {
+                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+             }
+         catch (IOException ex) {
+             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+         }
+
         return "";
     }
     
@@ -214,7 +244,39 @@ public class Client {
                 return guiSuaTL(data);
             case "UPDATESP":
                 return guiSuaSTL(data);
+            case "UPDATELKM":
+                return guiSuaLKM(data);
         }
+        return "";
+    }
+    
+    //ham gui yeu cau sua doi tuong loai khuyen mai toi server
+    private String guiSuaLKM(String data)
+    {
+        JSONObject json = new JSONObject(data);
+        String yeucau = json.getString("method");
+        try {
+             ClientListener client = new ClientListener(socket);
+             Thread thread = new Thread(client);
+             json.put("method",yeucau);
+             json.put("MaLoaiKM",json.getString("MaLoaiKM"));
+             json.put("TenLoaiKM",json.getString("TenLoaiKM"));
+             json.put("Phantram",json.getInt("Phantram"));
+             OutputStream output;
+             output = socket.getOutputStream();
+             output.write((json.toString()).getBytes());
+             output.flush();
+             thread.start();
+             thread.join();
+             return client.result;
+         } 
+         catch (InterruptedException ex) {
+                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+             }
+         catch (IOException ex) {
+             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+         }
+
         return "";
     }
     
@@ -359,10 +421,42 @@ public class Client {
             case "PUTTLSP":
                 guiThemTLSP(data);
                 return "thanhcong";
+            case "PUTLKM":
+                guiThemLKM(data);
+                return "thanhcong";
        }
        return "";
    }
    
+   //ham gui them the loai khuyen mai toi server
+   public String guiThemLKM(String data)
+   {
+       JSONObject json = new JSONObject(data);
+       String yeucau = json.getString("method");
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            json.put("method",yeucau);
+            json.put("MaLoaiKM",json.getString("MaLoaiKM"));
+            json.put("TenLoaiKM", json.getString("TenLoaiKM"));
+            json.put("Phantram",json.getInt("Phantram"));
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return "";
+   }
    
    //ham gui them the loai cua san pham toi server
    public String guiThemTLSP(String data)

@@ -14,6 +14,7 @@ import BLL.VaiTroBLL;
 import BLL.NhaXuatBanBLL;
 import BLL.SachTheLoaiBLL;
 import BLL.TheLoaiBLL;
+import DTO.LoaiKhuyenMaiDTO;
 import DTO.TacGiaDTO;
 import DTO.NhaXuatBanDTO;
 import DTO.SachTheLoaiDTO;
@@ -285,6 +286,27 @@ public class ClientHandle implements Runnable{
                     LoaiKhuyenMaiBLL lkmBLL = new LoaiKhuyenMaiBLL();
                     sendMessage(String.valueOf(lkmBLL.getList()));
                     break;
+              case "PUTLKM":
+                    LoaiKhuyenMaiBLL lkmBLL1 = new LoaiKhuyenMaiBLL();
+                    String MaloaiKM = json.getString("MaLoaiKM");
+                    String TenLoaiKM = json.getString("TenLoaiKM");
+                    int phantram = json.getInt("Phantram");
+                    LoaiKhuyenMaiDTO lkmDTO = new LoaiKhuyenMaiDTO(MaloaiKM,TenLoaiKM,phantram,1);
+                    sendMessage(String.valueOf(lkmBLL1.themLKM(lkmDTO)));
+                    break;
+              case "UPDATELKM":
+                    LoaiKhuyenMaiBLL lkmBLL2 = new LoaiKhuyenMaiBLL();
+                    String MaloaiKM1 = json.getString("MaLoaiKM");
+                    String TenLoaiKM1 = json.getString("TenLoaiKM");
+                    int phantram1 = json.getInt("Phantram");
+                    LoaiKhuyenMaiDTO lkmDTO1 = new LoaiKhuyenMaiDTO(MaloaiKM1,TenLoaiKM1,phantram1,1);
+                    sendMessage(String.valueOf(lkmBLL2.suaLKM(lkmDTO1)));
+                    break;
+              case "DELETELKM":
+                    LoaiKhuyenMaiBLL lkmBLL3 = new LoaiKhuyenMaiBLL();
+                    String MaloaiKM2 = json.getString("MaLoaiKM");
+                    LoaiKhuyenMaiDTO lkmDTO2 = new LoaiKhuyenMaiDTO(MaloaiKM2,"",0,0);
+                    sendMessage(String.valueOf(lkmBLL3.xoaLKM(lkmDTO2)));
         }
     }
 }

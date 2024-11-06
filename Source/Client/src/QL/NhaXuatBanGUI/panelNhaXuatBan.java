@@ -443,7 +443,7 @@ public class panelNhaXuatBan extends javax.swing.JInternalFrame {
         DefaultTableModel table = (DefaultTableModel) jTableNXB.getModel();
         int index = jTableNXB.getSelectedRow();
         String value = table.getValueAt(index, 0).toString();
-        MaDT = value;
+        MaDT=value;
     }//GEN-LAST:event_jTableNXBMouseClicked
 
 
