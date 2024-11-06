@@ -45,18 +45,18 @@ public class TaiKhoanBLL {
     }
     
     //lay 1 tai khoan 
-    public String getTaiKhoan(String MaTG)
+    public String getTaiKhoan(String MaTK)
     {
         TaiKhoanDAO tkDAO = new TaiKhoanDAO();
         JSONObject json = new JSONObject();
         for(TaiKhoanDTO x : tkDAO.getList())
         {
-            if(x.getMaTK().equals(MaTG))
+            if(x.getMaTK().equals(MaTK))
             {
                 json.put("Trangthai","true");
                 json.put("MaTK",x.getMaTK());
                 json.put("TenTK",x.getTenTK());
-                json.put("MatKhauTK",x.getMatKhauTK());
+                json.put("MatkhauTK",x.getMatKhauTK());
                 
                 break;
             }

@@ -45,16 +45,16 @@ public class panelTaiKhoan extends javax.swing.JInternalFrame {
         JSONObject json;
         
         switch (yeucau) {
-            case "ListTacGia": 
+            case "ListTaiKhoan": 
                     ArrayList<TaiKhoanDTO> list = new ArrayList<TaiKhoanDTO>();
                     json = new JSONObject(client1.getList(yeucau));
                     //chuyen mang chuoi sang mang jsonArray
                     JSONArray jsonArray = json.getJSONArray("list");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject tkObject = jsonArray.getJSONObject(i);
-                        String MaTK = tkObject.getString("MaTK");
-                        String TenTK = tkObject.getString("TenTK");
-                        String MatKhauTK = tkObject.getString("MatKhauTK");
+                        String MaTK = tkObject.getString("maTK");
+                        String TenTK = tkObject.getString("tenTK");
+                        String MatKhauTK = tkObject.getString("matKhauTK");
                         int Trangthai = tkObject.getInt("trangThai");
                     // Thêm vào ArrayList
                     //xem lai trang thai
@@ -236,7 +236,6 @@ public class panelTaiKhoan extends javax.swing.JInternalFrame {
         jTableTK.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jTableTK.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"TK01", "hello2", "123"},
                 {null, null, null},
                 {null, null, null}
             },

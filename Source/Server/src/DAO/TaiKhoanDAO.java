@@ -36,7 +36,7 @@ public class TaiKhoanDAO {
                 {
                     String maTK = rs.getString("MaTK");
                     String taikhoan = rs.getString("TenTK");
-                    String matkhau = rs.getString("MatKhauTK");
+                    String matkhau = rs.getString("MatkhauTK");
                     int trangthai = rs.getInt("Trangthai");
                     list.add(new TaiKhoanDTO(maTK,taikhoan,matkhau,trangthai));
                 }

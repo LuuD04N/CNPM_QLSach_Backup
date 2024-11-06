@@ -57,7 +57,7 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
                         JSONObject nvObject = jsonArray.getJSONObject(i);
                         String MaNV = nvObject.getString("maNV");
                         String Hovaten = nvObject.getString("hoVaTen");
-                        String Ngaysinh = Date.valueOf(nvObject.getString("ngaySinh"));
+                        Date Ngaysinh = Date.valueOf(nvObject.getString("ngaySinh"));
                         String GioiTinh = nvObject.getString("gioiTinh");
                         String Email = nvObject.getString("email");
                         String DiaChi = nvObject.getString("diaChi");
