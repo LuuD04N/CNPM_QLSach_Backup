@@ -162,6 +162,7 @@ public class ClientHandle implements Runnable{
                     NhaXuatBanDTO nxbDTO3 = new NhaXuatBanDTO(MaNXB1,"","","","",0);
                     sendMessage(String.valueOf(nxbBLL4.xoaNXB(nxbDTO3)));
                     break;
+                    
             // Xu li the loai
             case "ListTheLoai":
                     TheLoaiBLL tlBLL = new TheLoaiBLL();
@@ -200,9 +201,16 @@ public class ClientHandle implements Runnable{
                     break;
             case "UPDATETK":
                     TaiKhoanBLL tkBLL2 = new TaiKhoanBLL();
-                    TaiKhoanDTO tkDTO = new TaiKhoanDTO(json.getString("MaTK"),json.getString("TenTK"),json.getString("MatKhauTK"),1);
+                    TaiKhoanDTO tkDTO = new TaiKhoanDTO(json.getString("MaTK"),json.getString("TenTK"),json.getString("MatkhauTK"),1);
                     sendMessage(String.valueOf(tkBLL2.suaTK(tkDTO)));
                     break;
+            case "TaiKhoan":
+                    TaiKhoanBLL tkbll3 = new TaiKhoanBLL();
+                    String MaTK = json.getString("MaTK");
+                    sendMessage(String.valueOf(tkbll3.getTaiKhoan(MaTK)));
+                    break;
+                    
+            
         }
     }
 }

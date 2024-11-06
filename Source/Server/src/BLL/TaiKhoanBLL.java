@@ -11,6 +11,7 @@ package BLL;
 import DAO.TaiKhoanDAO;
 import DTO.TaiKhoanDTO;
 import org.json.JSONObject;
+
 public class TaiKhoanBLL {
     public String login(String data)
     {
@@ -39,7 +40,6 @@ public class TaiKhoanBLL {
         TaiKhoanDAO tkDAO = new TaiKhoanDAO();
         JSONObject json = new JSONObject();
         json.put("Trangthai","true");
-//        JSONArray jsonArray = new JSONArray(tgDAO.getList());
         json.put("list", tkDAO.getList());
         return json.toString();
     }
@@ -64,16 +64,16 @@ public class TaiKhoanBLL {
         
         return json.toString();
     }
-    
-    public String themTK(TaiKhoanDTO tk)
-    {
-        TaiKhoanDAO tkDAO = new TaiKhoanDAO();
-        JSONObject json = new JSONObject();
-        json.put("Trangthai", "true");
-        json.put("ketqua",tkDAO.themTK(tk));
-        return json.toString();
-    }
-    
+//    
+//    public String themTK(TaiKhoanDTO tk)
+//    {
+//        TaiKhoanDAO tkDAO = new TaiKhoanDAO();
+//        JSONObject json = new JSONObject();
+//        json.put("Trangthai", "true");
+//        json.put("ketqua",tkDAO.themTK(tk));
+//        return json.toString();
+//    }
+//    
     //ham sua tac gia va tra ve trang thai
     public String suaTK(TaiKhoanDTO tk)
     {
@@ -83,14 +83,14 @@ public class TaiKhoanBLL {
         json.put("ketqua",tkDAO.suaTK(tk));
         return json.toString();
     }
-    
-    //ham xoa tac gia va tra ve trang thai
-    public String xoaTK(TaiKhoanDTO tk)
-    {
-        TaiKhoanDAO tkDAO = new TaiKhoanDAO();
-        JSONObject json = new JSONObject();
-        json.put("Trangthai", "true");
-        json.put("ketqua",tkDAO.xoaTK(tk));
-        return json.toString();
-    }
+//    
+//    //ham xoa tai khoan va tra ve trang thai
+//    public String xoaTK(TaiKhoanDTO tk)
+//    {
+//        TaiKhoanDAO tkDAO = new TaiKhoanDAO();
+//        JSONObject json = new JSONObject();
+//        json.put("Trangthai", "true");
+//        json.put("ketqua",tkDAO.xoaTK(tk));
+//        return json.toString();
+//    }
 }

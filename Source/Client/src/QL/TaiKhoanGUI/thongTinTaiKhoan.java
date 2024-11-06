@@ -32,7 +32,7 @@ public class thongTinTaiKhoan extends javax.swing.JFrame {
         String data = client1.getDoiTuong("TaiKhoan",MaDT1);
         JSONObject json = new JSONObject(data);
         TenTK.setText(json.getString("TenTK"));
-        MaTK.setText(json.getString("MaTG"));
+        MaTK.setText(json.getString("MaTK"));
         MatKhauTK.setText(json.getString("MatkhauTK"));
     }
 
@@ -85,11 +85,6 @@ public class thongTinTaiKhoan extends javax.swing.JFrame {
 
         MaTK.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         MaTK.setEnabled(false);
-        MaTK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MaTKActionPerformed(evt);
-            }
-        });
 
         MatKhauTK.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         MatKhauTK.setEnabled(false);
@@ -106,6 +101,11 @@ public class thongTinTaiKhoan extends javax.swing.JFrame {
         jButton1.setText("Xong");
         jButton1.setBorder(null);
         jButton1.setBorderPainted(false);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -169,13 +169,16 @@ public class thongTinTaiKhoan extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MaTKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MaTKActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MaTKActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        dispose();
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments

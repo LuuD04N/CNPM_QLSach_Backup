@@ -293,7 +293,7 @@ public class Client {
              json.put("method",yeucau);
              json.put("MaTK",json.getString("MaTK"));
              json.put("TenTK",json.getString("TenTK"));
-             json.put("MatKhauTK",json.getString("MatKhauTK"));
+             json.put("MatkhauTK",json.getString("MatkhauTK"));
              OutputStream output;
              output = socket.getOutputStream();
              output.write((json.toString()).getBytes());
