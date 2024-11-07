@@ -16,7 +16,9 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
-import java.sql.Date;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.text.ParseException;
@@ -48,43 +50,44 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
         JSONObject json;
         
         switch (yeucau) {
-            case "ListNhanVien": 
+            case "ListKhuyenMai": 
+                
                     ArrayList<NhanVienDTO> list = new ArrayList<NhanVienDTO>();
                     json = new JSONObject(client1.getList(yeucau));
+                    System.out.println(json);;
                     //chuyen mang chuoi sang mang jsonArray
                     JSONArray jsonArray = json.getJSONArray("list");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject nvObject = jsonArray.getJSONObject(i);
                         String MaNV = nvObject.getString("maNV");
-                        String Hovaten = nvObject.getString("hoVaTen");
-                        Date Ngaysinh = Date.valueOf(nvObject.getString("ngaySinh"));
-                        String GioiTinh = nvObject.getString("gioiTinh");
+                        String HoVaTen = nvObject.getString("hovaten");
+                        String NgaySinh = nvObject.getString("ngaysinh");
+                        String GioiTinh = nvObject.getString("gioitinh");
+                        String SoDienThoai = nvObject.getString("sodienthoai");
                         String Email = nvObject.getString("email");
-                        String DiaChi = nvObject.getString("diaChi");
-                        String MaTK = nvObject.getString("maTK");
-                        String MaVT = nvObject.getString("maVT");
+                        String DiaChi = nvObject.getString("diachi");
+                        String MaTK = nvObject.getString("matk");
+                        String MaVT = nvObject.getString("mavt");
                         int Trangthai = nvObject.getInt("trangThai");
-                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                    
-                        
-                      
-                    // Thêm vào ArrayList
-                    //xem lai trang thai
-                    list.add(new NhanVienDTO(MaNV, Hovaten, Ngaysinh, GioiTinh, DiaChi, Email, DiaChi, MaTK, MaVT, Trangthai));
+                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");       
+            try {
+                Date ngaySinh = formatter.parse(NgaySinh);
+                // Thêm vào ArrayList
+                //xem lai trang thai
+                list.add(new NhanVienDTO(MaNV,  HoVaTen,  ngaySinh,  GioiTinh,  SoDienThoai, Email, DiaChi, MaTK, MaVT, Trangthai));
+            } catch (ParseException ex) {
+                Logger.getLogger(panelNhanVien.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-                    
                     return list;
                    
-        }
-                
-                    
+        }    
         return new ArrayList<>();
     }
     
     //ham thiet lap bang danh sach
     public void setUp()
     {
-        
         DefaultTableModel model = (DefaultTableModel) jTableNV.getModel();
         model.setRowCount(0);
         for(NhanVienDTO nhanvien : getList("ListNhanVien"))
@@ -93,6 +96,8 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
             //them tung doi tuong vao bang
             if(nhanvien.getTrangThai()==1)
             {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                String ngaySinh = formatter.format(nhanvien.getNgaySinh());
                 System.out.println(nhanvien.getHoVaTen());
                 model.addRow(new Object[] {nhanvien.getMaNV(),nhanvien.getHoVaTen(),nhanvien.getNgaySinh(),nhanvien.getGioiTinh(),nhanvien.getEmail(),nhanvien.getDiaChi()});
             }
@@ -364,17 +369,17 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(27, 27, 27))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -413,9 +418,9 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
 
     private void ThemButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ThemButtonMouseClicked
         // TODO add your handling code here:
-//        themNhanVien tnv = new themNhanVien();
-//        tnv.setDefaultCloseOperation(tnv.DISPOSE_ON_CLOSE);
-//        tnv.setVisible(true);
+        themNhanVien tnv = new themNhanVien(client1, this);
+        tnv.setDefaultCloseOperation(tnv.DISPOSE_ON_CLOSE);
+        tnv.setVisible(true);
     }//GEN-LAST:event_ThemButtonMouseClicked
 
     private void SuaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SuaButtonMouseClicked
@@ -427,7 +432,7 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
             return;
         }
         
-        suaNhanVien snv = new suaNhanVien();
+        suaNhanVien snv = new suaNhanVien(MaDT, client1, this);
         snv.setDefaultCloseOperation(snv.DISPOSE_ON_CLOSE);
         snv.setVisible(true);
     }//GEN-LAST:event_SuaButtonMouseClicked
@@ -440,7 +445,7 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
         }
         else
         {
-        thongTinNhanVien ttnv = new thongTinNhanVien();
+        thongTinNhanVien ttnv = new thongTinNhanVien(MaDT, client1);
         ttnv.setDefaultCloseOperation(ttnv.DISPOSE_ON_CLOSE);
         ttnv.setVisible(true);
         }

@@ -8,7 +8,7 @@ package DTO;
  *
  * @author PC
  */
-import java.sql.Date;
+import java.util.Date;
 
 public class NhanVienDTO {
     private String maNV;           // Mã Nhân Viên (Varchar)

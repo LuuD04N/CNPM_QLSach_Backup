@@ -12,6 +12,7 @@ import BLL.NhaXuatBanBLL;
 import BLL.TheLoaiBLL;
 import DTO.TacGiaDTO;
 import DTO.NhaXuatBanDTO;
+import DTO.NhanVienDTO;
 import DTO.TaiKhoanDTO;
 import DTO.TheLoaiDTO;
 import java.io.IOException;
@@ -19,6 +20,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.json.JSONObject;
 /**
  *
@@ -210,7 +213,70 @@ public class ClientHandle implements Runnable{
                     sendMessage(String.valueOf(tkbll3.getTaiKhoan(MaTK)));
                     break;
                     
-            
-        }
-    }
+            //Xu ly nhan vien
+            case "ListNhanVien":
+                    NhanVienBLL nvBLL1 = new NhanVienBLL();
+                    sendMessage(String.valueOf(nvBLL1.getList()));
+                    break;
+            case "NhanVien":
+                    NhanVienBLL nvBLL2 = new NhanVienBLL();
+                    String MaNV = json.getString("MaNV");
+                    sendMessage(String.valueOf(nvBLL2.getNhanVien(MaNV)));
+                    break;
+            case "PUTNV":
+                    NhanVienBLL nvBLL3 = new NhanVienBLL();
+                     try {
+                        String ngaySinhStr = json.getString("NgaySinh");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng này phải khớp với định dạng của chuỗi ngày sinh trong JSON
+                        java.util.Date parsedDate = dateFormat.parse(ngaySinhStr);
+                        Date ngaySinh = new Date(parsedDate.getTime()); // Chuyển đổi sang java.sql.Date
+        
+                        NhanVienDTO nvDTO = new NhanVienDTO(
+                            json.getString("MaNV"), 
+                            json.getString("Hovaten"), 
+                            ngaySinh, 
+                            json.getString("GioiTinh"), 
+                            json.getString("Sodienthoai"), 
+                            json.getString("Email"), 
+                            json.getString("DiaChi"), 
+                            json.getString("MaTK"), 
+                            json.getString("MaVT"), 1
+                        );
+                        sendMessage(String.valueOf(nvBLL3.themNV(nvDTO))); 
+                        break;
+                    } catch (Exception e) {
+                       e.printStackTrace();
+                    }
+            case "UPDATENV":
+                    NhanVienBLL nvBLL4 = new NhanVienBLL();
+                    try {
+                        String ngaySinhStr = json.getString("NgaySinh");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng này phải khớp với định dạng của chuỗi ngày sinh trong JSON
+                        java.util.Date parsedDate = dateFormat.parse(ngaySinhStr);
+                        Date ngaySinh = new Date(parsedDate.getTime()); // Chuyển đổi sang java.sql.Date
+        
+                        NhanVienDTO nvDTO = new NhanVienDTO(
+                            json.getString("MaNV"), 
+                            json.getString("Hovaten"), 
+                            ngaySinh, 
+                            json.getString("GioiTinh"), 
+                            json.getString("Sodienthoai"), 
+                            json.getString("Email"), 
+                            json.getString("DiaChi"), 
+                            json.getString("MaTK"), 
+                            json.getString("MaVT"), 1
+                        );
+                        sendMessage(String.valueOf(nvBLL4.suaNV(nvDTO))); 
+                        break;
+                    } catch (Exception e) {
+                       e.printStackTrace();
+                    }
+            case "DELETENV":
+                NhanVienBLL nvBLL5 = new NhanVienBLL();
+                String MaNV1 = json.getString("MaNV");
+                NhanVienDTO nvDTO = new NhanVienDTO(MaNV1, "", null, "", "", "", "", "", "", 0);
+                sendMessage(String.valueOf(nvBLL5.xoaNV(nvDTO)));
+                break;
+            }
+        } 
 }
