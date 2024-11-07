@@ -137,7 +137,10 @@ public class panelTheLoai extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
+        setPreferredSize(new java.awt.Dimension(976, 651));
+
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(964, 651));
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
