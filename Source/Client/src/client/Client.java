@@ -739,6 +739,7 @@ public class Client {
                 return yeucau("ListKhuyenMai");
             case "ListLoaiKhuyenMai":
                 return yeucau("ListLoaiKhuyenMai");
+            
        }
        return "";
    }
