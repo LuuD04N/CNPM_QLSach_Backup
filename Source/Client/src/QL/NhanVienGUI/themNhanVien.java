@@ -6,6 +6,8 @@ package QL.NhanVienGUI;
 
 import Client.Client;
 import com.formdev.flatlaf.FlatLightLaf;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
@@ -164,6 +166,8 @@ public class themNhanVien extends javax.swing.JFrame {
 
         jLabel9.setText("Mã nhân viên");
 
+        NgaySinh.setDateFormatString("yyyy-MM-dd");
+
         MaTK.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         MaTK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -275,14 +279,16 @@ public class themNhanVien extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // Lấy dữ liệu từ các trường nhập liệu
+       // Lấy dữ liệu từ các trường nhập liệu
     String tenNV = HoVaTen.getText();
     String maNV = MaNV.getText();
     String diaChiNV = DiaChi.getText();
     String emailNV = email.getText();
     String sdtNV = soDienThoai.getText();
     String vaitro = MaVT.getSelectedItem().toString();
-    String ngaySinh = NgaySinh.getDateFormatString();  // Định dạng "yyyy-MM-dd"
+    Date layngaySinh = NgaySinh.getDate();  // Định dạng "yyyy-MM-dd"
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    String ngaySinh = sdf.format(layngaySinh);
     String gioiTinh = GioiTinh.getSelectedItem().toString();  // giả định là combo box
     String maTK = MaTK.getText();
 //    String maVT = MaVT.getText();
@@ -312,6 +318,7 @@ public class themNhanVien extends javax.swing.JFrame {
         panelNhanVien1.setUp();
         
         this.setVisible(false);
+    
     }
     }//GEN-LAST:event_jButton1ActionPerformed
 
