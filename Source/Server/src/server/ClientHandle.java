@@ -4,6 +4,7 @@
  */
 package server;
 
+import BLL.HoaDonBLL;
 import BLL.NhanVienBLL;
 import BLL.TacGiaBLL;
 import BLL.TaiKhoanBLL;
@@ -191,6 +192,19 @@ public class ClientHandle implements Runnable{
                     TheLoaiDTO tlDTO3 = new TheLoaiDTO(MaTL1, "", 0);
                     sendMessage(String.valueOf(tlBLL4.xoaTheLoai(tlDTO3)));
                     break;
+                    
+            // Xu li hoa don
+            case "ListHoaDon":
+                    HoaDonBLL hdBLL = new HoaDonBLL();
+                    sendMessage(String.valueOf(hdBLL.getList()));
+                    break;
+            case "HoaDon":
+                    //lay doi tuong de xem thong tin the loai
+                    HoaDonBLL hdBLL1 = new HoaDonBLL();
+                    String MaHD = json.getString("MaHD");
+                    sendMessage(String.valueOf(hdBLL1.getHoaDon(MaHD)));
+                    break;
+                    
         }
     }
 }

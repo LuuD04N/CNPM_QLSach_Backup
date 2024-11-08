@@ -5,7 +5,7 @@
 package GUI;
 
 import QL.NhanVienGUI.panelNhanVien;
-import BH.HoaDonGUI.panelHoaDon;
+import QL.HoaDonGUI.panelHoaDon;
 import Client.Client;
 import DTO.TacGiaDTO;
 import QL.NhaXuatBanGUI.panelNhaXuatBan;
@@ -886,7 +886,7 @@ Color customColor = Color.decode("#C2F2E9");
         panel11.setBackground(Color.WHITE);
         panelTT.setBackground(Color.WHITE);
         panel12.setBackground(Color.WHITE);
-        panelHoaDon hd = new panelHoaDon();
+        panelHoaDon hd = new panelHoaDon(client1);
         panelChange.removeAll();
         panelChange.add(hd).setVisible(true);
     }//GEN-LAST:event_panel8MouseClicked
