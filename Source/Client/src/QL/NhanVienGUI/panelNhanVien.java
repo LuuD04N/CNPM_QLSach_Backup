@@ -50,7 +50,7 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
         JSONObject json;
         
         switch (yeucau) {
-            case "ListKhuyenMai": 
+            case "ListNhanVien": 
                 
                     ArrayList<NhanVienDTO> list = new ArrayList<NhanVienDTO>();
                     json = new JSONObject(client1.getList(yeucau));
@@ -60,14 +60,14 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject nvObject = jsonArray.getJSONObject(i);
                         String MaNV = nvObject.getString("maNV");
-                        String HoVaTen = nvObject.getString("hovaten");
-                        String NgaySinh = nvObject.getString("ngaysinh");
-                        String GioiTinh = nvObject.getString("gioitinh");
-                        String SoDienThoai = nvObject.getString("sodienthoai");
+                        String HoVaTen = nvObject.getString("hoVaTen");
+                        String NgaySinh = nvObject.getString("ngaySinh");
+                        String GioiTinh = nvObject.getString("gioiTinh");
+                        String SoDienThoai = nvObject.getString("soDienThoai");
                         String Email = nvObject.getString("email");
-                        String DiaChi = nvObject.getString("diachi");
-                        String MaTK = nvObject.getString("matk");
-                        String MaVT = nvObject.getString("mavt");
+                        String DiaChi = nvObject.getString("diaChi");
+                        String MaTK = nvObject.getString("maTK");
+                        String MaVT = nvObject.getString("maVT");
                         int Trangthai = nvObject.getInt("trangThai");
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");       
             try {
@@ -99,7 +99,7 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 String ngaySinh = formatter.format(nhanvien.getNgaySinh());
                 System.out.println(nhanvien.getHoVaTen());
-                model.addRow(new Object[] {nhanvien.getMaNV(),nhanvien.getHoVaTen(),nhanvien.getNgaySinh(),nhanvien.getGioiTinh(),nhanvien.getEmail(),nhanvien.getDiaChi()});
+                model.addRow(new Object[] {nhanvien.getMaNV(),nhanvien.getHoVaTen(),ngaySinh,nhanvien.getGioiTinh(),nhanvien.getEmail(),nhanvien.getDiaChi()});
             }
         }
     }
