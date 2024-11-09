@@ -39,7 +39,8 @@ public class KhuyenMaiDAO {
                     Date NgayKetThuc = rs.getDate("NgayKetThuc");
                     String MaLKM = rs.getString("MaLoaiKM");
                     int Trangthai = rs.getInt("Trangthai");
-                    list.add(new KhuyenMaiDTO( MaKM,  TenKM,  NgayBatDau,  NgayKetThuc,  MaLKM, Trangthai));
+                    int PhanTramGiam = rs.getInt("PhanTramGiam");
+                    list.add(new KhuyenMaiDTO( MaKM,  TenKM,  NgayBatDau,  NgayKetThuc,  MaLKM, Trangthai,PhanTramGiam));
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(KhuyenMaiDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -51,7 +52,7 @@ public class KhuyenMaiDAO {
     public String themDT(KhuyenMaiDTO km)
     {
         java.sql.Connection conn;
-        String query = "INSERT INTO khuyenmai(MaKM,TenKM,NgayBatDau,NgayKetThuc,MaLoaiKM,Trangthai) values(?,?,?,?,?,?)";
+        String query = "INSERT INTO khuyenmai(MaKM,TenKM,NgayBatDau,NgayKetThuc,MaLoaiKM,Trangthai,PhanTramGiam) values(?,?,?,?,?,?,?)";
         conn = database.connect();
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
@@ -63,6 +64,7 @@ public class KhuyenMaiDAO {
             pstmt.setDate(4,NKT);
             pstmt.setString(5,km.getMaLoaiKM());
             pstmt.setInt(6,1);
+            pstmt.setInt(7,km.getPhanTram());
             if(pstmt.executeUpdate() > 0)
             {
                 return "true";

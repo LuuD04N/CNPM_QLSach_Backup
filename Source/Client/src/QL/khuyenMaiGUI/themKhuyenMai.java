@@ -585,6 +585,7 @@ public class themKhuyenMai extends javax.swing.JFrame {
             String dateNKT = dateFormat.format(ngayKT);
             json.put("ngayBD",dateNBD);
             json.put("ngayKT",dateNKT);
+            json.put("phanTramGiam",phanTramKM);
             JSONObject json1 = new JSONObject();
             json1.put("method","PUTCTKM");
             json1.put("maKM", maKM);

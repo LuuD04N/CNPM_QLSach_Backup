@@ -327,10 +327,11 @@ public class ClientHandle implements Runnable{
                         String maKM = json.getString("maKM");
                         String tenKM = json.getString("tenKM");
                         String maLoaiKM = json.getString("maLoaiKM");
+                        String phanTramGiam=json.getString("phanTramGiam");
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                         Date ngayBD = dateFormat.parse(json.getString("ngayBD"));
                         Date ngayKT = dateFormat.parse(json.getString("ngayKT"));
-                        sendMessage(String.valueOf(kmBLL1.themKM(new KhuyenMaiDTO(maKM,tenKM, ngayBD, ngayKT, maLoaiKM,1))));
+                        sendMessage(String.valueOf(kmBLL1.themKM(new KhuyenMaiDTO(maKM,tenKM, ngayBD, ngayKT, maLoaiKM,1,Integer.parseInt(phanTramGiam)))));
                     } catch (ParseException ex) {
                         Logger.getLogger(ClientHandle.class.getName()).log(Level.SEVERE, null, ex);
                     }

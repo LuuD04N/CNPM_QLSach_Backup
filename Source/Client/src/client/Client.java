@@ -474,6 +474,7 @@ public class Client {
             json.put("maKM",json.getString("maKM"));
             json.put("tenKM",json.getString("tenKM"));
             json.put("maLoaiKM",json.getString("maLoaiKM"));
+            json.put("phanTramGiam",json.getString("phanTramGiam"));
             json.put("ngayBD",json.getString("ngayBD"));
             json.put("ngayKT",json.getString("ngayKT"));
             OutputStream output;
