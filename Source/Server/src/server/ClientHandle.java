@@ -349,6 +349,11 @@ public class ClientHandle implements Runnable{
                    ctkmBLL.themCTKM(list,maKM);
                    sendMessage(String.valueOf(ctkmBLL.themCTKM(list,maKM)));
                    break;
+               case "DELETEKM":
+                   KhuyenMaiBLL kmBLL2 = new KhuyenMaiBLL();
+                   String maKM1 = json.getString("MaKM");
+                   sendMessage(String.valueOf(kmBLL2.xoaKM(new KhuyenMaiDTO(maKM1,"",null,null,"",0,0))));
+                   break;
         }
     }
 }

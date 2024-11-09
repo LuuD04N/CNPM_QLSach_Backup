@@ -86,7 +86,37 @@ public class Client {
                  return guiXoaSP(data);
             case "DELETELKM":
                 return guiXoaLKM(data);
+            case "DELETEKM":
+                return guiXoaKM(data);
         }
+        return "";
+    }
+    
+    //ham gui yeu cau xoa doi tuong khuyen mai qua server
+    private String guiXoaKM(String data)
+    {
+        JSONObject json = new JSONObject(data);
+        String yeucau = json.getString("method");
+        try {
+             ClientListener client = new ClientListener(socket);
+             Thread thread = new Thread(client);
+             json.put("method",yeucau);
+             json.put("MaKM",json.getString("MaKM"));
+             OutputStream output;
+             output = socket.getOutputStream();
+             output.write((json.toString()).getBytes());
+             output.flush();
+             thread.start();
+             thread.join();
+             return client.result;
+         } 
+         catch (InterruptedException ex) {
+                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+             }
+         catch (IOException ex) {
+             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+         }
+
         return "";
     }
     

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
@@ -169,6 +170,11 @@ public class panelKhuyenMai extends javax.swing.JInternalFrame {
         );
 
         jPanel25.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel25.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel25MouseClicked(evt);
+            }
+        });
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/iconxoa.jpg"))); // NOI18N
@@ -407,9 +413,18 @@ public class panelKhuyenMai extends javax.swing.JInternalFrame {
 
     private void jPanel26MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel26MouseClicked
         // TODO add your handling code here:
-        chiTietKhuyenMai ctkm = new chiTietKhuyenMai(client1,MaDT);
-        ctkm.setDefaultCloseOperation(ctkm.DISPOSE_ON_CLOSE);
-        ctkm.setVisible(true);
+        if(MaDT.equals("0"))
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn đối tượng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        else
+        {
+            chiTietKhuyenMai ctkm = new chiTietKhuyenMai(client1,MaDT);
+            ctkm.setDefaultCloseOperation(ctkm.DISPOSE_ON_CLOSE);
+            ctkm.setVisible(true);
+        }
+        
     }//GEN-LAST:event_jPanel26MouseClicked
 
     private void jPanel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel12MouseClicked
@@ -434,6 +449,30 @@ public class panelKhuyenMai extends javax.swing.JInternalFrame {
         MaDT = value;
         
     }//GEN-LAST:event_jTableKMMouseClicked
+
+    private void jPanel25MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel25MouseClicked
+        // TODO add your handling code here:
+        if(MaDT.equals("0"))
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn đối tượng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        JSONObject json = new JSONObject();
+        json.put("method","DELETEKM");
+        json.put("MaKM",MaDT);
+        json.put("Trangthai",0);
+        JSONObject json1 = new JSONObject(client1.xoaDT(json.toString()));
+        if(json1.getString("ketqua").equals("true"))
+        {
+            JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            setUp();
+            
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Xóa không thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jPanel25MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

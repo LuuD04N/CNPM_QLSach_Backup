@@ -33,4 +33,14 @@ public class KhuyenMaiBLL {
         json.put("ketqua",kmDAO.themDT(km));
         return json.toString();
     }
+    
+    //ham xoa khuyen mai va tra ve trang thai
+    public String xoaKM(KhuyenMaiDTO km)
+    {
+        KhuyenMaiDAO kmDAO = new KhuyenMaiDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai", "true");
+        json.put("ketqua",kmDAO.xoaKM(km));
+        return json.toString();
+    }
 }

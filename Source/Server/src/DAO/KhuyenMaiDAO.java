@@ -75,4 +75,24 @@ public class KhuyenMaiDAO {
         return "false";
     }
  
+    
+    public String xoaKM(KhuyenMaiDTO km)
+    {
+        java.sql.Connection conn;
+        String query = "UPDATE khuyenmai SET Trangthai=? WHERE MaKM=?";
+        conn = database.connect();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,km.getTrangThai());
+            pstmt.setString(2,km.getMaKM());
+            if(pstmt.executeUpdate() > 0)
+            {
+                return "true";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TacGiaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "false";
+        
+    }
 }
