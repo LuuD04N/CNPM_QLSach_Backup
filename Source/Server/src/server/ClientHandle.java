@@ -4,6 +4,7 @@
  */
 package server;
 
+import BLL.ChiTietKhuyenMaiBLL;
 import BLL.KhuyenMaiBLL;
 import BLL.LoaiKhuyenMaiBLL;
 import BLL.NhanVienBLL;
@@ -14,6 +15,8 @@ import BLL.VaiTroBLL;
 import BLL.NhaXuatBanBLL;
 import BLL.SachTheLoaiBLL;
 import BLL.TheLoaiBLL;
+import DAO.ChiTietKhuyenMaiDAO;
+import DTO.KhuyenMaiDTO;
 import DTO.LoaiKhuyenMaiDTO;
 import DTO.TacGiaDTO;
 import DTO.NhaXuatBanDTO;
@@ -25,7 +28,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.JSONObject;
 /**
  *
@@ -287,6 +295,7 @@ public class ClientHandle implements Runnable{
                     sendMessage(String.valueOf(lkmBLL.getList()));
                     break;
               case "PUTLKM":
+                    //them loai khuyen mai
                     LoaiKhuyenMaiBLL lkmBLL1 = new LoaiKhuyenMaiBLL();
                     String MaloaiKM = json.getString("MaLoaiKM");
                     String TenLoaiKM = json.getString("TenLoaiKM");
@@ -295,6 +304,7 @@ public class ClientHandle implements Runnable{
                     sendMessage(String.valueOf(lkmBLL1.themLKM(lkmDTO)));
                     break;
               case "UPDATELKM":
+                    //sua loai khuyen mai
                     LoaiKhuyenMaiBLL lkmBLL2 = new LoaiKhuyenMaiBLL();
                     String MaloaiKM1 = json.getString("MaLoaiKM");
                     String TenLoaiKM1 = json.getString("TenLoaiKM");
@@ -303,10 +313,36 @@ public class ClientHandle implements Runnable{
                     sendMessage(String.valueOf(lkmBLL2.suaLKM(lkmDTO1)));
                     break;
               case "DELETELKM":
+                    //xoa loai khuyen mai
                     LoaiKhuyenMaiBLL lkmBLL3 = new LoaiKhuyenMaiBLL();
                     String MaloaiKM2 = json.getString("MaLoaiKM");
                     LoaiKhuyenMaiDTO lkmDTO2 = new LoaiKhuyenMaiDTO(MaloaiKM2,"",0,0);
                     sendMessage(String.valueOf(lkmBLL3.xoaLKM(lkmDTO2)));
+                    break;
+              case "PUTKM":
+                    //them khuyen mai
+                    KhuyenMaiBLL kmBLL1 = new KhuyenMaiBLL();
+//                     json.put("method","PUTKM");
+                    try {
+                        String maKM = json.getString("maKM");
+                        String tenKM = json.getString("tenKM");
+                        String maLoaiKM = json.getString("maLoaiKM");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        Date ngayBD = dateFormat.parse(json.getString("ngayBD"));
+                        Date ngayKT = dateFormat.parse(json.getString("ngayKT"));
+                        sendMessage(String.valueOf(kmBLL1.themKM(new KhuyenMaiDTO(maKM,tenKM, ngayBD, ngayKT, maLoaiKM,1))));
+                    } catch (ParseException ex) {
+                        Logger.getLogger(ClientHandle.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
+               case "PUTCTKM":
+                   //them chi tiet khuyen mai
+                   ChiTietKhuyenMaiBLL ctkmBLL = new ChiTietKhuyenMaiBLL();
+                   String list = json.getString("list");
+                   String maKM = json.getString("maKM");
+                   ctkmBLL.themCTKM(list,maKM);
+                   sendMessage(String.valueOf(ctkmBLL.themCTKM(list,maKM)));
+                   break;
         }
     }
 }

@@ -55,7 +55,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jButton6" pref="167" max="32767" attributes="0"/>
                       <Component id="maLKM" alignment="1" max="32767" attributes="0"/>
-                      <Component id="jTextField1" max="32767" attributes="0"/>
+                      <Component id="txtTenKM" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -71,7 +71,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jDateChooser2" min="-2" pref="155" max="-2" attributes="0"/>
+                              <Component id="jDateChooserNKT" min="-2" pref="155" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="211" max="-2" attributes="0"/>
                       </Group>
@@ -115,7 +115,7 @@
                           <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField1" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="txtTenKM" min="-2" pref="30" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -143,7 +143,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jDateChooser2" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jDateChooserNKT" min="-2" pref="30" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" attributes="0">
@@ -208,7 +208,7 @@
             <Property name="text" type="java.lang.String" value="T&#xea;n khuy&#x1ebf;n m&#xe3;i"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="txtTenKM">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
@@ -247,6 +247,7 @@
             <Property name="borderPainted" type="boolean" value="false"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
           </Events>
         </Component>
@@ -294,7 +295,7 @@
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="jDateChooserNBD">
         </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser2">
+        <Component class="com.toedter.calendar.JDateChooser" name="jDateChooserNKT">
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBoxLKM">
           <Properties>

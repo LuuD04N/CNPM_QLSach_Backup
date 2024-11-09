@@ -407,7 +407,7 @@ public class panelKhuyenMai extends javax.swing.JInternalFrame {
 
     private void jPanel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel12MouseClicked
         // TODO add your handling code here:
-       themKhuyenMai tkm = new themKhuyenMai(client1);
+       themKhuyenMai tkm = new themKhuyenMai(client1,this);
        tkm.setDefaultCloseOperation(tkm.DISPOSE_ON_CLOSE);  
        tkm.setVisible(true);
     }//GEN-LAST:event_jPanel12MouseClicked

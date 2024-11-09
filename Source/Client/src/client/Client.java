@@ -424,7 +424,73 @@ public class Client {
             case "PUTLKM":
                 guiThemLKM(data);
                 return "thanhcong";
+            case "PUTKM":
+                guiThemKM(data);
+                return "thanhcong";
+            case "PUTCTKM":
+                guiThemCTKM(data);
+                return "thanhcong";
        }
+       return "";
+   }
+   
+   //ham gui them khuyen mai toi server
+   public String guiThemCTKM(String data)
+   {
+       JSONObject json = new JSONObject(data);
+       String yeucau = json.getString("method");
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            json.put("method",yeucau);
+            json.put("list",json.getString("list"));
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return "";
+   }
+   
+   //ham gui them khuyen mai toi server
+   public String guiThemKM(String data)
+   {
+       JSONObject json = new JSONObject(data);
+       String yeucau = json.getString("method");
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            json.put("method",yeucau);
+            json.put("maKM",json.getString("maKM"));
+            json.put("tenKM",json.getString("tenKM"));
+            json.put("maLoaiKM",json.getString("maLoaiKM"));
+            json.put("ngayBD",json.getString("ngayBD"));
+            json.put("ngayKT",json.getString("ngayKT"));
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
        return "";
    }
    

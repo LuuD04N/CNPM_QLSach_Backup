@@ -5,6 +5,7 @@
 package BLL;
 
 import DAO.KhuyenMaiDAO;
+import DTO.KhuyenMaiDTO;
 import org.json.JSONObject;
 
 /**
@@ -23,5 +24,13 @@ public class KhuyenMaiBLL {
         return json.toString();
     }
     
-    
+    //ham them khuyen mai va tra ve trang thai
+    public String themKM(KhuyenMaiDTO km)
+    {
+        KhuyenMaiDAO kmDAO = new KhuyenMaiDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai", "true");
+        json.put("ketqua",kmDAO.themDT(km));
+        return json.toString();
+    }
 }
