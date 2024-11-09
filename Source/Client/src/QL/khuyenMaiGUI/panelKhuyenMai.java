@@ -27,6 +27,7 @@ public class panelKhuyenMai extends javax.swing.JInternalFrame {
 
     /** Creates new form panelKhuyenMai */
     private static Client client1;
+    private String MaDT = "0";
     public panelKhuyenMai(Client client) {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
@@ -56,6 +57,7 @@ public class panelKhuyenMai extends javax.swing.JInternalFrame {
                         String NgayKetThuc = tacGiaObject.getString("ngayKetThuc");
                         String MaLKM = tacGiaObject.getString("maLoaiKM");
                         int Trangthai = tacGiaObject.getInt("trangThai");
+                        int phanTramGiam = tacGiaObject.getInt("phanTram");
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                         
                         Date ngayBatDau;
@@ -64,7 +66,7 @@ public class panelKhuyenMai extends javax.swing.JInternalFrame {
                 Date ngayKetThuc = formatter.parse(NgayKetThuc);
                 // Thêm vào ArrayList
                 //xem lai trang thai
-                list.add(new KhuyenMaiDTO( MaKM,  TenKM,  ngayBatDau,  ngayKetThuc,  MaLKM, Trangthai));
+                list.add(new KhuyenMaiDTO( MaKM,  TenKM,  ngayBatDau,  ngayKetThuc,  MaLKM, Trangthai,phanTramGiam));
             } catch (ParseException ex) {
                 Logger.getLogger(panelKhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -345,6 +347,11 @@ public class panelKhuyenMai extends javax.swing.JInternalFrame {
         jTableKM.setGridColor(new java.awt.Color(0, 0, 0));
         jTableKM.setSelectionBackground(new java.awt.Color(0, 102, 255));
         jTableKM.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jTableKM.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableKMMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableKM);
 
         javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
@@ -400,9 +407,9 @@ public class panelKhuyenMai extends javax.swing.JInternalFrame {
 
     private void jPanel26MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel26MouseClicked
         // TODO add your handling code here:
-        chiTietKhuyenMai ctkm = new chiTietKhuyenMai();
-       ctkm.setDefaultCloseOperation(ctkm.DISPOSE_ON_CLOSE);
-       ctkm.setVisible(true);
+        chiTietKhuyenMai ctkm = new chiTietKhuyenMai(client1,MaDT);
+        ctkm.setDefaultCloseOperation(ctkm.DISPOSE_ON_CLOSE);
+        ctkm.setVisible(true);
     }//GEN-LAST:event_jPanel26MouseClicked
 
     private void jPanel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel12MouseClicked
@@ -418,6 +425,15 @@ public class panelKhuyenMai extends javax.swing.JInternalFrame {
         lkm.setDefaultCloseOperation(lkm.DISPOSE_ON_CLOSE);
        lkm.setVisible(true);
     }//GEN-LAST:event_jPanel30MouseClicked
+
+    private void jTableKMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableKMMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel table = (DefaultTableModel) jTableKM.getModel();
+        int index = jTableKM.getSelectedRow();
+        String value = table.getValueAt(index, 0).toString();
+        MaDT = value;
+        
+    }//GEN-LAST:event_jTableKMMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

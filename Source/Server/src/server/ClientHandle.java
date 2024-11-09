@@ -336,6 +336,11 @@ public class ClientHandle implements Runnable{
                         Logger.getLogger(ClientHandle.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
+               case "ListChiTietKhuyenMai":
+                    ChiTietKhuyenMaiBLL ctkmBLL1 = new ChiTietKhuyenMaiBLL();
+                    sendMessage(String.valueOf(ctkmBLL1.getList()));
+                    break;
+                    
                case "PUTCTKM":
                    //them chi tiet khuyen mai
                    ChiTietKhuyenMaiBLL ctkmBLL = new ChiTietKhuyenMaiBLL();

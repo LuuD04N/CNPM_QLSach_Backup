@@ -593,8 +593,6 @@ public class themKhuyenMai extends javax.swing.JFrame {
             JSONArray jsonArray = new JSONArray(list);
             String jsonString = jsonArray.toString();
             json1.put("list",jsonString);
-            
-            
             if(client1.themDT(json.toString()).equals("thanhcong"))
             {
                 JOptionPane.showMessageDialog(null, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);

@@ -806,7 +806,8 @@ public class Client {
                 return yeucau("ListKhuyenMai");
             case "ListLoaiKhuyenMai":
                 return yeucau("ListLoaiKhuyenMai");
-            
+            case "ListChiTietKhuyenMai":
+                return yeucau("ListChiTietKhuyenMai");
        }
        return "";
    }
