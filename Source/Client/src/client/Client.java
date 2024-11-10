@@ -838,6 +838,8 @@ public class Client {
                 return yeucau("ListLoaiKhuyenMai");
             case "ListChiTietKhuyenMai":
                 return yeucau("ListChiTietKhuyenMai");
+            case "ListPhieuNhap":
+                return yeucau("ListPhieuNhap");
        }
        return "";
    }

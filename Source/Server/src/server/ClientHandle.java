@@ -13,6 +13,7 @@ import BLL.TacGiaBLL;
 import BLL.TaiKhoanBLL;
 import BLL.VaiTroBLL;
 import BLL.NhaXuatBanBLL;
+import BLL.PhieuNhapBLL;
 import BLL.SachTheLoaiBLL;
 import BLL.TheLoaiBLL;
 import DAO.ChiTietKhuyenMaiDAO;
@@ -353,6 +354,10 @@ public class ClientHandle implements Runnable{
                    KhuyenMaiBLL kmBLL2 = new KhuyenMaiBLL();
                    String maKM1 = json.getString("MaKM");
                    sendMessage(String.valueOf(kmBLL2.xoaKM(new KhuyenMaiDTO(maKM1,"",null,null,"",0,0))));
+                   break;
+               case "ListPhieuNhap":
+                   PhieuNhapBLL pnBLL = new PhieuNhapBLL();
+                   sendMessage(String.valueOf(pnBLL.getList()));
                    break;
         }
     }

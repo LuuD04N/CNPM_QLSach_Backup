@@ -79,7 +79,6 @@ public class panelTacGia extends javax.swing.JInternalFrame {
         model.setRowCount(0);
         for(TacGiaDTO tacgia : getList("ListTacGia"))
         {
-            System.out.println(tacgia.getTrangThai());
             //them tung doi tuong vao bang
             if(tacgia.getTrangThai()==1)
             {
