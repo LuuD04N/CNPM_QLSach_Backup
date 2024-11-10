@@ -5,6 +5,7 @@
 package QL.NhanVienGUI;
 
 import Client.Client;
+import Customize.TimKiem;
 import DTO.NhanVienDTO;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
@@ -23,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -35,6 +37,8 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
      */
     private String MaDT = "0";
     private static Client client1;
+    private static TimKiem timkiem = new TimKiem();
+    
     public panelNhanVien(Client client) {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
@@ -42,6 +46,14 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
         bui.setNorthPane(null);
         client1 = client;
         setUp();
+        timkiem.setPlaceholder(timKiemField, "Tìm kiếm theo mã hoặc tên...");
+        timkiem.setUpSearchListener(timKiemField, this::timKiem);
+        
+        SwingUtilities.invokeLater(() -> {
+        jTableNV.requestFocusInWindow();
+        // hoặc có thể focus vào panel chính
+        // this.requestFocusInWindow();
+    });
     }
 
     //ham lay danh sách
@@ -99,8 +111,36 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 String ngaySinh = formatter.format(nhanvien.getNgaySinh());
                 System.out.println(nhanvien.getHoVaTen());
-                model.addRow(new Object[] {nhanvien.getMaNV(),nhanvien.getHoVaTen(),ngaySinh,nhanvien.getGioiTinh(),nhanvien.getEmail(),nhanvien.getDiaChi()});
+                model.addRow(new Object[] {nhanvien.getMaNV(),nhanvien.getHoVaTen(),ngaySinh,nhanvien.getGioiTinh(),nhanvien.getDiaChi(),nhanvien.getEmail()});
             }
+        }
+    }
+    
+    private void timKiem()
+    {
+        String searchText = timkiem.KhongLayDau(timKiemField.getText().trim().toLowerCase());
+        DefaultTableModel model = (DefaultTableModel) jTableNV.getModel();
+        model.setRowCount(0); 
+        
+
+        ArrayList<NhanVienDTO> allWorker = getList("ListNhanVien");
+
+        for (NhanVienDTO nv : allWorker) {
+            if (nv.getTrangThai() == 1) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                String ngaySinh = formatter.format(nv.getNgaySinh());
+                String maNV = timkiem.KhongLayDau(nv.getMaNV().toLowerCase());
+                String tenNV = timkiem.KhongLayDau(nv.getHoVaTen().toLowerCase());
+                
+
+                if (maNV.contains(searchText) || tenNV.contains(searchText)) {
+                    model.addRow(new Object[]{nv.getMaNV(), nv.getHoVaTen(), ngaySinh,nv.getGioiTinh(), nv.getDiaChi(), nv.getSoDienThoai(), nv.getEmail()});
+                }
+            }
+        }
+
+        if (model.getRowCount() == 0 && !searchText.isEmpty()) {
+            // xu li thong bao khi khong tim thay
         }
     }
     
@@ -128,8 +168,7 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        cbxType = new javax.swing.JComboBox<>();
+        timKiemField = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableNV = new javax.swing.JTable();
@@ -307,28 +346,25 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField1.setText("Tìm kiếm....");
-        jTextField1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTextField1.setSelectionColor(new java.awt.Color(0, 0, 0));
+        timKiemField.setText("Tìm kiếm....");
+        timKiemField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        timKiemField.setRequestFocusEnabled(false);
+        timKiemField.setSelectionColor(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(174, Short.MAX_VALUE)
+                .addComponent(timKiemField, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(timKiemField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -441,6 +477,7 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if(MaDT.equals("0"))
         {
+            
             JOptionPane.showMessageDialog(null, "Chưa chọn đối tượng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         }
         else
@@ -470,7 +507,7 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
         }
         JSONObject json = new JSONObject();
         json.put("method","DELETENV");
-        json.put("MaDT",MaDT);
+        json.put("MaNV",MaDT);
         JSONObject json1 = new JSONObject(client1.xoaDT(json.toString()));
         if(json1.getString("ketqua").equals("true"))
         {
@@ -490,7 +527,6 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
     private javax.swing.JPanel SuaButton;
     private javax.swing.JPanel ThemButton;
     private javax.swing.JPanel XoaButton;
-    public javax.swing.JComboBox<String> cbxType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -505,6 +541,6 @@ public class panelNhanVien extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableNV;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField timKiemField;
     // End of variables declaration//GEN-END:variables
 }

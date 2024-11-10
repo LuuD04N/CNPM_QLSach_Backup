@@ -155,7 +155,7 @@ public class themNhanVien extends javax.swing.JFrame {
 
         GioiTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "nam", "nữ" }));
 
-        MaVT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "VT001", "VT002" }));
+        MaVT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "VT001", "VT002", "VT003" }));
 
         MaNV.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         MaNV.addActionListener(new java.awt.event.ActionListener() {

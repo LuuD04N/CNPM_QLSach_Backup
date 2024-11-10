@@ -668,6 +668,8 @@ public class Client {
                 return xuLiGetTheLoai("TheLoai", maDT);
             case "TaiKhoan":
                 return xuLiGetTK("TaiKhoan", maDT);
+            case "NhanVien":
+                return xuLiGetNV("NhanVien", maDT);
               
       }
        return "";

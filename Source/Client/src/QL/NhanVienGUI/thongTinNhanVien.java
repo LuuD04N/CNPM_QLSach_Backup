@@ -5,6 +5,8 @@
 package QL.NhanVienGUI;
 
 import Client.Client;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import org.json.JSONObject;
 
@@ -34,8 +36,14 @@ public class thongTinNhanVien extends javax.swing.JFrame {
         String data = client1.getDoiTuong("NhanVien", MaDT1);
         JSONObject json = new JSONObject(data);
         TenNV.setText(json.getString("Hovaten"));
-        DiaChi.setText(json.getString("Diachi"));
-        NgaySinh.setDateFormatString(json.getString("NgaySinh"));
+        DiaChi.setText(json.getString("DiaChi"));
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = sdf.parse(json.getString("NgaySinh"));
+            NgaySinh.setDate(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         GioiTinh.setSelectedItem(json.getString("GioiTinh"));
         MaVT.setSelectedItem(json.getString("MaVT"));
         Email.setText(json.getString("Email"));
@@ -65,7 +73,7 @@ public class thongTinNhanVien extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         Email = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        XacNhanButton = new javax.swing.JButton();
         GioiTinh = new javax.swing.JComboBox<>();
         MaVT = new javax.swing.JComboBox<>();
         NgaySinh = new com.toedter.calendar.JDateChooser();
@@ -126,22 +134,24 @@ public class thongTinNhanVien extends javax.swing.JFrame {
 
         jLabel8.setText("Email");
 
-        jButton1.setBackground(new java.awt.Color(102, 255, 102));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jButton1.setText("Xong");
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        XacNhanButton.setBackground(new java.awt.Color(102, 255, 102));
+        XacNhanButton.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        XacNhanButton.setText("Xong");
+        XacNhanButton.setBorder(null);
+        XacNhanButton.setBorderPainted(false);
+        XacNhanButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                XacNhanButtonActionPerformed(evt);
             }
         });
 
         GioiTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "nam", "nữ" }));
         GioiTinh.setEnabled(false);
 
-        MaVT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân viên bán hàng", "Nhân viên nhập kho" }));
+        MaVT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "VT001", "VT002", "VT003" }));
         MaVT.setEnabled(false);
+
+        NgaySinh.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -169,7 +179,7 @@ public class thongTinNhanVien extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(jLabel8)
                             .addComponent(Email))
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(XacNhanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(GioiTinh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(112, 112, 112))
         );
@@ -208,7 +218,7 @@ public class thongTinNhanVien extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SoDienThoai, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(XacNhanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
@@ -226,9 +236,10 @@ public class thongTinNhanVien extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void XacNhanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_XacNhanButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_XacNhanButtonActionPerformed
 
     private void SoDienThoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SoDienThoaiActionPerformed
         // TODO add your handling code here:
@@ -277,7 +288,7 @@ public class thongTinNhanVien extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser NgaySinh;
     private javax.swing.JTextField SoDienThoai;
     private javax.swing.JTextField TenNV;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton XacNhanButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

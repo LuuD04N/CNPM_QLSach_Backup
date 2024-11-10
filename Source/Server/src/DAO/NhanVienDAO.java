@@ -44,14 +44,14 @@ public class NhanVienDAO {
                     String Gioitinh = rs.getString("GioiTinh");
                     String Sodienthoai = rs.getString("Sodienthoai");
                     String Email = rs.getString("Email");
-                    String Diachi = rs.getString("Diachi");
+                    String Diachi = rs.getString("DiaChi");
                     String MaTK = rs.getString("MaTK");
                     String MaVT = rs.getString("MaVT");
                     int Trangthai = rs.getInt("Trangthai");
                     list.add(new NhanVienDTO(MaNV,Hovaten,NgaySinh,Gioitinh,Sodienthoai,Email,Diachi,MaTK,MaVT,Trangthai));
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(TaiKhoanDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         return list;
     }
@@ -91,7 +91,7 @@ public class NhanVienDAO {
     public String suaNV(NhanVienDTO nv) 
     {
         java.sql.Connection conn;
-        String query = "update nhanvien set Hovaten=?,NgaySinh=?,GioiTinh=?,Sodienthoai=?,Email=?,DiaChi=?,MaTK=?,MaVT=? WHERE MaNXB=?";
+        String query = "update nhanvien set Hovaten=?,NgaySinh=?,GioiTinh=?,Sodienthoai=?,Email=?,DiaChi=?,MaTK=?,MaVT=? WHERE MaNV=?";
         conn = database.connect();
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
@@ -123,7 +123,7 @@ public class NhanVienDAO {
     public String xoaNV(NhanVienDTO nv) 
     {
         java.sql.Connection conn;
-        String query = "update nhaxuatban set Trangthai=? where MaNXB=?";
+        String query = "update nhanvien set Trangthai=? where MaNV=?";
         conn = database.connect();
         try {
             PreparedStatement pstmt = conn.prepareStatement(query);
@@ -135,7 +135,7 @@ public class NhanVienDAO {
                 return "true";
             }
         } catch (SQLException ex) {
-            Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "false";
     }

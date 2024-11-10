@@ -68,7 +68,7 @@
                               <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="Email" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jButton1" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
+                          <Component id="XacNhanButton" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
                       </Group>
                       <Component id="GioiTinh" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
                   </Group>
@@ -118,7 +118,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="SoDienThoai" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="jButton1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="XacNhanButton" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="50" max="32767" attributes="0"/>
               </Group>
@@ -242,7 +242,7 @@
             <Property name="text" type="java.lang.String" value="Email"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="XacNhanButton">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="ff" red="66" type="rgb"/>
@@ -257,7 +257,7 @@
             <Property name="borderPainted" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="XacNhanButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="GioiTinh">
@@ -277,9 +277,10 @@
         <Component class="javax.swing.JComboBox" name="MaVT">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="Nh&#xe2;n vi&#xea;n b&#xe1;n h&#xe0;ng"/>
-                <StringItem index="1" value="Nh&#xe2;n vi&#xea;n nh&#x1ead;p kho"/>
+              <StringArray count="3">
+                <StringItem index="0" value="VT001"/>
+                <StringItem index="1" value="VT002"/>
+                <StringItem index="2" value="VT003"/>
               </StringArray>
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
@@ -289,6 +290,9 @@
           </AuxValues>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="NgaySinh">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

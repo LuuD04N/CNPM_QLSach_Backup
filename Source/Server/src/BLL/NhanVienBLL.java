@@ -62,6 +62,7 @@ public class NhanVienBLL {
             {
                 json.put("Trangthai", "true");
                 json.put("MaNV", x.getMaNV());
+                json.put("Hovaten", x.getHoVaTen());
                 json.put("NgaySinh", x.getNgaySinh());
                 json.put("GioiTinh", x.getGioiTinh());
                 json.put("Sodienthoai", x.getSoDienThoai());

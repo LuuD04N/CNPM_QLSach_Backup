@@ -18,6 +18,7 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import Customize.TimKiem;
 
 /**
  *
@@ -30,6 +31,8 @@ public class panelTaiKhoan extends javax.swing.JInternalFrame {
      */
     private String MaDT ="0";
     private static Client client1;
+    private static TimKiem timkiem = new TimKiem();
+    
     public panelTaiKhoan(Client client) {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
@@ -37,6 +40,8 @@ public class panelTaiKhoan extends javax.swing.JInternalFrame {
         bui.setNorthPane(null);
         client1=client;
         setUp();
+        timkiem.setPlaceholder(timKiemField, "Tìm kiếm theo mã...");
+        timkiem.setUpSearchListener(timKiemField, this::timKiem);
     }
 
     //ham lay danh sach
@@ -88,6 +93,30 @@ public class panelTaiKhoan extends javax.swing.JInternalFrame {
         }
     }
     
+    private void timKiem() 
+    {        
+        String searchText = timkiem.KhongLayDau(timKiemField.getText().trim().toLowerCase());
+        DefaultTableModel model = (DefaultTableModel) jTableTK.getModel();
+        model.setRowCount(0); 
+
+        ArrayList<TaiKhoanDTO> allAccount = getList("ListTaiKhoan");
+
+        for (TaiKhoanDTO taikhoan : allAccount) {
+            if (taikhoan.getTrangThai() == 1) {
+                String maTK = timkiem.KhongLayDau(taikhoan.getMaTK().toLowerCase());
+                String tenTK = timkiem.KhongLayDau(taikhoan.getTenTK().toLowerCase());
+                
+                if (maTK.contains(searchText) || tenTK.contains(searchText)){
+                    model.addRow(new Object[]{taikhoan.getMaTK(), taikhoan.getTenTK(), taikhoan.getMatKhauTK()});
+                }
+            }
+        }
+
+        if (model.getRowCount() == 0 && !searchText.isEmpty()) {
+            // xu li thong bao khi khong tim thay
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -106,8 +135,7 @@ public class panelTaiKhoan extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        cbxType = new javax.swing.JComboBox<>();
+        timKiemField = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableTK = new javax.swing.JTable();
@@ -207,28 +235,24 @@ public class panelTaiKhoan extends javax.swing.JInternalFrame {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField1.setText("Tìm kiếm....");
-        jTextField1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTextField1.setSelectionColor(new java.awt.Color(0, 0, 0));
+        timKiemField.setText("Tìm kiếm....");
+        timKiemField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        timKiemField.setSelectionColor(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(174, Short.MAX_VALUE)
+                .addComponent(timKiemField, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxType, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(timKiemField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -358,7 +382,6 @@ public class panelTaiKhoan extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ChiTietTK;
     private javax.swing.JPanel SuaTK;
-    public javax.swing.JComboBox<String> cbxType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -369,6 +392,6 @@ public class panelTaiKhoan extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableTK;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField timKiemField;
     // End of variables declaration//GEN-END:variables
 }
