@@ -327,9 +327,9 @@ public class panelNhapKho extends javax.swing.JInternalFrame {
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
         // TODO add your handling code here:
-        themPhieuNhap tpn = new themPhieuNhap();
-        tpn.setDefaultCloseOperation(tpn.DISPOSE_ON_CLOSE);
-        tpn.setVisible(true);
+//        themPhieuNhap tpn = new themPhieuNhap();
+//        tpn.setDefaultCloseOperation(tpn.DISPOSE_ON_CLOSE);
+//        tpn.setVisible(true);
     }//GEN-LAST:event_jPanel7MouseClicked
 
     private void jPanel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseClicked

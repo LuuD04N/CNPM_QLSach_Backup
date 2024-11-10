@@ -29,13 +29,15 @@ public class panelKho extends javax.swing.JInternalFrame {
      * Creates new form panelKho
      */
     private static Client client1;
-    public panelKho(Client client) {
+    private String nguoiNhap1;
+    public panelKho(Client client,String nguoiNhap) {
         
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
         client1=client;
+        nguoiNhap1=nguoiNhap;
         setUp();
     }
 
@@ -519,7 +521,7 @@ public class panelKho extends javax.swing.JInternalFrame {
     
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
         // TODO add your handling code here:
-        themPhieuNhap tpn = new themPhieuNhap();
+        themPhieuNhap tpn = new themPhieuNhap(client1,nguoiNhap1);
         tpn.setDefaultCloseOperation(tpn.DISPOSE_ON_CLOSE);
         tpn.setVisible(true);
     }//GEN-LAST:event_jPanel7MouseClicked

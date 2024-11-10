@@ -439,6 +439,7 @@ public class panelSanPham extends javax.swing.JInternalFrame {
         int index = jTableSP.getSelectedRow();
         String value = table.getValueAt(index, 0).toString();
         MaDT = value;
+        System.out.println(MaDT);
     }//GEN-LAST:event_jTableSPMouseClicked
 
     private void jPanel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseClicked

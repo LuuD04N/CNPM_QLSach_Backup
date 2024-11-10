@@ -470,7 +470,6 @@ public class themKhuyenMai extends javax.swing.JFrame {
     private void jComboBoxLKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxLKMActionPerformed
 
         //ham xét điều kiện
-        System.out.println((String) jComboBoxLKM.getSelectedItem());
         if(((String) jComboBoxLKM.getSelectedItem()).equals("Tự nhập"))
         {
             jTextFieldKM.setEnabled(true);

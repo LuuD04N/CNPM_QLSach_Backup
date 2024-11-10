@@ -4,13 +4,20 @@
  */
 package QL.NhapKhoGUI;
 
+import Client.Client;
+import DTO.SanPhamDTO;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashSet;
 import javax.swing.BorderFactory;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -21,11 +28,19 @@ public class themPhieuNhap extends javax.swing.JFrame {
     /**
      * Creates new form themPhieuNhap
      */
-    public themPhieuNhap() {
+    private static Client client1;
+    private static String nguoiNhap1;
+    private Object[] obj;
+    private ArrayList<Object[]> list = new ArrayList<Object[]>();
+    private Object[] objRemove;
+    public themPhieuNhap(Client client, String nguoiNhap) {
         initComponents();
         this.setLocationRelativeTo(null);
         setBorder();
-        
+        client1=client;
+        nguoiNhap1=nguoiNhap;
+        setUp();
+        setMaPN();
     }
 
     private void setBorder()
@@ -35,6 +50,78 @@ public class themPhieuNhap extends javax.swing.JFrame {
         Border border2 = BorderFactory.createMatteBorder(1,0,1,1,Color.BLACK);
         jPanel2.setBorder(border);
         jPanel3.setBorder(border);
+    }
+    
+    
+    //ham lay danh sach
+    private ArrayList<SanPhamDTO> getList(String yeucau)
+    {
+        JSONObject json;
+        ArrayList<SanPhamDTO> list = new ArrayList<SanPhamDTO>();
+        switch (yeucau) {
+            case "ListSanPham": 
+
+                    json = new JSONObject(client1.getList(yeucau));
+                    //chuyen mang chuoi sang mang jsonArray
+                    JSONArray jsonArray = json.getJSONArray("list");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                          JSONObject tacGiaObject = jsonArray.getJSONObject(i);
+                          String MaSP = tacGiaObject.getString("maSP");
+                          String TenSP = tacGiaObject.getString("tenSP");
+                          int SoTrang =  tacGiaObject.getInt("soTrang");
+                          String NgonNgu = tacGiaObject.getString("ngonNgu");
+                          Double GiaBia = tacGiaObject.getDouble("giaBia");
+                          int SoLuong = tacGiaObject.getInt("soLuong");
+                          int Trangthai = tacGiaObject.getInt("trangThai");
+                          Double giaNhap = tacGiaObject.getDouble("giaNhap");
+                          String maTG = tacGiaObject.getString("maTG");
+                          list.add(new SanPhamDTO(MaSP,  TenSP,  SoTrang,  NgonNgu,  GiaBia, null, SoLuong, giaNhap, maTG,Trangthai));
+                }
+                 return list;
+        }
+                    
+                   
+                   return new ArrayList<>();
+        }
+                
+                    
+    private void setMaPN()
+    {
+     
+        JSONObject json = new JSONObject(client1.getList("ListPhieuNhap"));
+        JSONArray jsonArray = json.getJSONArray("list");
+        int max=0;
+        for(int i=0;i<jsonArray.length();i++)
+        {
+            JSONObject tacGiaObject = jsonArray.getJSONObject(i);
+              String chuoi = tacGiaObject.getString("maPN");
+            if(Integer.parseInt(chuoi.substring(3)) > max)
+            {
+                max = Integer.parseInt(chuoi.substring(3));
+            }
+            
+        }
+        MNV.setText("PN_"+ String.valueOf(max+1));
+    }
+    
+    
+    
+    //ham thiet lap bang danh sach
+    public void setUp()
+    {
+        
+        DefaultTableModel model = (DefaultTableModel) jTableSP.getModel();
+        model.setRowCount(0);
+        
+        for(SanPhamDTO sanpham : getList("ListSanPham"))
+        {
+            System.out.println(sanpham.getTrangThai());
+            //them tung doi tuong vao bang
+            if(sanpham.getTrangThai()==1)
+            {
+                model.addRow(new Object[] {sanpham.getMaSP(),sanpham.getTenSP(),String.valueOf(sanpham.getNgonNgu()),String.valueOf(sanpham.getGiaNhap())});
+            }
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,23 +139,20 @@ public class themPhieuNhap extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableSP = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableSPC = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        MNV = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -77,6 +161,7 @@ public class themPhieuNhap extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        MaPN = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
 
         jInternalFrame1.setVisible(true);
@@ -106,7 +191,7 @@ public class themPhieuNhap extends javax.swing.JFrame {
         jTextField1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jTextField1.setSelectionColor(new java.awt.Color(0, 0, 0));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableSP.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -114,16 +199,34 @@ public class themPhieuNhap extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã sản phẩm", "Tên sản phẩm", "Ngôn ngữ", "Giá Nhập"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableSP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableSPMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableSP);
 
         jButton1.setBackground(new java.awt.Color(154, 154, 238));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setText("Chọn sản phẩm");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableSPC.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -131,15 +234,29 @@ public class themPhieuNhap extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Giá nhập"
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableSPC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableSPCMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTableSPC);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setText("Mã sản phẩm");
 
+        jTextField2.setBackground(new java.awt.Color(60, 63, 65));
         jTextField2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jTextField2.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         jTextField2.setEnabled(false);
@@ -147,17 +264,11 @@ public class themPhieuNhap extends javax.swing.JFrame {
 
         jLabel2.setText("Tên sản phẩm");
 
+        jTextField3.setBackground(new java.awt.Color(60, 63, 65));
         jTextField3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jTextField3.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         jTextField3.setEnabled(false);
         jTextField3.setSelectionColor(new java.awt.Color(0, 0, 0));
-
-        jTextField4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTextField4.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        jTextField4.setEnabled(false);
-        jTextField4.setSelectionColor(new java.awt.Color(0, 0, 0));
-
-        jLabel3.setText("Tác giả");
 
         jLabel5.setText("Số lượng");
 
@@ -168,12 +279,10 @@ public class themPhieuNhap extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
-                    .addComponent(jTextField3)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
                     .addComponent(jTextField2)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(jSpinner1))
                 .addContainerGap(10, Short.MAX_VALUE))
@@ -188,30 +297,22 @@ public class themPhieuNhap extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(0, 67, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel6.setText("Mã phiếu nhập");
 
-        jTextField6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTextField6.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        jTextField6.setEnabled(false);
-        jTextField6.setSelectionColor(new java.awt.Color(0, 0, 0));
-
-        jTextField7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTextField7.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        jTextField7.setEnabled(false);
-        jTextField7.setSelectionColor(new java.awt.Color(0, 0, 0));
+        MNV.setBackground(new java.awt.Color(60, 63, 65));
+        MNV.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        MNV.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        MNV.setEnabled(false);
+        MNV.setSelectionColor(new java.awt.Color(0, 0, 0));
 
         jLabel7.setText("Nhân viên nhập");
 
@@ -228,6 +329,12 @@ public class themPhieuNhap extends javax.swing.JFrame {
         jButton4.setBackground(new java.awt.Color(102, 255, 102));
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton4.setText("Nhập hàng");
+
+        MaPN.setBackground(new java.awt.Color(60, 63, 65));
+        MaPN.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        MaPN.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        MaPN.setEnabled(false);
+        MaPN.setSelectionColor(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -248,13 +355,13 @@ public class themPhieuNhap extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel6)
-                            .addComponent(jTextField6)
+                            .addComponent(MNV)
                             .addComponent(jLabel7)
-                            .addComponent(jTextField7)
                             .addComponent(jLabel8)
                             .addComponent(jLabel9)
                             .addComponent(jComboBox1, 0, 166, Short.MAX_VALUE)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(MaPN))
                         .addGap(41, 41, 41))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -262,12 +369,12 @@ public class themPhieuNhap extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(MaPN, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(MNV, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -275,7 +382,7 @@ public class themPhieuNhap extends javax.swing.JFrame {
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -287,6 +394,11 @@ public class themPhieuNhap extends javax.swing.JFrame {
         jButton5.setBackground(new java.awt.Color(154, 154, 238));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton5.setText("Bỏ sản phẩm");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton5MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -354,6 +466,89 @@ public class themPhieuNhap extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTableSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSPMouseClicked
+        // TODO add your handling code here:
+        jSpinner1.setValue(0);
+        DefaultTableModel table = (DefaultTableModel) jTableSP.getModel();
+        int index = jTableSP.getSelectedRow();
+        String MaSP = table.getValueAt(index, 0).toString();
+        String TenSP = table.getValueAt(index, 1).toString();
+        String GiaNhap = table.getValueAt(index, 3).toString();
+        int value = (int) jSpinner1.getValue();
+        jTextField2.setText(MaSP);
+        jTextField3.setText(TenSP);
+//        Object[] obj1 = {MaSP,TenSP,value,GiaNhap};
+//        obj=obj1;
+    }//GEN-LAST:event_jTableSPMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel table1 = (DefaultTableModel) jTableSP.getModel();
+        int index = jTableSP.getSelectedRow();
+        int value = (int) jSpinner1.getValue();
+        String MaSP = table1.getValueAt(index, 0).toString();
+        String TenSP = table1.getValueAt(index, 1).toString();
+        String GiaNhap1 = table1.getValueAt(index, 3).toString();
+        Object[] obj1 = {MaSP,TenSP,value,GiaNhap1};
+        list.add(obj1);
+        DefaultTableModel table = (DefaultTableModel) jTableSPC.getModel();
+        table.setRowCount(0);
+        
+        ArrayList<Object[]> newList = new ArrayList<>();
+        // Sử dụng HashSet để theo dõi các giá trị đã thấy
+        HashSet<String> seenValues = new HashSet<>();
+
+        // Giả sử list chứa các đối tượng mảng mà bạn muốn kiểm tra
+        for (int i = 0; i < list.size(); i++) {
+            String maSP = (String) list.get(i)[0]; // Lấy giá trị từ cột đầu tiên của mỗi đối tượng
+            String ten = (String) list.get(i)[1]; 
+            String SoLuong = String.valueOf(list.get(i)[2]);
+            String GiaNhap = (String) list.get(i)[3];
+            if (!seenValues.contains(ten)) { // Kiểm tra xem giá trị đã được thêm chưa
+                seenValues.add(ten); // Thêm vào HashSet
+                newList.add(new Object[]{maSP,ten,SoLuong,GiaNhap}); // Thêm vào newList nếu chưa có
+            }
+        }
+        list.clear();
+        list.addAll(newList);
+        for(Object[] obj2 : list)
+        {
+            table.addRow(obj2);
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel table = (DefaultTableModel) jTableSPC.getModel();
+        for(int i=0;i<list.size();i++)
+        {
+            if(list.get(i)[0].equals((String) objRemove[0]))
+            {
+                list.remove(list.get(i));
+            }
+        }
+        table.setRowCount(0);
+        for(Object[] obj2 : list)
+        {
+            table.addRow(obj2);
+        }
+    }//GEN-LAST:event_jButton5MouseClicked
+
+    private void jTableSPCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSPCMouseClicked
+        // TODO add your handling code here:
+        jSpinner1.setValue(0);
+        jTextField2.setText("");
+        jTextField3.setText("");
+        DefaultTableModel table = (DefaultTableModel) jTableSPC.getModel();
+        int index = jTableSPC.getSelectedRow();
+        String MaSP = table.getValueAt(index, 0).toString();
+        String TenSP = table.getValueAt(index, 1).toString();
+        String SoLuong = table.getValueAt(index, 2).toString();
+        String GiaBia = table.getValueAt(index, 3).toString();
+        Object[] obj = {MaSP,TenSP,SoLuong,GiaBia};
+        objRemove=obj;
+    }//GEN-LAST:event_jTableSPCMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -386,13 +581,15 @@ public class themPhieuNhap extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                new themPhieuNhap().setVisible(true);
+                new themPhieuNhap(client1,nguoiNhap1).setVisible(true);
                
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField MNV;
+    private javax.swing.JTextField MaPN;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -403,7 +600,6 @@ public class themPhieuNhap extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -418,13 +614,10 @@ public class themPhieuNhap extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTableSP;
+    private javax.swing.JTable jTableSPC;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
 }
