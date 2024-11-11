@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.SQLException;
+import java.sql.PreparedStatement;
 /**
  *
  * @author PC
@@ -43,5 +44,30 @@ public class PhieuNhapDAO {
                 Logger.getLogger(TacGiaDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         return list;
+    }
+    
+    //ham them doi tuong vao csdl
+    public String themDT(PhieuNhapDTO pn)
+    {
+        java.sql.Connection conn;
+        String query = "INSERT INTO phieunhap(MaPN,NgayNhap,Thanhtien,Trangthai,MaTK,MaNXB) values(?,?,?,?,?,?)";
+        conn = database.connect();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,pn.getMaPN());
+            java.sql.Date ngaynhap = new java.sql.Date(pn.getNgayNhap().getTime());
+            pstmt.setDate(2,ngaynhap);
+            pstmt.setDouble(3,pn.getThanhTien());
+            pstmt.setInt(4,pn.getTrangThai());
+            pstmt.setString(5,pn.getMaTK());
+            pstmt.setString(6,pn.getMaNXB());
+            if(pstmt.executeUpdate() > 0)
+            {
+                return "true";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TacGiaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "false";
     }
 }

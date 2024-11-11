@@ -5,6 +5,7 @@
 package server;
 
 import BLL.ChiTietKhuyenMaiBLL;
+import BLL.ChiTietPhieuNhapBLL;
 import BLL.KhuyenMaiBLL;
 import BLL.LoaiKhuyenMaiBLL;
 import BLL.NhanVienBLL;
@@ -21,6 +22,7 @@ import DTO.KhuyenMaiDTO;
 import DTO.LoaiKhuyenMaiDTO;
 import DTO.TacGiaDTO;
 import DTO.NhaXuatBanDTO;
+import DTO.PhieuNhapDTO;
 import DTO.SachTheLoaiDTO;
 import DTO.SanPhamDTO;
 import DTO.TheLoaiDTO;
@@ -127,7 +129,6 @@ public class ClientHandle implements Runnable{
                     //lay danh sach tac gia
                     TacGiaBLL tgBLL = new TacGiaBLL();
                     sendMessage(String.valueOf(tgBLL.getList()));
-                    
                     break;
             case "TacGia":
                 //lay doi tuong de xem thong tin tac gia
@@ -135,6 +136,11 @@ public class ClientHandle implements Runnable{
                     String MaTG = json.getString("MaTG");
                     sendMessage(String.valueOf(tgBLL1.getTacGia(MaTG)));
                     
+                    break;
+            case "ListTaiKhoan":
+                    //lay danh sach san pham
+                    TaiKhoanBLL tkBLL1 = new TaiKhoanBLL();
+                    sendMessage(String.valueOf(tkBLL1.getList()));
                     break;
             case "PUTTG":
                 //them doi tuong tac gia
@@ -347,7 +353,7 @@ public class ClientHandle implements Runnable{
                    ChiTietKhuyenMaiBLL ctkmBLL = new ChiTietKhuyenMaiBLL();
                    String list = json.getString("list");
                    String maKM = json.getString("maKM");
-                   ctkmBLL.themCTKM(list,maKM);
+//                   ctkmBLL.themCTKM(list,maKM);
                    sendMessage(String.valueOf(ctkmBLL.themCTKM(list,maKM)));
                    break;
                case "DELETEKM":
@@ -358,6 +364,33 @@ public class ClientHandle implements Runnable{
                case "ListPhieuNhap":
                    PhieuNhapBLL pnBLL = new PhieuNhapBLL();
                    sendMessage(String.valueOf(pnBLL.getList()));
+                   break;
+               case "PUTPN":
+                   PhieuNhapBLL pnBLL1 = new PhieuNhapBLL();
+                   String maPN = json.getString("maPN");
+                   String maNV = json.getString("maNV");
+                   System.out.println(maNV+"a");
+                   String maNXB = json.getString("maNXB");
+                   String ngayNhap = json.getString("ngayNhap");
+                   String thanhtien = json.getString("thanhtien");
+                   SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    {
+                        try {
+                            sendMessage(String.valueOf(pnBLL1.themPN(new PhieuNhapDTO (maPN,dateFormat.parse(ngayNhap), Double.parseDouble(thanhtien), 1, maNV, maNXB))));
+                        } catch (ParseException ex) {
+                            Logger.getLogger(ClientHandle.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    break;
+               case "PUTCTPN":
+                    ChiTietPhieuNhapBLL ctpnBLL = new ChiTietPhieuNhapBLL();
+                    String list1 = json.getString("list");
+                    String maPN1 = json.getString("maPN");
+                    sendMessage(String.valueOf(ctpnBLL.themCTPN(list1,maPN1)));
+                    break;
+               case "ListNhanVien":
+                   NhanVienBLL nv = new NhanVienBLL();
+                   sendMessage(String.valueOf(nv.getList()));
                    break;
         }
     }

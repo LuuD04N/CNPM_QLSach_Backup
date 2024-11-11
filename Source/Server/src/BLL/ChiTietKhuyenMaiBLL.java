@@ -17,7 +17,7 @@ import org.json.JSONObject;
  */
 public class ChiTietKhuyenMaiBLL {
     
-        //lay danh sach tac gia
+        //lay danh sach khuyen mai
     public String getList()
     {
         ChiTietKhuyenMaiDAO kmDAO = new ChiTietKhuyenMaiDAO();

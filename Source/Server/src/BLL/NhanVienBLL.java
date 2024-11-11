@@ -13,6 +13,18 @@ import org.json.JSONObject;
  * @author PC
  */
 public class NhanVienBLL {
+    
+    //ham lay danh sach nhan vien
+    public String getList()
+    {
+        NhanVienDAO nvDAO = new NhanVienDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai","true");
+//        JSONArray jsonArray = new JSONArray(tgDAO.getList());
+        json.put("list", nvDAO.getAll());
+        return json.toString();
+    }
+    
     //lay nhan vien bang ma tai khoan
     public String getNV(String data)
     {

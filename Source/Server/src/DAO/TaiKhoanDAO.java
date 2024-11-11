@@ -43,4 +43,28 @@ public class TaiKhoanDAO {
             }
         return list;
     }
+    
+    public ArrayList<TaiKhoanDTO> getList()
+    {
+        java.sql.Connection conn;
+        ArrayList<TaiKhoanDTO> list = new ArrayList<TaiKhoanDTO>();
+        try {
+                conn = database.connect();
+                String query = "select * from taikhoan";
+                Statement stm = null;
+                stm = conn.createStatement();
+                ResultSet rs = stm.executeQuery(query);
+                while(rs.next())
+                {
+                    String MaTK = rs.getString("MaTK");
+                    String tenTK = rs.getString("TenTK");
+                    String matKhau = rs.getString("MatkhauTK");
+                    int trangthai = rs.getInt("Trangthai");
+                    list.add(new TaiKhoanDTO(MaTK, tenTK, matKhau, trangthai));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(TaiKhoanDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return list;
+    }
 }

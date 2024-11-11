@@ -5,13 +5,23 @@
 package QL.NhapKhoGUI;
 
 import Client.Client;
+import DTO.NhaXuatBanDTO;
+import DTO.NhanVienDTO;
 import DTO.SanPhamDTO;
+import DTO.TacGiaDTO;
+import DTO.TaiKhoanDTO;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
@@ -28,21 +38,167 @@ public class themPhieuNhap extends javax.swing.JFrame {
     /**
      * Creates new form themPhieuNhap
      */
+    //luu ten tac gia de lay ma
+    private String tenTG1="";
     private static Client client1;
     private static String nguoiNhap1;
     private Object[] obj;
     private ArrayList<Object[]> list = new ArrayList<Object[]>();
     private Object[] objRemove;
-    public themPhieuNhap(Client client, String nguoiNhap) {
+    private double thanhTien1=0;
+    private static panelKho panelKho1;
+    public themPhieuNhap(Client client, String nguoiNhap,panelKho panelKho) {
         initComponents();
         this.setLocationRelativeTo(null);
         setBorder();
         client1=client;
         nguoiNhap1=nguoiNhap;
+        panelKho1=panelKho;
         setUp();
         setMaPN();
+        setUpNXB();
+        MNV.setText(nguoiNhap);
+        ngayNhapDate.setDate(new Date());
     }
 
+    //ham lay ma nha xuat ban
+    private String getMaNXB(String tenNXB)
+    {
+        for(NhaXuatBanDTO nxb : getListNXB("ListNhaXuatBan"))
+        {
+            if(tenNXB.equals(nxb.getTenNXB()))
+            {
+                return nxb.getMaNXB();
+            }
+        }
+        
+        return "";
+    }
+    
+     // ham lay danh sach
+    private ArrayList<NhaXuatBanDTO> getListNXB(String yeucau) 
+    {
+        JSONObject json;
+        
+        switch (yeucau) 
+        {
+            case "ListNhaXuatBan":
+                ArrayList<NhaXuatBanDTO> list = new ArrayList<>();
+                json = new JSONObject(client1.getList(yeucau));
+                
+                // chuyen mang chuoi sang mang jsonArray
+                JSONArray jsonArray = json.getJSONArray("list");
+                for (int i = 0; i < jsonArray.length(); i++) 
+                {
+                    JSONObject nxbObject = jsonArray.getJSONObject(i);
+                    String MaNXB = nxbObject.getString("maNXB");
+                    String TenNXB = nxbObject.getString("tenNXB");
+                    String DiaChi = nxbObject.getString("diaChi");
+                    String SoDienThoai = nxbObject.getString("soDienThoai");
+                    String Email = nxbObject.getString("email");
+                    int Trangthai = nxbObject.getInt("trangThai");
+                    // them vao arraylist
+                    // xem lai trang thai
+                    list.add(new NhaXuatBanDTO(MaNXB, TenNXB, DiaChi, SoDienThoai, Email, Trangthai));
+                }
+                return list;
+        }
+                
+        return new ArrayList<>();
+    }
+    
+    
+    //ham lay ma tai khoan tu nhan vien
+    private String getMaNV(String tenNV)
+    {
+        for(NhanVienDTO nv : getListNV("ListNhanVien"))
+        {
+            if(tenNV.equals(nv.getHoVaTen()))
+            {
+                return nv.getMaTK();
+            }
+        }
+        
+        return "";
+    }
+    
+    private String getMaTK(String MaNV)
+    {
+        for(TaiKhoanDTO x : getListTK("ListTaiKhoan"))
+        {
+            if(x.getMaTK().equals(MaNV))
+            {
+                return x.getMaTK();
+            }
+        }
+        return "";
+    }
+    
+    private ArrayList<TaiKhoanDTO> getListTK(String yeucau)
+    {
+        JSONObject json;
+        ArrayList<TaiKhoanDTO> list = new ArrayList<TaiKhoanDTO>();
+        switch (yeucau) {
+            case "ListTaiKhoan": 
+
+                    json = new JSONObject(client1.getList(yeucau));
+                    //chuyen mang chuoi sang mang jsonArray
+                    JSONArray jsonArray = json.getJSONArray("list");
+                    System.out.println(jsonArray);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                          JSONObject tacGiaObject = jsonArray.getJSONObject(i);
+                          String MaTK = tacGiaObject.getString("maTK");
+                          String tenTK = tacGiaObject.getString("tenTK");
+                          String matkhau = tacGiaObject.getString("matKhauTK");
+                          int trangThai = tacGiaObject.getInt("trangThai");
+                          list.add(new TaiKhoanDTO(MaTK,tenTK,matkhau,trangThai));
+                }
+                 return list;
+        }
+       
+                   return new ArrayList<>();
+        }
+    
+    //ham lay danh sach nhan vien
+    private ArrayList<NhanVienDTO> getListNV(String yeucau)
+    {
+        JSONObject json;
+        ArrayList<NhanVienDTO> list = new ArrayList<NhanVienDTO>();
+        switch (yeucau) {
+            case "ListNhanVien": 
+
+                    json = new JSONObject(client1.getList(yeucau));
+                    //chuyen mang chuoi sang mang jsonArray
+                    JSONArray jsonArray = json.getJSONArray("list");
+                    System.out.println(jsonArray);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                          JSONObject tacGiaObject = jsonArray.getJSONObject(i);
+                          String MaNV = tacGiaObject.getString("maNV");
+                          String hovaten = tacGiaObject.getString("hoVaTen");
+                          String ngaySinh1 = tacGiaObject.getString("ngaySinh");
+                          String gioiTinh = tacGiaObject.getString("gioiTinh");
+                          String sdt = tacGiaObject.getString("soDienThoai");
+                          String email = tacGiaObject.getString("email");
+                          String diaChi = tacGiaObject.getString("diaChi");
+                          String maTK = tacGiaObject.getString("maTK");
+                          String maVT = tacGiaObject.getString("maVT");
+                          int trangThai = tacGiaObject.getInt("trangThai");
+                          SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                           Date ngaySinh;
+                            try {
+                                ngaySinh = formatter.parse(ngaySinh1);
+                                list.add(new NhanVienDTO(MaNV,hovaten,ngaySinh,gioiTinh,sdt,email,diaChi,maTK,maVT,trangThai));
+                            } catch (ParseException ex) {
+                                Logger.getLogger(themPhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                }
+                 return list;
+        }
+       
+                   return new ArrayList<>();
+        }
+    
+    
     private void setBorder()
     {
         Border border = BorderFactory.createMatteBorder(1,1,1,1,Color.BLACK);
@@ -52,6 +208,45 @@ public class themPhieuNhap extends javax.swing.JFrame {
         jPanel3.setBorder(border);
     }
     
+    private void setUpNXB()
+    {
+        for(NhaXuatBanDTO nxb : getListNXB("ListNhaXuatBan"))
+        {
+            comboboxNXB.addItem(nxb.getTenNXB());
+        }
+    }
+    
+    //ham lay danh sach
+    private ArrayList<TacGiaDTO> getListTG(String yeucau)
+    {
+        JSONObject json;
+        
+        switch (yeucau) {
+            case "ListTacGia": 
+                    ArrayList<TacGiaDTO> list = new ArrayList<TacGiaDTO>();
+                    json = new JSONObject(client1.getList(yeucau));
+                    //chuyen mang chuoi sang mang jsonArray
+                    JSONArray jsonArray = json.getJSONArray("list");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject tacGiaObject = jsonArray.getJSONObject(i);
+                        String MaTG = tacGiaObject.getString("maTG");
+                        String Hovaten = tacGiaObject.getString("hoVaTen");
+                        String Butdanh = tacGiaObject.getString("butDanh");
+                        String GioiTinh = tacGiaObject.getString("gioiTinh");
+                        String QuocTich = tacGiaObject.getString("quocTich");
+                        int Trangthai = tacGiaObject.getInt("trangThai");
+                    // Thêm vào ArrayList
+                    //xem lai trang thai
+                    list.add(new TacGiaDTO(MaTG, Hovaten, Butdanh, GioiTinh, QuocTich,Trangthai));
+        }
+                    
+                    return list;
+                   
+        }
+                
+                    
+        return new ArrayList<>();
+    }
     
     //ham lay danh sach
     private ArrayList<SanPhamDTO> getList(String yeucau)
@@ -101,7 +296,7 @@ public class themPhieuNhap extends javax.swing.JFrame {
             }
             
         }
-        MNV.setText("PN_"+ String.valueOf(max+1));
+        MaPN.setText("PN_"+ String.valueOf(max+1));
     }
     
     
@@ -156,11 +351,11 @@ public class themPhieuNhap extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboboxNXB = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        thanhTien = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        ngayNhapDate = new com.toedter.calendar.JDateChooser();
         MaPN = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
 
@@ -320,15 +515,28 @@ public class themPhieuNhap extends javax.swing.JFrame {
 
         jLabel9.setText("Nhà xuất bản");
 
+        comboboxNXB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboboxNXBActionPerformed(evt);
+            }
+        });
+
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel10.setText("Tổng tiền: ");
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel11.setText("xxxxx Đ");
+        thanhTien.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        thanhTien.setText("xxxxx Đ");
 
         jButton4.setBackground(new java.awt.Color(102, 255, 102));
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton4.setText("Nhập hàng");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
+            }
+        });
+
+        ngayNhapDate.setEnabled(false);
 
         MaPN.setBackground(new java.awt.Color(60, 63, 65));
         MaPN.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -344,7 +552,7 @@ public class themPhieuNhap extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(thanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(46, Short.MAX_VALUE)
@@ -359,8 +567,8 @@ public class themPhieuNhap extends javax.swing.JFrame {
                             .addComponent(jLabel7)
                             .addComponent(jLabel8)
                             .addComponent(jLabel9)
-                            .addComponent(jComboBox1, 0, 166, Short.MAX_VALUE)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(comboboxNXB, 0, 166, Short.MAX_VALUE)
+                            .addComponent(ngayNhapDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(MaPN))
                         .addGap(41, 41, 41))))
         );
@@ -377,15 +585,15 @@ public class themPhieuNhap extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ngayNhapDate, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(comboboxNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(thanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
@@ -483,6 +691,10 @@ public class themPhieuNhap extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
+        jSpinner1.setValue(0);
+        jTextField2.setText("");
+        jTextField3.setText("");
+        
         DefaultTableModel table1 = (DefaultTableModel) jTableSP.getModel();
         int index = jTableSP.getSelectedRow();
         int value = (int) jSpinner1.getValue();
@@ -504,6 +716,7 @@ public class themPhieuNhap extends javax.swing.JFrame {
             String ten = (String) list.get(i)[1]; 
             String SoLuong = String.valueOf(list.get(i)[2]);
             String GiaNhap = (String) list.get(i)[3];
+            thanhTien1+= (Double.parseDouble(GiaNhap) * Integer.parseInt(SoLuong));
             if (!seenValues.contains(ten)) { // Kiểm tra xem giá trị đã được thêm chưa
                 seenValues.add(ten); // Thêm vào HashSet
                 newList.add(new Object[]{maSP,ten,SoLuong,GiaNhap}); // Thêm vào newList nếu chưa có
@@ -513,8 +726,11 @@ public class themPhieuNhap extends javax.swing.JFrame {
         list.addAll(newList);
         for(Object[] obj2 : list)
         {
+            
             table.addRow(obj2);
         }
+        
+        thanhTien.setText(String.valueOf(thanhTien1)+" Đ");
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
@@ -524,6 +740,7 @@ public class themPhieuNhap extends javax.swing.JFrame {
         {
             if(list.get(i)[0].equals((String) objRemove[0]))
             {
+                thanhTien1-= (Double.parseDouble((String) list.get(i)[3]) * Integer.parseInt((String) list.get(i)[2]));
                 list.remove(list.get(i));
             }
         }
@@ -532,6 +749,7 @@ public class themPhieuNhap extends javax.swing.JFrame {
         {
             table.addRow(obj2);
         }
+         thanhTien.setText(String.valueOf(thanhTien1)+" Đ");
     }//GEN-LAST:event_jButton5MouseClicked
 
     private void jTableSPCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSPCMouseClicked
@@ -548,6 +766,87 @@ public class themPhieuNhap extends javax.swing.JFrame {
         Object[] obj = {MaSP,TenSP,SoLuong,GiaBia};
         objRemove=obj;
     }//GEN-LAST:event_jTableSPCMouseClicked
+
+    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+        // TODO add your handling code here:
+        String maNV = getMaTK(getMaNV(MNV.getText()));
+        String maNXB = getMaNXB((String) comboboxNXB.getSelectedItem());
+        Date ngayNhap = ngayNhapDate.getDate();
+        System.out.println(maNXB);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        
+        String thanhtien = thanhTien.getText().substring(0,thanhTien.getText().length()-1);
+        String maPN = MaPN.getText();
+        JSONObject json = new JSONObject();
+        json.put("method","PUTPN");
+        json.put("maNV",maNV);
+        json.put("maNXB",maNXB);
+        json.put("ngayNhap",dateFormat.format(ngayNhap));
+        json.put("thanhtien",thanhtien);
+        json.put("maPN",maPN);
+        
+        
+        //xet dieu kien dau vao
+        if(list.size()==0)
+        {
+           
+            JOptionPane.showMessageDialog(null, "Chưa chọn sản phẩm!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else
+        {
+            
+            JSONObject json1 = new JSONObject();
+            json1.put("method","PUTCTPN");
+            JSONArray jsonArray = new JSONArray(list);
+            json1.put("maPN",maPN);
+            json1.put("list",jsonArray.toString());
+            
+            if(client1.themDT(json.toString()).equals("thanhcong"))
+            {
+                JOptionPane.showMessageDialog(null, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                client1.themDT(json1.toString());
+                panelKho1.setUp();
+                this.setVisible(false);
+            }
+//            String maKM = maLKM.getText();
+//            String tenKM = txtTenKM.getText();
+//            String phanTramKM = jTextFieldKM.getText();
+//            Date ngayBD = jDateChooserNBD.getDate();
+//            Date ngayKT = jDateChooserNKT.getDate();
+//            
+//            JSONObject json = new JSONObject();
+//            json.put("method","PUTKM");
+//            json.put("maKM",maKM);
+//            json.put("tenKM",tenKM);
+//            json.put("maLoaiKM",maLoaiKM);
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//            String dateNBD = dateFormat.format(ngayBD);
+//            String dateNKT = dateFormat.format(ngayKT);
+//            json.put("ngayBD",dateNBD);
+//            json.put("ngayKT",dateNKT);
+//            json.put("phanTramGiam",phanTramKM);
+//            JSONObject json1 = new JSONObject();
+//            json1.put("method","PUTCTKM");
+//            json1.put("maKM", maKM);
+//            //chuyen mang thanh chuoi de truyen du lieu
+//            JSONArray jsonArray = new JSONArray(list);
+//            String jsonString = jsonArray.toString();
+//            json1.put("list",jsonString);
+//            if(client1.themDT(json.toString()).equals("thanhcong"))
+//            {
+//                JOptionPane.showMessageDialog(null, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+//                client1.themDT(json1.toString());
+//                panelKhuyenMai1.setUp();
+//                this.setVisible(false);
+//            }
+        }
+        
+    }//GEN-LAST:event_jButton4MouseClicked
+
+    private void comboboxNXBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxNXBActionPerformed
+        // TODO add your handling code here:
+        tenTG1 = (String) comboboxNXB.getSelectedItem();
+    }//GEN-LAST:event_comboboxNXBActionPerformed
 
     /**
      * @param args the command line arguments
@@ -581,7 +880,7 @@ public class themPhieuNhap extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                new themPhieuNhap(client1,nguoiNhap1).setVisible(true);
+                new themPhieuNhap(client1,nguoiNhap1,panelKho1).setVisible(true);
                
             }
         });
@@ -590,15 +889,13 @@ public class themPhieuNhap extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField MNV;
     private javax.swing.JTextField MaPN;
+    private javax.swing.JComboBox<String> comboboxNXB;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -619,5 +916,7 @@ public class themPhieuNhap extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private com.toedter.calendar.JDateChooser ngayNhapDate;
+    private javax.swing.JLabel thanhTien;
     // End of variables declaration//GEN-END:variables
 }

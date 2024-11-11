@@ -521,7 +521,7 @@ public class panelKho extends javax.swing.JInternalFrame {
     
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
         // TODO add your handling code here:
-        themPhieuNhap tpn = new themPhieuNhap(client1,nguoiNhap1);
+        themPhieuNhap tpn = new themPhieuNhap(client1,nguoiNhap1,this);
         tpn.setDefaultCloseOperation(tpn.DISPOSE_ON_CLOSE);
         tpn.setVisible(true);
     }//GEN-LAST:event_jPanel7MouseClicked
