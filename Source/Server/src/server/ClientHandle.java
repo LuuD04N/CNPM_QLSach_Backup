@@ -392,10 +392,16 @@ public class ClientHandle implements Runnable{
                     String maPN1 = json.getString("maPN");
                     sendMessage(String.valueOf(ctpnBLL.themCTPN(list1,maPN1)));
                     break;
+               case "DELETEPN":
+                    PhieuNhapBLL ctpnBLL2 = new PhieuNhapBLL();
+                    String maPN2 = json.getString("MaPN");
+                    sendMessage(String.valueOf(ctpnBLL2.xoaPN(new PhieuNhapDTO(maPN2, null, 0, 0, "", ""))));
+                    break;
                case "ListNhanVien":
                    NhanVienBLL nv = new NhanVienBLL();
                    sendMessage(String.valueOf(nv.getList()));
                    break;
+               
         }
     }
 }

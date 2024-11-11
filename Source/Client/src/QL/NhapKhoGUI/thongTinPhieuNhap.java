@@ -127,6 +127,11 @@ public class thongTinPhieuNhap extends javax.swing.JFrame {
         jButton4.setBackground(new java.awt.Color(102, 255, 102));
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton4.setText("Xong");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
+            }
+        });
 
         jTextFieldNXB.setBackground(new java.awt.Color(51, 51, 51));
         jTextFieldNXB.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -238,6 +243,11 @@ public class thongTinPhieuNhap extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton4MouseClicked
 //ham lay danh sach
     private ArrayList<PhieuNhapDTO> getList(String yeucau)
     {

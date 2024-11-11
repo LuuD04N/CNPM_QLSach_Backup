@@ -127,6 +127,11 @@ public class panelKho extends javax.swing.JInternalFrame {
         );
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel10MouseClicked(evt);
+            }
+        });
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/iconxoa.jpg"))); // NOI18N
@@ -259,6 +264,11 @@ public class panelKho extends javax.swing.JInternalFrame {
         jTextField1.setSelectionColor(new java.awt.Color(0, 0, 0));
 
         jButton1.setText("Làm mới");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -494,6 +504,25 @@ public class panelKho extends javax.swing.JInternalFrame {
         }
     }
     
+    //ham thiet lap bang danh sach
+    public void setUpDelete()
+    {
+        
+        DefaultTableModel model = (DefaultTableModel) jTablePN.getModel();
+        model.setRowCount(0);
+        for(PhieuNhapDTO phieunhap : getList("ListPhieuNhap"))
+        {
+            //them tung doi tuong vao bang
+            if(phieunhap.getTrangThai()==0)
+            {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                String ngayNhap = formatter.format(phieunhap.getNgayNhap());
+                System.out.println(phieunhap.getMaPN());
+                model.addRow(new Object[] {phieunhap.getMaPN(),ngayNhap,phieunhap.getThanhTien(),phieunhap.getMaNXB()});
+            }
+        }
+    }
+    
     // ham lay danh sach
     private ArrayList<NhaXuatBanDTO> getListNXB(String yeucau) 
     {
@@ -548,7 +577,9 @@ public class panelKho extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jPanel11MouseClicked
 
     private void jPanel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel12MouseClicked
-        // TODO add your handling code here:
+        // hien thi danh sach phieu nhap da xoa
+        
+        setUpDelete();
     }//GEN-LAST:event_jPanel12MouseClicked
 
     private void jTablePNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePNMouseClicked
@@ -558,6 +589,35 @@ public class panelKho extends javax.swing.JInternalFrame {
         String value = table.getValueAt(index, 0).toString();
         MaDT=value;
     }//GEN-LAST:event_jTablePNMouseClicked
+
+    private void jPanel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseClicked
+        // TODO add your handling code here:
+        
+        if(MaDT.equals("0"))
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn đối tượng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        JSONObject json = new JSONObject();
+        json.put("method","DELETEPN");
+        json.put("MaPN", MaDT);
+        JSONObject json1 = new JSONObject(client1.xoaDT(json.toString()));
+        if(json1.getString("ketqua").equals("true"))
+        {
+            JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            setUp();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Xóa không thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jPanel10MouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        setUp();
+    }//GEN-LAST:event_jButton1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

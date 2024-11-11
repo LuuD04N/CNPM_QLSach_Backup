@@ -33,4 +33,14 @@ public class PhieuNhapBLL {
         json.put("ketqua",pnDAO.themDT(pn));
         return json.toString();
     }
+    
+    //ham xoa tac gia va tra ve trang thai
+    public String xoaPN(PhieuNhapDTO pn)
+    {
+        PhieuNhapDAO pnDAO = new PhieuNhapDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai", "true");
+        json.put("ketqua",pnDAO.xoaPN(pn));
+        return json.toString();
+    }
 }

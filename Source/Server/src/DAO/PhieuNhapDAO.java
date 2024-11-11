@@ -70,4 +70,24 @@ public class PhieuNhapDAO {
         }
         return "false";
     }
+    
+    public String xoaPN(PhieuNhapDTO pn)
+    {
+        java.sql.Connection conn;
+        String query = "UPDATE phieunhap SET Trangthai=? WHERE MaPN=?";
+        conn = database.connect();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,pn.getTrangThai());
+            pstmt.setString(2,pn.getMaPN());
+            if(pstmt.executeUpdate() > 0)
+            {
+                return "true";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TacGiaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "false";
+        
+    }
 }
