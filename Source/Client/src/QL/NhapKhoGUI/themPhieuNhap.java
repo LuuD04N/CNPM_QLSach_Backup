@@ -691,9 +691,7 @@ public class themPhieuNhap extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        jSpinner1.setValue(0);
-        jTextField2.setText("");
-        jTextField3.setText("");
+
         
         DefaultTableModel table1 = (DefaultTableModel) jTableSP.getModel();
         int index = jTableSP.getSelectedRow();
@@ -731,6 +729,9 @@ public class themPhieuNhap extends javax.swing.JFrame {
         }
         
         thanhTien.setText(String.valueOf(thanhTien1)+" Đ");
+        jSpinner1.setValue(0);
+        jTextField2.setText("");
+        jTextField3.setText("");
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
