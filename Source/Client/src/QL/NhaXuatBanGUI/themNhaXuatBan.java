@@ -62,14 +62,14 @@ public class themNhaXuatBan extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         MaNXB = new javax.swing.JTextField();
-        SdtNXB = new javax.swing.JTextField();
+        DiaChiNXB = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         TenNXB = new javax.swing.JTextField();
-        DiaChiNXB = new javax.swing.JTextField();
+        SdtNXB = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        nutThem = new javax.swing.JButton();
+        nutHuy = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         EmailNXB = new javax.swing.JTextField();
 
@@ -103,40 +103,40 @@ public class themNhaXuatBan extends javax.swing.JFrame {
         MaNXB.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         MaNXB.setEnabled(false);
 
-        SdtNXB.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        DiaChiNXB.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel3.setText("Số điện thoại");
+        jLabel3.setText("Địa chỉ");
 
-        jLabel5.setText("Họ và tên");
+        jLabel5.setText("Tên nhà xuất bản");
 
         TenNXB.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        DiaChiNXB.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        SdtNXB.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel6.setText("Địa chỉ");
+        jLabel6.setText("Số điện thoại");
 
-        jButton1.setBackground(new java.awt.Color(102, 255, 102));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jButton1.setText("Thêm");
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        nutThem.setBackground(new java.awt.Color(102, 255, 102));
+        nutThem.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        nutThem.setText("Thêm");
+        nutThem.setBorder(null);
+        nutThem.setBorderPainted(false);
+        nutThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                nutThemActionPerformed(evt);
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(255, 12, 12));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jButton5.setText("Hủy");
-        jButton5.setBorder(null);
-        jButton5.setMaximumSize(new java.awt.Dimension(43, 22));
-        jButton5.setMinimumSize(new java.awt.Dimension(43, 22));
-        jButton5.setOpaque(true);
-        jButton5.setPreferredSize(new java.awt.Dimension(43, 22));
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        nutHuy.setBackground(new java.awt.Color(255, 12, 12));
+        nutHuy.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        nutHuy.setText("Hủy");
+        nutHuy.setBorder(null);
+        nutHuy.setMaximumSize(new java.awt.Dimension(43, 22));
+        nutHuy.setMinimumSize(new java.awt.Dimension(43, 22));
+        nutHuy.setOpaque(true);
+        nutHuy.setPreferredSize(new java.awt.Dimension(43, 22));
+        nutHuy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                nutHuyActionPerformed(evt);
             }
         });
 
@@ -156,19 +156,19 @@ public class themNhaXuatBan extends javax.swing.JFrame {
                     .addComponent(EmailNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nutThem, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addComponent(MaNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
-                            .addComponent(SdtNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(DiaChiNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(59, 59, 59)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nutHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel5)
                                 .addComponent(TenNXB)
                                 .addComponent(jLabel6)
-                                .addComponent(DiaChiNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(SdtNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(166, 166, 166))
         );
         jPanel1Layout.setVerticalGroup(
@@ -190,19 +190,19 @@ public class themNhaXuatBan extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(SdtNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(DiaChiNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(DiaChiNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(SdtNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(14, 14, 14)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(EmailNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nutThem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nutHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26))
         );
 
@@ -224,38 +224,85 @@ public class themNhaXuatBan extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        String tenNXB = TenNXB.getText();
+    private void nutThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nutThemActionPerformed
+        String tenNXB = TenNXB.getText().trim();
         String maNXB = MaNXB.getText();
-        String diaChiNXB = DiaChiNXB.getText();
-        String emailNXB = EmailNXB.getText();
-        String sdtNXB = SdtNXB.getText();
+        String diaChiNXB = DiaChiNXB.getText().trim();
+        String sdtNXB = SdtNXB.getText().trim();
+        String emailNXB = EmailNXB.getText().trim();
+
+        // kiem tra ten
+        if (tenNXB.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Tên nhà xuất bản không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if (tenNXB.matches(".*\\d.*")) {
+            JOptionPane.showMessageDialog(null, "Tên nhà xuất bản không được chứa số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // kiem tra so dien thoai
+        if (!sdtNXB.matches("^0\\d{9}$")) {
+            JOptionPane.showMessageDialog(null, "Số điện thoại phải bắt đầu bằng 0 và có 10 chữ số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         
+        // kiem tra dia chi
+        if (diaChiNXB.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Địa chỉ không được để trống", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // kiem tra email
+        if (!emailNXB.matches("^[^@]+@[^@]+$")) {
+            JOptionPane.showMessageDialog(null, "Địa chỉ email không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // kiem tra trung lap
+        if (kiemtraTrungNXB(tenNXB, sdtNXB, emailNXB)) {
+            JOptionPane.showMessageDialog(null, "Tên nhà xuất bản, số điện thoại hoặc email đã tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Prepare the JSON object to send to the server
         JSONObject json = new JSONObject();
-        
-        json.put("method","PUTNXB");
+        json.put("method", "PUTNXB");
         json.put("MaNXB", maNXB);
         json.put("TenNXB", tenNXB);
         json.put("Diachi", diaChiNXB);
-        json.put("Sodienthoai",sdtNXB);
+        json.put("Sodienthoai", sdtNXB);
         json.put("Email", emailNXB);
-        
+
         this.setVisible(false);
-        if(client1.themDT(json.toString()).equals("thanhcong"))
-        {
+        // Send the request to add the publisher and handle the response
+        if (client1.themDT(json.toString()).equals("thanhcong")) {
             JOptionPane.showMessageDialog(null, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            
             panelNhaXuatBan1.setUp();
-            
             this.setVisible(false);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_nutThemActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private boolean kiemtraTrungNXB(String tenNXB, String sdtNXB, String emailNXB) {
+        JSONObject json = new JSONObject(client1.getList("ListNhaXuatBan"));
+        JSONArray jsonArray = json.getJSONArray("list");
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject nxbObject = jsonArray.getJSONObject(i);
+            String existingName = nxbObject.getString("tenNXB").trim().toLowerCase();
+            String existingPhone = nxbObject.getString("soDienThoai").trim();
+            String existingEmail = nxbObject.getString("email").trim().toLowerCase();
+
+            if (existingName.equals(tenNXB.toLowerCase()) || existingPhone.equals(sdtNXB) || existingEmail.equals(emailNXB.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private void nutHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nutHuyActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_nutHuyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -298,8 +345,6 @@ public class themNhaXuatBan extends javax.swing.JFrame {
     private javax.swing.JTextField MaNXB;
     private javax.swing.JTextField SdtNXB;
     private javax.swing.JTextField TenNXB;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -308,5 +353,7 @@ public class themNhaXuatBan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton nutHuy;
+    private javax.swing.JButton nutThem;
     // End of variables declaration//GEN-END:variables
 }

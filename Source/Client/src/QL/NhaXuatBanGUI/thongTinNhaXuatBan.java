@@ -53,11 +53,11 @@ public class thongTinNhaXuatBan extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         MaNXB = new javax.swing.JTextField();
-        SdtNXB = new javax.swing.JTextField();
+        DiaChiNXB = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         TenNXB = new javax.swing.JTextField();
-        DiaChiNXB = new javax.swing.JTextField();
+        SdtNXB = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         XacNhan = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -93,20 +93,20 @@ public class thongTinNhaXuatBan extends javax.swing.JFrame {
         MaNXB.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         MaNXB.setEnabled(false);
 
-        SdtNXB.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        SdtNXB.setEnabled(false);
+        DiaChiNXB.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        DiaChiNXB.setEnabled(false);
 
-        jLabel3.setText("Số điện thoại");
+        jLabel3.setText("Địa chỉ");
 
-        jLabel5.setText("Họ và tên");
+        jLabel5.setText("Tên nhà xuất bản");
 
         TenNXB.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         TenNXB.setEnabled(false);
 
-        DiaChiNXB.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        DiaChiNXB.setEnabled(false);
+        SdtNXB.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        SdtNXB.setEnabled(false);
 
-        jLabel6.setText("Địa chỉ");
+        jLabel6.setText("Số điện thoại");
 
         XacNhan.setBackground(new java.awt.Color(102, 255, 102));
         XacNhan.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -135,7 +135,7 @@ public class thongTinNhaXuatBan extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(MaNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(SdtNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DiaChiNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(EmailNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(59, 59, 59)
@@ -145,7 +145,7 @@ public class thongTinNhaXuatBan extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addComponent(TenNXB)
                         .addComponent(jLabel6)
-                        .addComponent(DiaChiNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(SdtNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(166, 166, 166))
         );
         jPanel1Layout.setVerticalGroup(
@@ -167,11 +167,11 @@ public class thongTinNhaXuatBan extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(SdtNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(DiaChiNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(DiaChiNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(SdtNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

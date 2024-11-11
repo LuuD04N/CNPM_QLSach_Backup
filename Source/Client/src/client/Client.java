@@ -928,6 +928,7 @@ public class Client {
                 return yeucau("ListNhaXuatBan");
             case "ListTheLoai":
                 return yeucau("ListTheLoai");
+<<<<<<< HEAD
             case "ListKhuyenMai":
                 return yeucau("ListKhuyenMai");
             case "ListLoaiKhuyenMai":
@@ -942,6 +943,11 @@ public class Client {
                 return yeucau("ListNhanVien");
             case "ListTaiKhoan":
                 return yeucau("ListTaiKhoan");
+=======
+            case "ListHoaDon":
+                return yeucau("ListHoaDon");
+               
+>>>>>>> Khoa
        }
        return "";
    }
@@ -956,10 +962,16 @@ public class Client {
                 return xuLiGetNXB("NhaXuatBan", maDT);
             case "TheLoai":
                 return xuLiGetTheLoai("TheLoai", maDT);
+<<<<<<< HEAD
             case "SanPham":
                 return xuLiGetSanPham("SanPham",maDT);
             case "AnhBia":
                 return xuLiGetAnhBia("AnhBia",maDT);
+=======
+            case "HoaDon":
+                return xuLiGetHoaDon("HoaDon", maDT);
+              
+>>>>>>> Khoa
       }
        return "";
        
@@ -1134,6 +1146,32 @@ public class Client {
             JSONObject json = new JSONObject();
             json.put("method",yeucau);
             json.put("MaSP",maDT);
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return "";
+   }
+   
+   public String xuLiGetHoaDon(String yeucau,String maDT)
+   {
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            JSONObject json = new JSONObject();
+            json.put("method",yeucau);
+            json.put("MaHD",maDT);
             OutputStream output;
             output = socket.getOutputStream();
             output.write((json.toString()).getBytes());

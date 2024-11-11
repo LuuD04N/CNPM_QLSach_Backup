@@ -6,6 +6,7 @@ package QL.TheLoaiGUI;
 
 import Client.Client;
 import javax.swing.JOptionPane;
+import org.json.JSONArray;
 import org.json.JSONObject;
 /**
  *
@@ -92,7 +93,7 @@ public class suaTheLoai extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Thể loại");
+        jLabel5.setText("Tên thể loại");
 
         TenTL.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -188,8 +189,22 @@ public class suaTheLoai extends javax.swing.JFrame {
         String maTL = MaTL.getText();
         String tenTL = TenTL.getText();
         
-        JSONObject json = new JSONObject();
+        // kiem tra ten the loai
+        if (tenTL.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Tên thể loại không được để trống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if (tenTL.matches(".*\\d.*")) {
+            JOptionPane.showMessageDialog(null, "Tên thể loại không được chứa số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         
+        // kiem tra trung lap
+        if (kiemtraTrungTL(tenTL)) {
+            JOptionPane.showMessageDialog(null, "Tên thể loại đã tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        JSONObject json = new JSONObject();
         json.put("method","UPDATETL");
         json.put("MaTL", maTL);
         json.put("TenTL", tenTL);
@@ -208,6 +223,22 @@ public class suaTheLoai extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_nutSuaActionPerformed
 
+        // ham kiem tra trung ten the loai
+    private boolean kiemtraTrungTL(String tenTL) {
+        JSONObject json = new JSONObject(client1.getList("ListTheLoai"));
+        JSONArray jsonArray = json.getJSONArray("list");
+        
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject tlObject = jsonArray.getJSONObject(i);
+            String existingName = tlObject.getString("tenTL").trim().toLowerCase();
+
+            if (existingName.equals(tenTL.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     private void nutHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nutHuyActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
