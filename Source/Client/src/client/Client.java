@@ -90,7 +90,37 @@ public class Client {
                 return guiXoaKM(data);
             case "DELETEPN":
                 return guiXoaPN(data);
+            case "DELETEHD":
+                return guiXoaHD(data);
         }
+        return "";
+    }
+    
+    //ham gui yeu cau xoa doi tuong hoa don qua server
+    private String guiXoaHD(String data)
+    {
+        JSONObject json = new JSONObject(data);
+        String yeucau = json.getString("method");
+        try {
+             ClientListener client = new ClientListener(socket);
+             Thread thread = new Thread(client);
+             json.put("method",yeucau);
+             json.put("MaHD",json.getString("MaHD"));
+             OutputStream output;
+             output = socket.getOutputStream();
+             output.write((json.toString()).getBytes());
+             output.flush();
+             thread.start();
+             thread.join();
+             return client.result;
+         } 
+         catch (InterruptedException ex) {
+                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+             }
+         catch (IOException ex) {
+             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+         }
+
         return "";
     }
     
@@ -496,7 +526,72 @@ public class Client {
             case "PUTCTPN":
                 guiThemCTPN(data);
                 return "thanhcong";
+            case "PUTHD":
+                guiThemHD(data);
+                return "thanhcong";
+            case "PUTCTHD":
+                guiThemCTHD(data);
+                return "thanhcong";
        }
+       return "";
+   }
+   
+   //ham gui them phieu nhap toi server
+   public String guiThemCTHD(String data)
+   {
+       JSONObject json = new JSONObject(data);
+       String yeucau = json.getString("method");
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            json.put("method",yeucau);
+            json.put("list",json.getString("list"));
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return "";
+   }
+   
+   //ham gui them phieu nhap toi server
+   public String guiThemHD(String data)
+   {
+       JSONObject json = new JSONObject(data);
+       String yeucau = json.getString("method");
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            json.put("method",yeucau);
+            json.put("maNV",json.getString("maNV"));
+            json.put("ngayNhap",json.getString("ngayNhap"));
+            json.put("thanhtien",json.getString("thanhtien"));
+            json.put("maHD",json.getString("maHD"));
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
        return "";
    }
    
@@ -928,7 +1023,6 @@ public class Client {
                 return yeucau("ListNhaXuatBan");
             case "ListTheLoai":
                 return yeucau("ListTheLoai");
-<<<<<<< HEAD
             case "ListKhuyenMai":
                 return yeucau("ListKhuyenMai");
             case "ListLoaiKhuyenMai":
@@ -943,11 +1037,11 @@ public class Client {
                 return yeucau("ListNhanVien");
             case "ListTaiKhoan":
                 return yeucau("ListTaiKhoan");
-=======
             case "ListHoaDon":
                 return yeucau("ListHoaDon");
+            case "ListCTHD":
+                return yeucau("ListCTHD");
                
->>>>>>> Khoa
        }
        return "";
    }
@@ -962,16 +1056,13 @@ public class Client {
                 return xuLiGetNXB("NhaXuatBan", maDT);
             case "TheLoai":
                 return xuLiGetTheLoai("TheLoai", maDT);
-<<<<<<< HEAD
             case "SanPham":
                 return xuLiGetSanPham("SanPham",maDT);
             case "AnhBia":
                 return xuLiGetAnhBia("AnhBia",maDT);
-=======
             case "HoaDon":
                 return xuLiGetHoaDon("HoaDon", maDT);
               
->>>>>>> Khoa
       }
        return "";
        

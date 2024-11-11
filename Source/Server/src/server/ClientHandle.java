@@ -4,14 +4,12 @@
  */
 package server;
 
-<<<<<<< HEAD
+import BLL.ChiTietHoaDonBLL;
 import BLL.ChiTietKhuyenMaiBLL;
 import BLL.ChiTietPhieuNhapBLL;
 import BLL.KhuyenMaiBLL;
 import BLL.LoaiKhuyenMaiBLL;
-=======
 import BLL.HoaDonBLL;
->>>>>>> Khoa
 import BLL.NhanVienBLL;
 import BLL.SanPhamBLL;
 import BLL.TacGiaBLL;
@@ -22,6 +20,7 @@ import BLL.PhieuNhapBLL;
 import BLL.SachTheLoaiBLL;
 import BLL.TheLoaiBLL;
 import DAO.ChiTietKhuyenMaiDAO;
+import DTO.HoaDonDTO;
 import DTO.KhuyenMaiDTO;
 import DTO.LoaiKhuyenMaiDTO;
 import DTO.TacGiaDTO;
@@ -166,13 +165,9 @@ public class ClientHandle implements Runnable{
                     String MaTG1 = json.getString("MaDT");
                     TacGiaDTO tgDTO3 = new TacGiaDTO(MaTG1,"","","","",0);
                     sendMessage(String.valueOf(tgBLL4.xoaTG(tgDTO3)));
-<<<<<<< HEAD
                    
                     break;
-=======
-                    break;
                     
->>>>>>> Khoa
             // Xu li nha xuat ban
             case "ListNhaXuatBan":
                     NhaXuatBanBLL nxbBLL = new NhaXuatBanBLL();
@@ -205,14 +200,9 @@ public class ClientHandle implements Runnable{
                     NhaXuatBanBLL nxbBLL4 = new NhaXuatBanBLL();
                     String MaNXB1 = json.getString("MaNXB");
                     NhaXuatBanDTO nxbDTO3 = new NhaXuatBanDTO(MaNXB1,"","","","",0);
-                    sendMessage(String.valueOf(nxbBLL4.xoaNXB(nxbDTO3)));
-<<<<<<< HEAD
-                    
+                    sendMessage(String.valueOf(nxbBLL4.xoaNXB(nxbDTO3)));      
                     break;
-                    
-=======
-                    break;
->>>>>>> Khoa
+
             // Xu li the loai
             case "ListTheLoai":
                     TheLoaiBLL tlBLL = new TheLoaiBLL();
@@ -247,7 +237,7 @@ public class ClientHandle implements Runnable{
                     TheLoaiDTO tlDTO3 = new TheLoaiDTO(MaTL1, "", 0);
                     sendMessage(String.valueOf(tlBLL4.xoaTheLoai(tlDTO3)));
                     break;
-<<<<<<< HEAD
+
              case "ListSanPham":
                     //lay danh sach san pham
                     SanPhamBLL spBLL = new SanPhamBLL();
@@ -383,7 +373,6 @@ public class ClientHandle implements Runnable{
                    PhieuNhapBLL pnBLL1 = new PhieuNhapBLL();
                    String maPN = json.getString("maPN");
                    String maNV = json.getString("maNV");
-                   System.out.println(maNV+"a");
                    String maNXB = json.getString("maNXB");
                    String ngayNhap = json.getString("ngayNhap");
                    String thanhtien = json.getString("thanhtien");
@@ -414,10 +403,7 @@ public class ClientHandle implements Runnable{
                case "ListNhanVien":
                    NhanVienBLL nv = new NhanVienBLL();
                    sendMessage(String.valueOf(nv.getList()));
-                   break;
-               
-=======
-                    
+                   break;              
             // Xu li hoa don
             case "ListHoaDon":
                     HoaDonBLL hdBLL = new HoaDonBLL();
@@ -429,8 +415,38 @@ public class ClientHandle implements Runnable{
                     String MaHD = json.getString("MaHD");
                     sendMessage(String.valueOf(hdBLL1.getHoaDon(MaHD)));
                     break;
+            case "PUTHD":
+                    //lay doi tuong de xem thong tin the loai
+                    HoaDonBLL hdBLL2 = new HoaDonBLL();
+                    String maHD =json.getString("maHD");
+                    String maTK = json.getString("maNV");
+                    String ngayNhap1 = json.getString("ngayNhap");
+                    String thanhtien1 = json.getString("thanhtien");
+                    SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+                    {
+                        try {
+                            sendMessage(String.valueOf(hdBLL2.themHD(new HoaDonDTO (maHD, dateFormat1.parse(ngayNhap1), Double.parseDouble(thanhtien1), 1, maTK))));
+                        } catch (ParseException ex) {
+                            Logger.getLogger(ClientHandle.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    break;
+            case "DELETEHD":
+                    HoaDonBLL hdBLL3 = new HoaDonBLL();
+                    String maHD2 = json.getString("MaHD");
+                    sendMessage(String.valueOf(hdBLL3.xoaHD(new HoaDonDTO (maHD2, null,0, 0,""))));
+                    break;
+            case "PUTCTHD":
+                    ChiTietHoaDonBLL cthdBLL = new ChiTietHoaDonBLL();
+                    String list2 = json.getString("list");
+                    String maCTHD1 = json.getString("maHD");
+                    sendMessage(String.valueOf(cthdBLL.themCTHD(list2,maCTHD1)));
+                    break; 
+            case "ListCTHD":
+                    ChiTietHoaDonBLL cthdBLL1 = new ChiTietHoaDonBLL();
+                    sendMessage(String.valueOf(cthdBLL1.getList()));
+                    break;
                     
->>>>>>> Khoa
         }
     }
 }

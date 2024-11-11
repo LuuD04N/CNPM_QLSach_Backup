@@ -780,7 +780,6 @@ public class themPhieuNhap extends javax.swing.JFrame {
         String maNV = getMaTK(getMaNV(MNV.getText()));
         String maNXB = getMaNXB((String) comboboxNXB.getSelectedItem());
         Date ngayNhap = ngayNhapDate.getDate();
-        System.out.println(maNXB);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         
         String thanhtien = thanhTien.getText().substring(0,thanhTien.getText().length()-1);
@@ -816,37 +815,6 @@ public class themPhieuNhap extends javax.swing.JFrame {
                 panelKho1.setUp();
                 this.setVisible(false);
             }
-//            String maKM = maLKM.getText();
-//            String tenKM = txtTenKM.getText();
-//            String phanTramKM = jTextFieldKM.getText();
-//            Date ngayBD = jDateChooserNBD.getDate();
-//            Date ngayKT = jDateChooserNKT.getDate();
-//            
-//            JSONObject json = new JSONObject();
-//            json.put("method","PUTKM");
-//            json.put("maKM",maKM);
-//            json.put("tenKM",tenKM);
-//            json.put("maLoaiKM",maLoaiKM);
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//            String dateNBD = dateFormat.format(ngayBD);
-//            String dateNKT = dateFormat.format(ngayKT);
-//            json.put("ngayBD",dateNBD);
-//            json.put("ngayKT",dateNKT);
-//            json.put("phanTramGiam",phanTramKM);
-//            JSONObject json1 = new JSONObject();
-//            json1.put("method","PUTCTKM");
-//            json1.put("maKM", maKM);
-//            //chuyen mang thanh chuoi de truyen du lieu
-//            JSONArray jsonArray = new JSONArray(list);
-//            String jsonString = jsonArray.toString();
-//            json1.put("list",jsonString);
-//            if(client1.themDT(json.toString()).equals("thanhcong"))
-//            {
-//                JOptionPane.showMessageDialog(null, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-//                client1.themDT(json1.toString());
-//                panelKhuyenMai1.setUp();
-//                this.setVisible(false);
-//            }
         }
         
     }//GEN-LAST:event_jButton4MouseClicked

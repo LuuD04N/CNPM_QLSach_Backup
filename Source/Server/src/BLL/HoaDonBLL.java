@@ -36,4 +36,25 @@ public class HoaDonBLL {
         
         return json.toString();
     }
+    
+    
+    //ham them hoa don va tra ve trang thai
+    public String themHD(HoaDonDTO hd)
+    {
+        HoaDonDAO hdDAO = new HoaDonDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai", "true");
+        json.put("ketqua",hdDAO.themDT(hd));
+        return json.toString();
+    }
+    
+    //ham xoa hoa don va tra ve trang thai
+    public String xoaHD(HoaDonDTO hd)
+    {
+        HoaDonDAO hdDAO = new HoaDonDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai", "true");
+        json.put("ketqua",hdDAO.xoaHD(hd));
+        return json.toString();
+    }
 }

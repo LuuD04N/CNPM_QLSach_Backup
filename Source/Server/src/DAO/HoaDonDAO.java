@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.SQLException;
+import java.sql.PreparedStatement;
 
 public class HoaDonDAO {
     ConnectDB database = new ConnectDB();
@@ -35,5 +36,49 @@ public class HoaDonDAO {
             Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+    
+    //ham them doi tuong vao csdl
+    public String themDT(HoaDonDTO hd)
+    {
+        java.sql.Connection conn;
+        String query = "INSERT INTO hoadon(MaHD,Ngaylaphoadon,ThanhTien,Trangthai,MaTK) values(?,?,?,?,?)";
+        conn = database.connect();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,hd.getMaHD());
+            java.sql.Date ngaynhap = new java.sql.Date(hd.getNgayLapHoaDon().getTime());
+            pstmt.setDate(2,ngaynhap);
+            pstmt.setDouble(3,hd.getThanhTien());
+            pstmt.setInt(4,hd.getTrangThai());
+            pstmt.setString(5,hd.getMaTK());
+            if(pstmt.executeUpdate() > 0)
+            {
+                return "true";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TacGiaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "false";
+    }
+    
+    public String xoaHD(HoaDonDTO hd)
+    {
+        java.sql.Connection conn;
+        String query = "UPDATE hoadon SET Trangthai=? WHERE MaHD=?";
+        conn = database.connect();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,hd.getTrangThai());
+            pstmt.setString(2,hd.getMaHD());
+            if(pstmt.executeUpdate() > 0)
+            {
+                return "true";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TacGiaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "false";
+        
     }
 }

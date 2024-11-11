@@ -2,6 +2,7 @@ package QL.HoaDonGUI;
 
 import Client.Client;
 import DTO.HoaDonDTO;
+import QL.NhapKhoGUI.thongTinPhieuNhap;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,14 +25,16 @@ public class panelHoaDon extends javax.swing.JInternalFrame {
      * Creates new form panelHoaDon
      */
     private String MaDT = "0";
+    private String nguoiNhap1;
     private static Client client1;
 
-    public panelHoaDon(Client client) {
+    public panelHoaDon(Client client,String nguoiNhap) {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
         client1 = client;
+        nguoiNhap1=nguoiNhap;
         setUp();
     }
     
@@ -62,7 +66,6 @@ public class panelHoaDon extends javax.swing.JInternalFrame {
                         // Thêm vào ArrayList
                         //xem lai trang thai
                         list.add(new HoaDonDTO(MaHD, ngayLapHD, ThanhTien, Trangthai, MaTK));
-                        System.out.println(ngayLapHD);
                     } catch (ParseException ex) {
                         Logger.getLogger(panelHoaDon.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -81,6 +84,23 @@ public class panelHoaDon extends javax.swing.JInternalFrame {
             System.out.println(hd.getTrangThai());
             // them tung doi tuong vao bang
             if (hd.getTrangThai() == 1) 
+            {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                String ngayLapHD = formatter.format(hd.getNgayLapHoaDon());
+                System.out.println(hd.getMaHD());
+                model.addRow(new Object[] {hd.getMaHD(), ngayLapHD, hd.getThanhTien(), hd.getMaTK()});
+            }
+        }
+    }
+    
+    public void setUpDelete() 
+    {
+        DefaultTableModel model = (DefaultTableModel) jTableHD.getModel();
+        model.setRowCount(0);
+        for (HoaDonDTO hd : getList("ListHoaDon")) 
+        {
+            // them tung doi tuong vao bang
+            if (hd.getTrangThai() == 0) 
             {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 String ngayLapHD = formatter.format(hd.getNgayLapHoaDon());
@@ -209,6 +229,11 @@ public class panelHoaDon extends javax.swing.JInternalFrame {
         );
 
         huyButton.setBackground(new java.awt.Color(255, 255, 255));
+        huyButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                huyButtonMouseClicked(evt);
+            }
+        });
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/iconxoa.jpg"))); // NOI18N
@@ -305,6 +330,11 @@ public class panelHoaDon extends javax.swing.JInternalFrame {
         jTextField1.setSelectionColor(new java.awt.Color(0, 0, 0));
 
         jButton1.setText("Làm mới");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -455,23 +485,26 @@ public class panelHoaDon extends javax.swing.JInternalFrame {
 
     private void themButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_themButtonMouseClicked
         // TODO add your handling code here:
-        themHoaDon thd = new themHoaDon();
+        themHoaDon thd = new themHoaDon(client1,nguoiNhap1,this);
         thd.setDefaultCloseOperation(thd.DISPOSE_ON_CLOSE);
         thd.setVisible(true);
     }//GEN-LAST:event_themButtonMouseClicked
 
     private void dsHuyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dsHuyButtonMouseClicked
         // TODO add your handling code here:
-        thongTinHoaDon tthd = new thongTinHoaDon();
-        tthd.setDefaultCloseOperation(tthd.DISPOSE_ON_CLOSE);
-        tthd.setVisible(true);
+        setUpDelete();
     }//GEN-LAST:event_dsHuyButtonMouseClicked
 
     private void chiTietButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chiTietButtonMouseClicked
         // TODO add your handling code here:
-//        suaPhieuNhap spn = new suaPhieuNhap();
-//        spn.setDefaultCloseOperation(spn.DISPOSE_ON_CLOSE);
-//        spn.setVisible(true);
+        if (MaDT.equals("0")) {
+            JOptionPane.showMessageDialog(null, "Chưa chọn đối tượng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        } else {
+            thongTinHoaDon tthd = new thongTinHoaDon(MaDT,client1);
+            tthd.setDefaultCloseOperation(tthd.DISPOSE_ON_CLOSE);
+            tthd.setVisible(true);
+        }
     }//GEN-LAST:event_chiTietButtonMouseClicked
 
     private void jTableHDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableHDMouseClicked
@@ -480,6 +513,34 @@ public class panelHoaDon extends javax.swing.JInternalFrame {
         String value = table.getValueAt(index, 0).toString();
         MaDT = value;
     }//GEN-LAST:event_jTableHDMouseClicked
+
+    private void huyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_huyButtonMouseClicked
+        // TODO add your handling code here:
+        if(MaDT.equals("0"))
+        {
+            JOptionPane.showMessageDialog(null, "Chưa chọn đối tượng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        JSONObject json = new JSONObject();
+        json.put("method","DELETEHD");
+        json.put("MaHD", MaDT);
+        JSONObject json1 = new JSONObject(client1.xoaDT(json.toString()));
+        if(json1.getString("ketqua").equals("true"))
+        {
+            JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            setUp();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Xóa không thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_huyButtonMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        setUp();
+    }//GEN-LAST:event_jButton1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

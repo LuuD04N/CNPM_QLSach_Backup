@@ -887,7 +887,8 @@ Color customColor = Color.decode("#C2F2E9");
         panel11.setBackground(Color.WHITE);
         panelTT.setBackground(Color.WHITE);
         panel12.setBackground(Color.WHITE);
-        panelHoaDon hd = new panelHoaDon(client1);
+        
+        panelHoaDon hd = new panelHoaDon(client1,tenNV.getText());
         panelChange.removeAll();
         panelChange.add(hd).setVisible(true);
     }//GEN-LAST:event_panel8MouseClicked
