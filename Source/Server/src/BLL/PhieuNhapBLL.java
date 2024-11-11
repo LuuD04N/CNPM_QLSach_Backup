@@ -13,7 +13,7 @@ import org.json.JSONObject;
  * @author PC
  */
 public class PhieuNhapBLL {
-        //lay danh sach tac gia
+        //lay danh sach phieu nhap
     public String getList()
     {
         PhieuNhapDAO pnDAO = new PhieuNhapDAO();

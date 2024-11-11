@@ -714,20 +714,27 @@ public class themPhieuNhap extends javax.swing.JFrame {
             String ten = (String) list.get(i)[1]; 
             String SoLuong = String.valueOf(list.get(i)[2]);
             String GiaNhap = (String) list.get(i)[3];
-            thanhTien1+= (Double.parseDouble(GiaNhap) * Integer.parseInt(SoLuong));
+            
             if (!seenValues.contains(ten)) { // Kiểm tra xem giá trị đã được thêm chưa
                 seenValues.add(ten); // Thêm vào HashSet
-                newList.add(new Object[]{maSP,ten,SoLuong,GiaNhap}); // Thêm vào newList nếu chưa có
+                newList.add(new Object[]{maSP,ten,SoLuong,GiaNhap});// Thêm vào newList nếu chưa có
+                
             }
         }
         list.clear();
         list.addAll(newList);
         for(Object[] obj2 : list)
-        {
-            
+        {     
             table.addRow(obj2);
         }
-        
+        thanhTien1=0;
+        for (int i = 0; i < list.size(); i++) {
+            String SoLuong = String.valueOf(list.get(i)[2]);
+            String GiaNhap = (String) list.get(i)[3];
+            thanhTien1+= (Double.parseDouble(GiaNhap) * Integer.parseInt(SoLuong));
+            System.out.println(thanhTien1+"a");
+        }
+        System.out.println(thanhTien1);
         thanhTien.setText(String.valueOf(thanhTien1)+" Đ");
         jSpinner1.setValue(0);
         jTextField2.setText("");

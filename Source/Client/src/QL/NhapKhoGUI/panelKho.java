@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
@@ -28,6 +29,7 @@ public class panelKho extends javax.swing.JInternalFrame {
     /**
      * Creates new form panelKho
      */
+    private String MaDT = "0";
     private static Client client1;
     private String nguoiNhap1;
     public panelKho(Client client,String nguoiNhap) {
@@ -307,6 +309,11 @@ public class panelKho extends javax.swing.JInternalFrame {
         jTablePN.setGridColor(new java.awt.Color(0, 0, 0));
         jTablePN.setSelectionBackground(new java.awt.Color(0, 102, 255));
         jTablePN.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jTablePN.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTablePNMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTablePN);
 
         jLabel11.setText("Nhân viên nhập");
@@ -528,14 +535,29 @@ public class panelKho extends javax.swing.JInternalFrame {
 
     private void jPanel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseClicked
         // TODO add your handling code here:
-        thongTinPhieuNhap ttpn = new thongTinPhieuNhap();
-        ttpn.setDefaultCloseOperation(ttpn.DISPOSE_ON_CLOSE);
-        ttpn.setVisible(true);
+        
+        if (MaDT.equals("0")) {
+            JOptionPane.showMessageDialog(null, "Chưa chọn đối tượng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        } else {
+            thongTinPhieuNhap ttpn = new thongTinPhieuNhap(MaDT,client1);
+            ttpn.setDefaultCloseOperation(ttpn.DISPOSE_ON_CLOSE);
+            ttpn.setVisible(true);
+        }
+
     }//GEN-LAST:event_jPanel11MouseClicked
 
     private void jPanel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel12MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel12MouseClicked
+
+    private void jTablePNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePNMouseClicked
+        // TODO add your handling code here:
+         DefaultTableModel table = (DefaultTableModel) jTablePN.getModel();
+        int index = jTablePN.getSelectedRow();
+        String value = table.getValueAt(index, 0).toString();
+        MaDT=value;
+    }//GEN-LAST:event_jTablePNMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

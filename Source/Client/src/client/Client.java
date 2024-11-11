@@ -906,6 +906,8 @@ public class Client {
                 return yeucau("ListChiTietKhuyenMai");
             case "ListPhieuNhap":
                 return yeucau("ListPhieuNhap");
+            case "ListCTPhieuNhap":
+                return yeucau("ListCTPhieuNhap");
             case "ListNhanVien":
                 return yeucau("ListNhanVien");
             case "ListTaiKhoan":

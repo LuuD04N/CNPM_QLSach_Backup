@@ -14,6 +14,17 @@ import org.json.JSONObject;
  * @author PC
  */
 public class ChiTietPhieuNhapBLL {
+    
+    public String getList()
+    {
+        ChiTietPhieuNhapDAO ctpnDAO = new ChiTietPhieuNhapDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai","true");
+//        JSONArray jsonArray = new JSONArray(tgDAO.getList());
+        json.put("list", ctpnDAO.getList());
+        return json.toString();
+    }
+    
     //ham them chi tiet phieu nhap va tra ve trang thai
     public String themCTPN(String list,String maPN)
     {

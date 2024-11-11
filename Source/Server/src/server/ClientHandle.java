@@ -382,6 +382,10 @@ public class ClientHandle implements Runnable{
                         }
                     }
                     break;
+                case "ListCTPhieuNhap":
+                   ChiTietPhieuNhapBLL ctpnBLL1 = new ChiTietPhieuNhapBLL();
+                   sendMessage(String.valueOf(ctpnBLL1.getList()));
+                   break;
                case "PUTCTPN":
                     ChiTietPhieuNhapBLL ctpnBLL = new ChiTietPhieuNhapBLL();
                     String list1 = json.getString("list");
