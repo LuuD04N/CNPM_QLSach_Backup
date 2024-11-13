@@ -25,9 +25,11 @@ import DTO.KhuyenMaiDTO;
 import DTO.LoaiKhuyenMaiDTO;
 import DTO.TacGiaDTO;
 import DTO.NhaXuatBanDTO;
+import DTO.NhanVienDTO;
 import DTO.PhieuNhapDTO;
 import DTO.SachTheLoaiDTO;
 import DTO.SanPhamDTO;
+import DTO.TaiKhoanDTO;
 import DTO.TheLoaiDTO;
 import java.io.IOException;
 import java.io.InputStream;
@@ -128,6 +130,10 @@ public class ClientHandle implements Runnable{
                     sendMessage(String.valueOf(vtBLL.getVaiTro(data)));
                     
                     break;
+            case "ListVaiTro":
+                    VaiTroBLL vtBLL1 = new VaiTroBLL();
+                    sendMessage(String.valueOf(vtBLL1.getList()));
+                    break;
             case "ListTacGia":
                     //lay danh sach tac gia
                     TacGiaBLL tgBLL = new TacGiaBLL();
@@ -144,6 +150,14 @@ public class ClientHandle implements Runnable{
                     //lay danh sach san pham
                     TaiKhoanBLL tkBLL1 = new TaiKhoanBLL();
                     sendMessage(String.valueOf(tkBLL1.getList()));
+                    
+                    break;
+            case "PUTTK":
+                    TaiKhoanBLL tkBLL2 = new TaiKhoanBLL();
+                    String maTK1 = json.getString("MaTK");
+                    String tenTK = json.getString("TenTK");
+                    String matKhauTK = json.getString("MatkhauTK");
+                    sendMessage(tkBLL2.themTK(new TaiKhoanDTO( maTK1, tenTK, matKhauTK,1)));
                     break;
             case "PUTTG":
                 //them doi tuong tac gia
@@ -403,7 +417,62 @@ public class ClientHandle implements Runnable{
                case "ListNhanVien":
                    NhanVienBLL nv = new NhanVienBLL();
                    sendMessage(String.valueOf(nv.getList()));
-                   break;              
+                   
+                   break;       
+                case "PUTNV":
+                    NhanVienBLL nvBLL3 = new NhanVienBLL();
+                     try {
+                        String ngaySinhStr = json.getString("NgaySinh");
+                        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng này phải khớp với định dạng của chuỗi ngày sinh trong JSON
+                        java.util.Date parsedDate = dateFormat2.parse(ngaySinhStr);
+                        Date ngaySinh = new Date(parsedDate.getTime()); // Chuyển đổi sang java.sql.Date
+        
+                        NhanVienDTO nvDTO = new NhanVienDTO(
+                            json.getString("MaNV"), 
+                            json.getString("Hovaten"), 
+                            ngaySinh, 
+                            json.getString("GioiTinh"), 
+                            json.getString("Sodienthoai"), 
+                            json.getString("Email"), 
+                            json.getString("DiaChi"), 
+                            json.getString("MaTK"), 
+                            json.getString("MaVT"), 1
+                        );
+                        sendMessage(String.valueOf(nvBLL3.themNV(nvDTO))); 
+                        break;
+                    } catch (Exception e) {
+                       e.printStackTrace();
+                    }
+            case "UPDATENV":
+                    NhanVienBLL nvBLL4 = new NhanVienBLL();
+                    try {
+                        String ngaySinhStr = json.getString("NgaySinh");
+                        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng này phải khớp với định dạng của chuỗi ngày sinh trong JSON
+                        java.util.Date parsedDate = dateFormat1.parse(ngaySinhStr);
+                        Date ngaySinh = new Date(parsedDate.getTime()); // Chuyển đổi sang java.sql.Date
+        
+                        NhanVienDTO nvDTO = new NhanVienDTO(
+                            json.getString("MaNV"), 
+                            json.getString("Hovaten"), 
+                            ngaySinh, 
+                            json.getString("GioiTinh"), 
+                            json.getString("Sodienthoai"), 
+                            json.getString("Email"), 
+                            json.getString("DiaChi"), 
+                            json.getString("MaTK"), 
+                            json.getString("MaVT"), 1
+                        );
+                        sendMessage(String.valueOf(nvBLL4.suaNV(nvDTO))); 
+                        break;
+                    } catch (Exception e) {
+                       e.printStackTrace();
+                    }
+            case "DELETENV":
+                NhanVienBLL nvBLL5 = new NhanVienBLL();
+                String MaNV1 = json.getString("MaNV");
+                NhanVienDTO nvDTO = new NhanVienDTO(MaNV1, "", null, "", "", "", "", "", "", 0);
+                sendMessage(String.valueOf(nvBLL5.xoaNV(nvDTO)));
+                break;
             // Xu li hoa don
             case "ListHoaDon":
                     HoaDonBLL hdBLL = new HoaDonBLL();
@@ -446,6 +515,7 @@ public class ClientHandle implements Runnable{
                     ChiTietHoaDonBLL cthdBLL1 = new ChiTietHoaDonBLL();
                     sendMessage(String.valueOf(cthdBLL1.getList()));
                     break;
+                    
                     
         }
     }

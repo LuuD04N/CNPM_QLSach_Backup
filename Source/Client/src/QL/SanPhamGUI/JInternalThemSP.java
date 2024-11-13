@@ -59,6 +59,7 @@ public class JInternalThemSP extends javax.swing.JInternalFrame {
         setButDanh();
         setUpTL();
         setMaSP();
+        System.out.println("a");
     }
     private void setUpTL() {
     if (dt1.list.size() != 0) {

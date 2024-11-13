@@ -532,7 +532,77 @@ public class Client {
             case "PUTCTHD":
                 guiThemCTHD(data);
                 return "thanhcong";
+            case "PUTNV":
+                guiThemNV(data);
+                return "thanhcong";
+            case "PUTTK":
+                guiThemTK(data);
+                return "thanhcong";
        }
+       return "";
+   }
+   
+   public String guiThemTK(String data)
+   {
+       JSONObject json = new JSONObject(data);
+       String yeucau = json.getString("method");
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            json.put("method",yeucau);
+            json.put("MaTK",json.getString("MaTK"));
+            json.put("TenTK",json.getString("TenTK"));
+            json.put("MatkhauTK",json.getString("MatkhauTK"));
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       return "";
+   }
+   
+   public String guiThemNV(String data)
+   {
+       JSONObject json = new JSONObject(data);
+       String yeucau = json.getString("method");
+       try {
+            ClientListener client = new ClientListener(socket);
+            Thread thread = new Thread(client);
+            json.put("method",yeucau);
+            json.put("MaNV",json.getString("MaNV"));
+            json.put("Hovaten",json.getString("Hovaten"));
+            json.put("NgaySinh", json.getString("NgaySinh"));
+            json.put("GioiTinh", json.getString("GioiTinh"));
+            json.put("Sodienthoai", json.getString("Sodienthoai"));
+            json.put("Email", json.getString("Email"));
+            json.put("DiaChi", json.getString("DiaChi"));
+            json.put("MaTK",json.getString("MaTK"));
+            json.put("MaVT", json.getString("MaVT"));
+            OutputStream output;
+            output = socket.getOutputStream();
+            output.write((json.toString()).getBytes());
+            output.flush();
+            thread.start();
+            thread.join();
+            return client.result;
+        } 
+        catch (InterruptedException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
        return "";
    }
    
@@ -1041,6 +1111,8 @@ public class Client {
                 return yeucau("ListHoaDon");
             case "ListCTHD":
                 return yeucau("ListCTHD");
+            case "ListVaiTro":
+                return yeucau("ListVaiTro");
                
        }
        return "";

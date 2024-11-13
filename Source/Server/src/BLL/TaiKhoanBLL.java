@@ -51,4 +51,54 @@ public class TaiKhoanBLL {
         json.put("list", tkDAO.getList());
         return json.toString();
     }
+    
+    //lay 1 tai khoan 
+    public String getTaiKhoan(String MaTK)
+    {
+        TaiKhoanDAO tkDAO = new TaiKhoanDAO();
+        JSONObject json = new JSONObject();
+        for(TaiKhoanDTO x : tkDAO.getList())
+        {
+            if(x.getMaTK().equals(MaTK))
+            {
+                json.put("Trangthai","true");
+                json.put("MaTK",x.getMaTK());
+                json.put("TenTK",x.getTenTK());
+                json.put("MatkhauTK",x.getMatKhauTK());
+                
+                break;
+            }
+        }
+        
+        return json.toString();
+    }
+    
+    public String themTK(TaiKhoanDTO tk)
+    {
+        TaiKhoanDAO tkDAO = new TaiKhoanDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai", "true");
+        json.put("ketqua",tkDAO.themTK(tk));
+        return json.toString();
+    }
+    
+    //ham sua tac gia va tra ve trang thai
+    public String suaTK(TaiKhoanDTO tk)
+    {
+        TaiKhoanDAO tkDAO = new TaiKhoanDAO();
+        JSONObject json = new JSONObject();
+        json.put("Trangthai", "true");
+        json.put("ketqua",tkDAO.suaTK(tk));
+        return json.toString();
+    }
+//    
+//    //ham xoa tai khoan va tra ve trang thai
+//    public String xoaTK(TaiKhoanDTO tk)
+//    {
+//        TaiKhoanDAO tkDAO = new TaiKhoanDAO();
+//        JSONObject json = new JSONObject();
+//        json.put("Trangthai", "true");
+//        json.put("ketqua",tkDAO.xoaTK(tk));
+//        return json.toString();
+//    }
 }

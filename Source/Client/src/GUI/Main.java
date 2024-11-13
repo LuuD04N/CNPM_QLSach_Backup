@@ -928,7 +928,7 @@ Color customColor = Color.decode("#C2F2E9");
         panel11.setBackground(Color.WHITE);
         panelTT.setBackground(Color.WHITE);
         panel12.setBackground(Color.WHITE);
-        panelNhanVien nv = new panelNhanVien();
+        panelNhanVien nv = new panelNhanVien(client1);
         panelChange.removeAll();
         panelChange.add(nv).setVisible(true);
         
